@@ -122,6 +122,13 @@
                                                         !< file or default value is used
     END TYPE point_coordinates_t
 
+    TYPE type_building
+       INTEGER(iwp) ::  id                                    !< building id
+       INTEGER(iwp) ::  num_facades_h                         !< total number of horizontal facade elements
+
+       INTEGER(iwp), DIMENSION(:), ALLOCATABLE ::  surf_inds  !< index array linking surface-element index with building
+    END TYPE type_building
+
 
     REAL(wp), DIMENSION(:), ALLOCATABLE :: ah_time      !< time steps
 
@@ -134,6 +141,8 @@
     TYPE(real_2d_matrix) :: building_ah                 !< anthropogenic heat profiles for buildings
     TYPE(real_2d_matrix) :: street_ah                   !< anthropogenic heat profiles for streets
     TYPE(real_2d_matrix) :: point_ah                    !< anthropogenic heat profiles for point sources
+
+    TYPE(type_building), DIMENSION(:), ALLOCATABLE ::  building_surfaces  !< list containing surface elements per building
 
 !
 !-- Interfaces of subroutines accessed from outside of this module
@@ -149,6 +158,10 @@
        MODULE PROCEDURE ah_init
     END INTERFACE ah_init
 
+    INTERFACE ah_init_checks
+       MODULE PROCEDURE ah_init_checks
+    END INTERFACE ah_init_checks
+
     INTERFACE ah_actions
        MODULE PROCEDURE ah_actions
     END INTERFACE ah_actions
@@ -163,6 +176,7 @@
     PUBLIC                                                                                         &
        ah_parin,                                                                                   &
        ah_init,                                                                                    &
+       ah_init_checks,                                                                             &
        ah_actions,                                                                                 &
        ah_check_parameters
 
@@ -231,6 +245,37 @@
     CALL ah_profiles_netcdf_data_input
 
  END SUBROUTINE ah_init
+
+
+!--------------------------------------------------------------------------------------------------!
+! Description:
+! ------------
+!> Checks done after the Initialization.
+!
+!> @todo This routine is currently mis-used for additional initialization required to be done after
+!>       the indoor_model init. Remove dependency to indoor_model_mod and move content of this 
+!>       routine to ah_init.
+!--------------------------------------------------------------------------------------------------!
+ SUBROUTINE ah_init_checks
+ 
+    INTEGER(iwp) ::  b  !< loop index
+
+
+    ! @todo Map building ids to surface elements
+   
+    ALLOCATE( building_surfaces(LBOUND(building_ids%val, DIM=1):UBOUND(building_ids%val, DIM=1)) )
+   
+    DO  b = LBOUND(building_ids%val, DIM=1), UBOUND(building_ids%val, DIM=1)
+      
+       building_surfaces(b)%id = building_ids%val(b)
+      
+       CALL ah_building_id_to_surfaces(building_ids%val(b), building_surfaces(b)%surf_inds, building_surfaces(b)%num_facades_h)
+
+    ENDDO
+   
+    ! @todo Map point sources to surface elements
+   
+ END SUBROUTINE ah_init_checks
 
 
 !--------------------------------------------------------------------------------------------------!
@@ -505,18 +550,18 @@
        !
        ! Identify the relevant surfaces and apply the anthropogenic heat profiles to them
        ! -- for buildings
-       DO  b = LBOUND(building_ids%val, DIM=1), UBOUND(building_ids%val, DIM=1)
-          CALL ah_building_id_to_surfaces(building_ids%val(b), b_surf_indexes, num_facades_per_building_h)
+       DO  b = LBOUND(building_surfaces, DIM=1), UBOUND(building_surfaces, DIM=1)
+
           !-- Only do something if surfaces of building are found (i.e., building is loaced on local pe)
-          IF ( ALLOCATED( b_surf_indexes ) )  THEN
-             !-- distribute the anthropogenic heat profile of the building to the corresponding surfaces
-             DO  m = LBOUND(b_surf_indexes, DIM=1), UBOUND(b_surf_indexes, DIM=1)
-                b_surf_index = b_surf_indexes(m)
+          IF ( ALLOCATED( building_surfaces(b)%surf_inds ) )  THEN
+             !-- Distribute the anthropogenic heat profile of the building to the corresponding surfaces
+             DO  m = LBOUND(building_surfaces(b)%surf_inds, DIM=1), UBOUND(building_surfaces(b)%surf_inds, DIM=1)
+                b_surf_index = building_surfaces(b)%surf_inds(m)
                 IF ( surf_usm%upward(b_surf_index)  .OR.  surf_usm%downward(b_surf_index) )  THEN
-                   surf_usm%waste_heat(b_surf_index) = ( building_ah%val(b, t_step + 1) * ( t_exact - ah_time(t_step) ) +   &
+                   surf_usm%waste_heat(b_surf_index) = ( building_ah%val(b, t_step + 1) * ( t_exact - ah_time(t_step) ) +   &  ! @bug dimensions of val might be wrong!
                                                        building_ah%val(b, t_step) * ( ah_time(t_step + 1) - t_exact ) )   &
-                                                       / ( ah_time(t_step + 1) - ah_time(t_step) )                                              &
-                                                       / REAL( num_facades_per_building_h, wp )                                &
+                                                       / ( ah_time(t_step + 1) - ah_time(t_step) )                        &
+                                                       / REAL( building_surfaces(b)%num_facades_h, wp )                   &
                                                        / (dx * dy)
                 ENDIF
              ENDDO

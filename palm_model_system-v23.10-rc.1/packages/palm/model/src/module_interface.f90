@@ -31,6 +31,7 @@
     USE anthropogenic_heat_mod,                                                                    &
         ONLY:  ah_parin,                                                                           &
                ah_init,                                                                            &
+               ah_init_checks,                                                                     &
                ah_actions,                                                                         &
                ah_check_parameters
 
@@ -1195,6 +1196,7 @@
 
     CALL dynamics_init_checks
 
+    IF ( external_anthropogenic_heat )  CALL ah_init_checks
     IF ( biometeorology )  CALL bio_init_checks
 
     IF ( debug_output )  CALL debug_message( 'module-specific post-initialization checks', 'end' )
