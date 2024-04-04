@@ -32,7 +32,7 @@ class AHDriver:
         """Write global attributes to driver."""
         print("Writing global attributes...")
 
-        # Optional global attributes
+        # Global attributes
         # --------------------------
         self.nc_file.title = 'Example PALM ah driver'
         self.nc_file.author = 'Tobias Gronemeier, Mathias Niffeler'
@@ -47,17 +47,7 @@ class AHDriver:
         self.nc_file.references = ''
         self.nc_file.source = ''
         self.nc_file.version = '1'
-
-        # Mandatory global attributes
-        # ---------------------------
         self.nc_file.Conventions = 'CF-1.7'
-        self.nc_file.origin_lat = 1.303687    # (overwrite initialization_parameters)
-        self.nc_file.origin_lon = 103.773933  # Used to initialize Coriolis parameter
-        self.nc_file.origin_time = '2024-01-01 10:00:00 +08'
-        self.nc_file.origin_x = 363594.0
-        self.nc_file.origin_y = 144130.0
-        self.nc_file.origin_z = 0.0
-        self.nc_file.rotation_angle = 0.0
 
     def define_dimensions(self):
         """Set dimensions on which variables are defined."""
@@ -111,19 +101,19 @@ class AHDriver:
         # Define variables
         # -----------------
         nc_building_ah = self.nc_file.createVariable(
-            'building_ah', 'i4', ('time', 'building_id'), fill_value=-9999)
+            'building_ah', 'f8', ('time', 'building_id'), fill_value=-9999)
         nc_building_ah.long_name = "anthropogenic heat emission from building roof"
         nc_building_ah.units = "kWh"
         nc_building_ah[:, :] = nc_building_ah._FillValue
 
         nc_street_ah = self.nc_file.createVariable(
-            'street_ah', 'i4', ('time', 'street_id'), fill_value=-9999)
+            'street_ah', 'f8', ('time', 'street_id'), fill_value=-9999)
         nc_street_ah.long_name = "anthropogenic heat emission from street segments"
         nc_street_ah.units = "kWh"
         nc_street_ah[:, :] = nc_street_ah._FillValue
 
         nc_point_ah = self.nc_file.createVariable(
-            'point_ah', 'i4', ('time', 'point_id'), fill_value=-9999)
+            'point_ah', 'f8', ('time', 'point_id'), fill_value=-9999)
         nc_point_ah.long_name = "anthropogenic heat emission from a specific ground tile"
         nc_point_ah.units = "kWh"
         nc_point_ah[:, :] = nc_point_ah._FillValue
@@ -142,25 +132,28 @@ class AHDriver:
 
         # AH emissions
         # --------------
-        nc_building_ah[:, 0] = 1000
-        nc_building_ah[:, 1] = 2000
+        nc_building_ah[:, 0] = 1000000
+        nc_building_ah[:, 1] = 2000000
 
-        nc_street_ah[:, 0] = 100
-        nc_street_ah[:, 1] = 200
-        nc_street_ah[:, 2] = 300
+        nc_street_ah[:, 0] = 100000
+        nc_street_ah[:, 1] = 200000
+        nc_street_ah[:, 2] = 300000
 
-        nc_point_ah[:, 0] = 10
-        nc_point_ah[:, 1] = 20
-        nc_point_ah[:, 2] = 30
-        nc_point_ah[:, 3] = 40
-        nc_point_ah[:, 4] = 50
+        nc_point_ah[:, 0] = 1000
+        nc_point_ah[:, 1] = 2000
+        nc_point_ah[:, 2] = 3000
+        nc_point_ah[:, 3] = 4000
+        nc_point_ah[:, 4] = 5000
 
         # Define coordinates of emission points at the grid centres and assume 2 m grid spacing.
         # (coordinates are, however, saved as UTM coordinates)
         dx = dy = 2.0
 
-        nc_point_x[:] = (np.array([4, 9, 25, 22, 26]) + 0.5) * dx + self.nc_file.origin_x
-        nc_point_y[:] = (np.array([4, 9,  2, 13, 25]) + 0.5) * dy + self.nc_file.origin_y
+        origin_x = 363594.0
+        origin_y = 144130.0
+
+        nc_point_x[:] = (np.array([4, 9, 25, 22, 26]) + 0.5) * dx + origin_x
+        nc_point_y[:] = (np.array([4, 9,  2, 13, 25]) + 0.5) * dy + origin_y
 
 
     def finalize(self):
