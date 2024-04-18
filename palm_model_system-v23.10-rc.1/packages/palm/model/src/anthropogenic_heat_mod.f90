@@ -39,8 +39,6 @@
 !> The module could be extended to include heat from traffic, if:
 !>   a) a traffic model is available that provides heat profiles, and
 !>   b) PALM4U started working with unique street IDs, identifying each street in the model domain.
-!
-!> @todo Check if indoor_model is switched on
 !--------------------------------------------------------------------------------------------------!
  MODULE anthropogenic_heat_mod
 
@@ -128,6 +126,41 @@
 
        INTEGER(iwp), DIMENSION(:), ALLOCATABLE ::  surf_inds  !< index array linking surface-element index with building
     END TYPE type_building
+
+
+
+!
+!-- Define data structure for buidlings.
+    TYPE build
+
+       !> @todo add other parameters like ah emission profiles (if possible)
+
+       INTEGER(iwp) ::  id                                !< building ID
+       INTEGER(iwp) ::  kb_max                            !< highest vertical index of a building
+       INTEGER(iwp) ::  kb_min                            !< lowest vertical index of a building
+       INTEGER(iwp) ::  num_facades_per_building = 0      !< total number of horizontal and vertical facade elements
+       INTEGER(iwp) ::  num_facades_per_building_h = 0    !< total number of horizontal facades elements
+       INTEGER(iwp) ::  num_facades_per_building_l = 0    !< number of horizontal and vertical facade elements on local subdomain
+       INTEGER(iwp) ::  num_facades_per_building_r = 0    !< total number of roof elements (horizontal upward facing elements)
+       INTEGER(iwp) ::  num_facades_per_building_v = 0    !< total number of vertical facades elements
+
+       INTEGER(iwp), DIMENSION(:), ALLOCATABLE ::  m              !< index array linking surface-element index with building
+       INTEGER(iwp), DIMENSION(:), ALLOCATABLE ::  num_facade_h   !< number of horizontal facade elements per buidling
+                                                                  !< and height level
+       INTEGER(iwp), DIMENSION(:), ALLOCATABLE ::  num_facade_r   !< number of roof elements per buidling
+                                                                  !< and height level
+       INTEGER(iwp), DIMENSION(:), ALLOCATABLE ::  num_facade_v   !< number of vertical facades elements per buidling
+                                                                  !< and height level
+
+
+       LOGICAL ::  on_pe = .FALSE.   !< flag indicating whether a building with certain ID is on local subdomain
+
+       REAL(wp) ::  area_facade           !< [m2] area of total facade
+       REAL(wp) ::  building_height       !< building height
+       REAL(wp) ::  vol_tot               !< [m3] total building volume
+    END TYPE build
+
+    TYPE(build), DIMENSION(:), ALLOCATABLE ::  buildings_ah  !< building array   !> @todo temporarily named buildings_ah to not confuse with var from indoor_model. --> rename
 
 
     REAL(wp), DIMENSION(:), ALLOCATABLE :: ah_time      !< time steps
@@ -240,9 +273,261 @@
 !--------------------------------------------------------------------------------------------------!
  SUBROUTINE ah_init
 
+    USE indices,                                                                                   &
+        ONLY:  nxl,                                                                                &
+               nxr,                                                                                &
+               nyn,                                                                                &
+               nys,                                                                                &
+               nzb,                                                                                &
+               nzt,                                                                                &
+               topo_flags
+
+    USE netcdf_data_input_mod,                                                                     &
+        ONLY:  building_id_f
+
     IMPLICIT NONE
 
+    INTEGER(iwp) ::  n_buildings  !< number of buildings
+
+
+
+    INTEGER(iwp) ::  i           !< running index along x-direction
+    INTEGER(iwp) ::  j           !< running index along y-direction
+    INTEGER(iwp) ::  k           !< running index along z-direction
+    INTEGER(iwp) ::  m           !< running index surface elements
+    INTEGER(iwp) ::  nb          !< building index
+
+    INTEGER(iwp), DIMENSION(:), ALLOCATABLE ::  k_max_l             !< highest vertical index of a building on subdomain
+    INTEGER(iwp), DIMENSION(:), ALLOCATABLE ::  k_min_l             !< lowest vertical index of a building on subdomain
+    INTEGER(iwp), DIMENSION(:), ALLOCATABLE ::  n_fa                !< counting array
+    INTEGER(iwp), DIMENSION(:), ALLOCATABLE ::  num_facades_h       !< dummy array used for summing-up total number of
+                                                                    !< horizontal facade elements
+    INTEGER(iwp), DIMENSION(:), ALLOCATABLE ::  num_facades_r       !< dummy array used for summing-up total number of
+                                                                    !< roof elements
+    INTEGER(iwp), DIMENSION(:), ALLOCATABLE ::  num_facades_v       !< dummy array used for summing-up total number of
+                                                                    !< vertical facade elements
+    INTEGER(iwp), DIMENSION(:), ALLOCATABLE ::  receive_dum_h       !< dummy array used for MPI_ALLREDUCE
+    INTEGER(iwp), DIMENSION(:), ALLOCATABLE ::  receive_dum_r       !< dummy array used for MPI_ALLREDUCE
+    INTEGER(iwp), DIMENSION(:), ALLOCATABLE ::  receive_dum_v       !< dummy array used for MPI_ALLREDUCE
+
+
+
     CALL ah_profiles_netcdf_data_input
+
+    n_buildings = SIZE( building_ids%val, DIM=1 )
+!
+!-- Allocate building-data structure array. Note, this is a global array and all buildings with 
+!-- anthropogenic heat emission on domain are known by each PE. Height-dependent arrays and 
+!-- surface-element lists, however, are only allocated on PEs where the respective building is 
+!-- present (in order to reduce memory demands).
+    ALLOCATE( buildings_ah(0:n_buildings-1) )
+
+!
+!-- Store building IDs and check if building with certain ID is present on subdomain.
+    DO  nb = 0, n_buildings-1
+       buildings_ah(nb)%id = building_ids%val(nb)
+
+       IF ( ANY( building_id_f%var(nys:nyn,nxl:nxr) == buildings_ah(nb)%id ) )                        &
+          buildings_ah(nb)%on_pe = .TRUE.
+    ENDDO
+
+!
+!-- Determine the maximum vertical dimension occupied by each building.
+    ALLOCATE( k_min_l(0:n_buildings-1) )
+    ALLOCATE( k_max_l(0:n_buildings-1) )
+    k_min_l = nzt + 1
+    k_max_l = 0
+
+    DO  i = nxl, nxr
+       DO  j = nys, nyn
+          IF ( building_id_f%var(j,i) /= building_id_f%fill )  THEN
+             IF ( MINVAL( ABS( buildings_ah(:)%id - building_id_f%var(j,i) ), DIM=1 ) == 0 )  THEN
+                nb = MINLOC( ABS( buildings_ah(:)%id - building_id_f%var(j,i) ), DIM=1 ) - 1
+                DO  k = nzb, nzt+1
+!
+!--                Check if grid point belongs to a building.
+                   IF ( BTEST( topo_flags(k,j,i), 6 ) )  THEN
+                      k_min_l(nb) = MIN( k_min_l(nb), k )
+                      k_max_l(nb) = MAX( k_max_l(nb), k )
+                   ENDIF
+
+                ENDDO
+             ENDIF
+          ENDIF
+       ENDDO
+    ENDDO
+
+#if defined( __parallel )
+    CALL MPI_ALLREDUCE( MPI_IN_PLACE, k_min_l, n_buildings, MPI_INTEGER, MPI_MIN, comm2d, ierr )
+    CALL MPI_ALLREDUCE( MPI_IN_PLACE, k_max_l, n_buildings, MPI_INTEGER, MPI_MAX, comm2d, ierr )
+#endif
+    buildings_ah(:)%kb_min = k_min_l(:)
+    buildings_ah(:)%kb_max = k_max_l(:)
+
+    DEALLOCATE( k_min_l )
+    DEALLOCATE( k_max_l )
+
+!
+!-- Allocate arrays for number of facades per height level. Distinguish between horizontal and
+!-- vertical facades.
+    DO  nb = 0, n_buildings - 1
+       IF ( buildings_ah(nb)%on_pe )  THEN
+          ALLOCATE( buildings_ah(nb)%num_facade_h(buildings_ah(nb)%kb_min:buildings_ah(nb)%kb_max) )
+          ALLOCATE( buildings_ah(nb)%num_facade_r(buildings_ah(nb)%kb_min:buildings_ah(nb)%kb_max) )
+          ALLOCATE( buildings_ah(nb)%num_facade_v(buildings_ah(nb)%kb_min:buildings_ah(nb)%kb_max) )
+
+          buildings_ah(nb)%num_facade_h = 0
+          buildings_ah(nb)%num_facade_r = 0
+          buildings_ah(nb)%num_facade_v = 0
+       ENDIF
+    ENDDO
+!
+!-- Determine number of facade elements per building on local subdomain.
+    buildings_ah(:)%num_facades_per_building_l = 0
+    DO  m = 1, surf_usm%ns
+!
+!--    For the current facade element determine corresponding building index.
+!--    First, obtain i,j,k indices of the building. Please note the offset between facade/surface
+!--    element and building location (for horizontal surface elements the horizontal offsets are
+!--    zero).
+       i = surf_usm%i(m) + surf_usm%ioff(m)
+       j = surf_usm%j(m) + surf_usm%joff(m)
+       k = surf_usm%k(m) + surf_usm%koff(m)
+!
+!--    Determine building index and check whether building is listed in ah emission and is on PE.
+       IF ( MINVAL( ABS( buildings_ah(:)%id - building_id_f%var(j,i) ), DIM=1 ) == 0 )  THEN
+          nb = MINLOC( ABS( buildings_ah(:)%id - building_id_f%var(j,i) ), DIM=1 ) - 1
+
+          IF ( buildings_ah(nb)%on_pe )  THEN
+!
+!--          Horizontal facade elements (roofs, etc.)
+             IF ( surf_usm%upward(m)  .OR.  surf_usm%downward(m) )  THEN
+!
+!--             Count number of facade elements at each height level.
+                buildings_ah(nb)%num_facade_h(k) = buildings_ah(nb)%num_facade_h(k) + 1
+!
+!--             Moreover, sum up number of local facade elements per building.
+                buildings_ah(nb)%num_facades_per_building_l = buildings_ah(nb)%num_facades_per_building_l + 1
+!
+!--             Count roof elements at each height level
+                IF ( surf_usm%upward(m) )                                                          &
+                   buildings_ah(nb)%num_facade_r(k) = buildings_ah(nb)%num_facade_r(k) + 1
+!
+!--          Vertical facades
+             ELSE
+                buildings_ah(nb)%num_facade_v(k) = buildings_ah(nb)%num_facade_v(k) + 1
+                buildings_ah(nb)%num_facades_per_building_l = buildings_ah(nb)%num_facades_per_building_l + 1
+             ENDIF
+          ENDIF
+       ENDIF
+    ENDDO
+!
+!-- Determine total number of facade elements per building and assign number to building data type.
+    DO  nb = 0, n_buildings - 1
+!
+!--    Allocate dummy array used for summing-up facade elements.
+!--    Please note, dummy arguments are necessary as building-date type arrays are not necessarily
+!--    allocated on all PEs.
+       ALLOCATE( num_facades_h(buildings_ah(nb)%kb_min:buildings_ah(nb)%kb_max) )
+       ALLOCATE( num_facades_r(buildings_ah(nb)%kb_min:buildings_ah(nb)%kb_max) )
+       ALLOCATE( num_facades_v(buildings_ah(nb)%kb_min:buildings_ah(nb)%kb_max) )
+       ALLOCATE( receive_dum_h(buildings_ah(nb)%kb_min:buildings_ah(nb)%kb_max) )
+       ALLOCATE( receive_dum_r(buildings_ah(nb)%kb_min:buildings_ah(nb)%kb_max) )
+       ALLOCATE( receive_dum_v(buildings_ah(nb)%kb_min:buildings_ah(nb)%kb_max) )
+       num_facades_h = 0
+       num_facades_r = 0
+       num_facades_v = 0
+       receive_dum_h = 0
+       receive_dum_r = 0
+       receive_dum_v = 0
+
+       IF ( buildings_ah(nb)%on_pe )  THEN
+          num_facades_h = buildings_ah(nb)%num_facade_h
+          num_facades_r = buildings_ah(nb)%num_facade_r
+          num_facades_v = buildings_ah(nb)%num_facade_v
+       ENDIF
+
+#if defined( __parallel )
+       CALL MPI_ALLREDUCE( num_facades_h,                                                          &
+                           receive_dum_h,                                                          &
+                           buildings_ah(nb)%kb_max - buildings_ah(nb)%kb_min + 1,                  &
+                           MPI_INTEGER,                                                            &
+                           MPI_SUM,                                                                &
+                           comm2d,                                                                 &
+                           ierr )
+
+       CALL MPI_ALLREDUCE( num_facades_r,                                                          &
+                           receive_dum_r,                                                          &
+                           buildings_ah(nb)%kb_max - buildings_ah(nb)%kb_min + 1,                  &
+                           MPI_INTEGER,                                                            &
+                           MPI_SUM,                                                                &
+                           comm2d,                                                                 &
+                           ierr )
+
+       CALL MPI_ALLREDUCE( num_facades_v,                                                          &
+                           receive_dum_v,                                                          &
+                           buildings_ah(nb)%kb_max - buildings_ah(nb)%kb_min + 1,                  &
+                           MPI_INTEGER,                                                            &
+                           MPI_SUM,                                                                &
+                           comm2d,                                                                 &
+                           ierr )
+       IF ( ALLOCATED( buildings_ah(nb)%num_facade_h ) )  buildings_ah(nb)%num_facade_h = receive_dum_h
+       IF ( ALLOCATED( buildings_ah(nb)%num_facade_r ) )  buildings_ah(nb)%num_facade_r = receive_dum_r
+       IF ( ALLOCATED( buildings_ah(nb)%num_facade_v ) )  buildings_ah(nb)%num_facade_v = receive_dum_v
+#else
+       buildings_ah(nb)%num_facade_h = num_facades_h
+       buildings_ah(nb)%num_facade_r = num_facades_r
+       buildings_ah(nb)%num_facade_v = num_facades_v
+#endif
+
+!
+!--    Deallocate dummy arrays
+       DEALLOCATE( num_facades_h )
+       DEALLOCATE( num_facades_r )
+       DEALLOCATE( num_facades_v )
+       DEALLOCATE( receive_dum_h )
+       DEALLOCATE( receive_dum_r )
+       DEALLOCATE( receive_dum_v )
+!
+!--    Allocate index arrays which link facade elements with surface-data type.
+!--    Please note, no height levels are considered here (information is stored in surface-data type
+!--    itself).
+       IF ( buildings_ah(nb)%on_pe )  THEN
+!
+!--       Determine number of facade elements per building.
+          buildings_ah(nb)%num_facades_per_building_h = SUM( buildings_ah(nb)%num_facade_h )
+          buildings_ah(nb)%num_facades_per_building_r = SUM( buildings_ah(nb)%num_facade_r )
+          buildings_ah(nb)%num_facades_per_building_v = SUM( buildings_ah(nb)%num_facade_v )
+          buildings_ah(nb)%num_facades_per_building   = buildings_ah(nb)%num_facades_per_building_h +    &
+                                                     buildings_ah(nb)%num_facades_per_building_v
+!
+!--       Allocate array that links the building with the urban-type surfaces.
+!--       Please note, the linking array is allocated over all facade elements, which is
+!--       required in case a building is located at the subdomain boundaries, where the building and
+!--       the corresponding surface elements are located on different subdomains.
+          ALLOCATE( buildings_ah(nb)%m(1:buildings_ah(nb)%num_facades_per_building_l) )
+       ENDIF
+
+    ENDDO
+!
+!-- Link facade elements with surface data type.
+!-- Allocate array for counting.
+    ALLOCATE( n_fa(0:n_buildings-1) )
+    n_fa = 1
+
+    DO  m = 1, surf_usm%ns
+       i = surf_usm%i(m) + surf_usm%ioff(m)
+       j = surf_usm%j(m) + surf_usm%joff(m)
+
+       IF ( MINVAL( ABS( buildings_ah(:)%id - building_id_f%var(j,i) ), DIM=1 ) == 0 )  THEN
+          nb = MINLOC( ABS( buildings_ah(:)%id - building_id_f%var(j,i) ), DIM=1 ) - 1
+
+          IF ( buildings_ah(nb)%on_pe )  THEN
+             buildings_ah(nb)%m(n_fa(nb)) = m
+             n_fa(nb) = n_fa(nb) + 1
+          ENDIF
+       ENDIF
+    ENDDO
 
  END SUBROUTINE ah_init
 
@@ -260,8 +545,6 @@
  
     INTEGER(iwp) ::  b  !< loop index
 
-
-    ! @todo Map building ids to surface elements
    
     ALLOCATE( building_surfaces(LBOUND(building_ids%val, DIM=1):UBOUND(building_ids%val, DIM=1)) )
    
@@ -590,9 +873,6 @@
 !--------------------------------------------------------------------------------------------------!
  SUBROUTINE ah_building_id_to_surfaces( building_id, surf_indexes, num_facades_per_building_h )
 
-    USE indoor_model_mod,                                                                          &
-        ONLY: buildings
-
     IMPLICIT NONE
 
     INTEGER(iwp), INTENT(IN) ::  building_id                               !< building id
@@ -603,11 +883,11 @@
     INTEGER(iwp) ::  b  !< auxiliary building index
 
 
-    DO  b = LBOUND( buildings, DIM=1 ), UBOUND( buildings, DIM=1 )
-       IF ( buildings(b)%id == building_id  .AND.  buildings(b)%on_pe )  THEN
-          ALLOCATE( surf_indexes(LBOUND( buildings(b)%m, DIM=1 ):UBOUND( buildings(b)%m, DIM=1 )) )
-          surf_indexes = buildings(b)%m
-          num_facades_per_building_h = buildings(b)%num_facades_per_building_h
+    DO  b = LBOUND( buildings_ah, DIM=1 ), UBOUND( buildings_ah, DIM=1 )
+       IF ( buildings_ah(b)%id == building_id  .AND.  buildings_ah(b)%on_pe )  THEN
+          ALLOCATE( surf_indexes(LBOUND( buildings_ah(b)%m, DIM=1 ):UBOUND( buildings_ah(b)%m, DIM=1 )) )
+          surf_indexes = buildings_ah(b)%m
+          num_facades_per_building_h = buildings_ah(b)%num_facades_per_building_h
           EXIT
        ENDIF
     ENDDO
