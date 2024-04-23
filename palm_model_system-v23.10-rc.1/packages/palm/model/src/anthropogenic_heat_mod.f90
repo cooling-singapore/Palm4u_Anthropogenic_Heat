@@ -601,14 +601,11 @@
        ALLOCATE( var_names(1:num_vars) )
        CALL inquire_variable_names( id_netcdf, var_names )
 !
-!-- Read dimensions from file
-       CALL get_dimension_length( id_netcdf, n_buildings, 'building_id' )
-       CALL get_dimension_length( id_netcdf, n_streets, 'street_id' )
-       CALL get_dimension_length( id_netcdf, n_points, 'point_id' )
-       CALL get_dimension_length( id_netcdf, n_timesteps, 'time' )
-!
 !-- Read building ids from file
-       IF ( n_buildings > 0 .AND. check_existence( var_names, 'building_id' ) )  THEN
+       IF ( check_existence( var_names, 'building_id' ) )  THEN
+
+          CALL get_dimension_length( id_netcdf, n_buildings, 'building_id' )
+
           building_ids%from_file = .TRUE.
 
           ALLOCATE( building_ids%val(0:n_buildings-1) )
@@ -619,7 +616,10 @@
        ENDIF
 !
 !-- Read streed ids from file
-       IF ( n_streets > 0 .AND. check_existence( var_names, 'street_id' ) )  THEN
+       IF ( check_existence( var_names, 'street_id' ) )  THEN
+
+          CALL get_dimension_length( id_netcdf, n_streets, 'street_id' )
+
           street_ids%from_file = .TRUE.
 
           ALLOCATE( street_ids%val(0:n_streets-1) )
@@ -630,7 +630,10 @@
        ENDIF
 !
 !-- Read point ids from file
-       IF ( n_points > 0 .AND. check_existence( var_names, 'point_id' ) )  THEN
+       IF ( check_existence( var_names, 'point_id' ) )  THEN
+
+         CALL get_dimension_length( id_netcdf, n_points, 'point_id' )
+
          point_ids%from_file = .TRUE.
 
          ALLOCATE( point_ids%val(0:n_points-1) )
@@ -641,14 +644,15 @@
       ENDIF
 !
 !-- Read timesteps from file
-       IF ( n_timesteps > 0 .AND. check_existence( var_names, 'time' ) .AND.                       &
-           ( building_ids%from_file .OR. street_ids%from_file .OR. point_ids%from_file ) )  THEN
+       IF ( check_existence( var_names, 'time' ) .AND.                       &
+            ( building_ids%from_file .OR. street_ids%from_file .OR. point_ids%from_file ) )  THEN
 
-            ALLOCATE( ah_time(0:n_timesteps-1) )
+          CALL get_dimension_length( id_netcdf, n_timesteps, 'time' )
+
+          ALLOCATE( ah_time(0:n_timesteps-1) )
 
           CALL get_variable( id_netcdf, 'time', ah_time )
        ENDIF
-
 !
 !-- Read anthrpogenic heat profiles from buildings from file
        IF ( building_ids%from_file .AND. check_existence( var_names, 'building_ah') ) THEN
