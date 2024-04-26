@@ -91,7 +91,9 @@
     USE pegrid
 
     USE surface_mod,                                                                               &
-        ONLY:  surf_lsm,                                                                           &
+        ONLY:  surf_type,                                                                          &
+               surf_def,                                                                           &
+               surf_lsm,                                                                           &
                surf_usm
 
     IMPLICIT NONE
@@ -127,7 +129,15 @@
        INTEGER(iwp), DIMENSION(:), ALLOCATABLE ::  surf_inds  !< index array linking surface-element index with building
     END TYPE type_building
 
+    TYPE surface_pointer
+       CLASS(surf_type), POINTER :: surface_type => NULL()   !< pointer to a specific surface type
+       INTEGER(iwp) :: surface_index                         !< index array linking surface-element index with building
+    END TYPE surface_pointer
 
+    TYPE point_to_surface_dictionary
+       INTEGER(iwp), DIMENSION(:), ALLOCATABLE :: point_source_ids       !< list of point source ids
+       TYPE(surface_pointer), DIMENSION(:), ALLOCATABLE :: surface_list  !< list containing surface elements per building
+    END TYPE point_to_surface_dictionary 
 
 !
 !-- Define data structure for buidlings.
@@ -176,6 +186,7 @@
     TYPE(real_2d_matrix) :: point_ah                    !< anthropogenic heat profiles for point sources
 
     TYPE(type_building), DIMENSION(:), ALLOCATABLE ::  building_surfaces  !< list containing surface elements per building
+    TYPE(point_to_surface_dictionary) :: point_source_surfaces            !< dictionary linking point sources to surface elements
 
 !
 !-- Interfaces of subroutines accessed from outside of this module
@@ -814,9 +825,10 @@
 
        INTEGER(iwp) :: t_step, b, m, p                            !< auxiliary indices
        INTEGER(iwp), DIMENSION(:), ALLOCATABLE :: b_surf_indexes  !< array of building surface indexes
-       INTEGER(iwp) ::  num_facades_per_building_h  !< total number of horzontal surfaces (up- and downward) per building
+       INTEGER(iwp) ::  num_facades_per_building_h                !< total number of horizontal surfaces (up- and downward) per building
        INTEGER(iwp) :: b_surf_index                               !< building surface index
-       INTEGER(iwp) :: p_surf_index                               !< point source surface index
+       
+       TYPE(surface_pointer) :: p_surface                         !< pointer to the surface of an anthropogenic heat point source
 
        REAL(wp)  :: t_exact                                       !< copy of time_since_reference_point
 
@@ -857,12 +869,13 @@
 
        ! -- for point sources
        DO p = LBOUND(point_ids%val, DIM=1), UBOUND(point_ids%val, DIM=1)
-          CALL ah_point_id_to_surfaces(point_ids%val(p), p_surf_index)
-          IF ( .NOT. p_surf_index == -9999 )  THEN
-            surf_usm%waste_heat(p_surf_index) = ( point_ah%val(p, t_step + 1) * ( t_exact - ah_time(t_step) ) +   &
-                                                   point_ah%val(p, t_step) * ( ah_time(t_step + 1) - t_exact ) )   &
-                                                / ( ah_time(t_step + 1) - ah_time(t_step) )                                           &
-                                                / (dx * dy)
+          CALL get_matching_surface(point_ids%val(p), p_surface)
+          IF ( .NOT. p_surface%surface_index == -9999 )  THEN
+             p_surface%surface_type%waste_heat(p_surface%surface_index) =                                                 &
+                         ( point_ah%val(p, t_step + 1) * ( t_exact - ah_time(t_step) ) +                                  &
+                           point_ah%val(p, t_step) * ( ah_time(t_step + 1) - t_exact ) )                                  &
+                         / ( ah_time(t_step + 1) - ah_time(t_step) )                                                      &
+                         / (dx * dy)
           ENDIF
        ENDDO
 
@@ -902,18 +915,45 @@
 !--------------------------------------------------------------------------------------------------!
 ! Description:
 ! ------------
+!> Fetch the corresponing surface pointer for a given id of an anthropogenic heat point source
+!--------------------------------------------------------------------------------------------------!
+ SUBROUTINE get_matching_surface( point_id, surface )
+
+    IMPLICIT NONE
+
+    INTEGER(iwp), INTENT(IN) ::  point_id           !< point id  
+    TYPE(surface_pointer), INTENT(OUT) ::  surface  !< surface pointer
+
+    INTEGER(iwp) ::  i                              !< index of surface in the surface dictionary
+!
+!-- Check if the point source is already associated with a surface and fetch the correct index
+    IF ( .NOT. ANY( point_source_surfaces%point_source_ids == point_id ) ) THEN
+       CALL ah_point_id_to_surfaces( point_id, i )
+    ELSE
+       i = MINLOC( ABS( point_source_surfaces%point_id - point_id ) )
+    ENDIF
+!
+!-- Assign the corresponding surface pointer to the surface
+    surface = point_source_surfaces%surface_list(i)
+
+ END SUBROUTINE get_matching_surface
+
+
+!--------------------------------------------------------------------------------------------------!
+! Description:
+! ------------
 !> This routine fetches the ground surface tiles based on point-source ids
 !
 !> @todo call routine once during init and save values to reduce computing time and output of
 !>       warning message during every timestep
 !--------------------------------------------------------------------------------------------------!
- SUBROUTINE ah_point_id_to_surfaces( point_id, surf_index )
+ SUBROUTINE ah_point_id_to_surfaces( point_id, dict_index )
 
     IMPLICIT NONE
 
     INTEGER(iwp), INTENT(IN) ::  point_id     !< point id
 
-    INTEGER(iwp), INTENT(OUT) ::  surf_index  !< surface index
+    INTEGER(iwp), INTENT(OUT) ::  dict_index  !< index of the found surface in the dictionary
 
     INTEGER(iwp) ::  i                        !< auxiliary surface index
     INTEGER(iwp) ::  is                       !< auxiliary surface index
@@ -921,14 +961,16 @@
     INTEGER(iwp) ::  js                       !< auxiliary surface index
     INTEGER(iwp) ::  m                        !< auxiliary surface index
     INTEGER(iwp) ::  p                        !< auxiliary point source index
+    INTEGER(iwp) ::  np                       !< number of registered point sources
 
     LOGICAL ::  found                         !< flag to indicate if a match was found for the point source
 
     REAL(wp) ::  x_coord_abs                  !< absolute metric x-coordinate of the point source
     REAL(wp) ::  y_coord_abs                  !< absolute metric y-coordinate of the point source
 
+    TYPE(surface_pointer) ::  surface         !< surface pointer
+    TYPE(point_to_surface_dictionary) :: temp_point_to_surface_dict  !< temporary point to surface dictionary
 
-    surf_index = -9999
     found = .FALSE.
 
     IF ( point_coords%from_file )  THEN
@@ -946,7 +988,8 @@
           i = surf_lsm%i(m)
           j = surf_lsm%j(m)
           IF ( i == is  .AND.  j == js )  THEN
-             ! surf_index = m  ! @todo implement treatment of land-surface surfaces
+             surface%surface_type = surf_lsm
+             surface%surface_index = m
              found = .TRUE.
              EXIT
           ENDIF
@@ -963,13 +1006,53 @@
              i = surf_usm%i(m)
              j = surf_usm%j(m)
              IF ( i == is  .AND.  j == js )  THEN
-                surf_index = m
+                surface%surface_type = surf_usm
+                surface%surface_index = m
                 found = .TRUE.
                 EXIT
              ENDIF
           ENDDO
        ENDIF
-
+!
+!--    If no match was found in the land or urban surfaces, search the default surfaces (def).
+       IF ( .NOT. found )  THEN
+         DO  m = 1, surf_def%ns
+            i = surf_def%i(m)
+            j = surf_def%j(m)
+            IF ( i == is  .AND.  j == js )  THEN
+               surface%surface_type = surf_def
+               surface%surface_index = m
+               found = .TRUE.
+               EXIT
+            ENDIF
+         ENDDO
+       ENDIF
+!
+!--    If a match was found add the surface to the point to surface dictionary
+       IF ( .NOT. found )  THEN
+          surface%surface_type = surf_def
+          surface%surface_index = -9999
+          WRITE(message_string, '(A, I0, A)') 'The point source ', point_id, ' could not be attributed to any surface. Ignoring point source.'  
+          CALL message( 'ah_point_id_to_surfaces', 'AH0007', 0, 1, 0, 6, 0 )
+       ENDIF
+!
+!--    Register the size of the current point source dictoinary and allocate memory for the new entry
+       np = SIZE( point_to_surface_dict%point_id )
+       ALLOCATE( temp_point_to_surface_dict%point_id(1:np+1) )
+       ALLOCATE( temp_point_to_surface_dict%surface_list(1:np+1) )
+!
+!--    Copy the existing point to surface dictionary to the temporary dictionary
+       temp_point_to_surface_dict%point_id(1:np) = point_to_surface_dict%point_id
+       temp_point_to_surface_dict%surface_list(1:np) = point_to_surface_dict%surface_list
+!
+!--    Add the new point source to the dictionary
+       dict_index = np + 1
+       temp_point_to_surface_dict%point_id(dict_index) = point_id
+       temp_point_to_surface_dict%surface_list(dict_index) = surface
+!
+!--    Update the point to surface dictionary
+       point_to_surface_dict = temp_point_to_surface_dict
+       
        ! @todo add treatment of default surfaces (surf_def)
 
     ENDIF

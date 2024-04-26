@@ -83,6 +83,7 @@
                debug_output_timestep,                                                              &
                debug_string,                                                                       &
                dt_3d,                                                                              &
+               external_anthropogenic_heat,                                                        &
                humidity,                                                                           &
                initializing_actions,                                                               &
                intermediate_timestep_count,                                                        &
@@ -1923,6 +1924,10 @@
           surf%shf(m) = surf%shf(m) * ( 1.0_wp - fr_urb(j,i) )
           surf%ghf(m) = surf%ghf(m) * ( 1.0_wp - fr_urb(j,i) )
        ENDIF
+!--    Add waste heat from anthropogenic heat sources to to the sensible heat flux 
+       IF ( external_anthropogenic_heat )  THEN
+         surf%shf(m) = surf%shf(m) + surf%waste_heat(m) / c_p  !! TODO: Check if the division by c_p is correct
+      ENDIF
 !
 !--    Update the 3d field of rad_lw_out array to have consistent output
        IF ( surf%upward(m) )  THEN

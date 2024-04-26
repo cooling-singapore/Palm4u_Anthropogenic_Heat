@@ -5202,7 +5202,7 @@
 !
 !--    If the indoor model is applied, further add waste heat from buildings to the kinematic flux.
        IF ( indoor_model )  THEN
-          surf%shf(m) = surf%shf(m) + surf%waste_heat(m) / c_p
+          surf%shf(m) = surf%shf(m) + surf%waste_heat(m) / c_p  !! TODO: Check if the division by c_p is correct
        ENDIF
 !
 !--    Following line is necessary to remove the density from the flux. For horizontal surfaces
