@@ -70,7 +70,11 @@
 
     USE indices,                                                                                   &
         ONLY:  nx,                                                                                 &
-               ny
+               nxl,                                                                                &
+               nxr,                                                                                &
+               ny,                                                                                 &
+               nyn,                                                                                &
+               nys
 
     USE kinds
 
@@ -130,7 +134,7 @@
     END TYPE type_building
 
     TYPE surface_pointer
-       CLASS(surf_type), POINTER :: surface_type => NULL()   !< pointer to a specific surface type
+       TYPE(surf_type), POINTER :: surface_type => NULL()    !< pointer to a specific surface type
        INTEGER(iwp) :: surface_index                         !< index array linking surface-element index with building
     END TYPE surface_pointer
 
@@ -539,6 +543,10 @@
           ENDIF
        ENDIF
     ENDDO
+!
+!-- Initialize array
+    ALLOCATE( point_source_surfaces%point_source_ids(0:0) )
+    point_source_surfaces%point_source_ids(:) = -9999
 
  END SUBROUTINE ah_init
 
@@ -930,7 +938,7 @@
     IF ( .NOT. ANY( point_source_surfaces%point_source_ids == point_id ) ) THEN
        CALL ah_point_id_to_surfaces( point_id, i )
     ELSE
-       i = MINLOC( ABS( point_source_surfaces%point_id - point_id ) )
+       i = MINLOC( ABS( point_source_surfaces%point_source_ids - point_id ), DIM = 1 )
     ENDIF
 !
 !-- Assign the corresponding surface pointer to the surface
@@ -982,15 +990,22 @@
 !--    Transform metric coordinates to grid indices
        CALL  metric_coords_to_grid_indices( x_coord_abs, y_coord_abs, is, js )
 !
+!--    Check if point is on local processor
+       IF ( is < nxl  .OR. is > nxr .OR. js < nys .OR. js > nyn )  RETURN
+!
 !--    Find the surface index of the grid cell in which the point source is located.
 !--    First, search within the land surfaces (lsm)
        DO  m = 1, surf_lsm%ns
           i = surf_lsm%i(m)
           j = surf_lsm%j(m)
           IF ( i == is  .AND.  j == js )  THEN
-             surface%surface_type = surf_lsm
+             surface%surface_type => surf_lsm
              surface%surface_index = m
              found = .TRUE.
+             IF ( .NOT.  ALLOCATED( surf_lsm%waste_heat ) )  THEN 
+                ALLOCATE( surf_lsm%waste_heat(1:surf_lsm%ns) )
+                surf_lsm%waste_heat(:) = 0.0_wp
+             ENDIF
              EXIT
           ENDIF
        ENDDO
@@ -1006,9 +1021,13 @@
              i = surf_usm%i(m)
              j = surf_usm%j(m)
              IF ( i == is  .AND.  j == js )  THEN
-                surface%surface_type = surf_usm
+                surface%surface_type => surf_usm
                 surface%surface_index = m
                 found = .TRUE.
+                IF ( .NOT.  ALLOCATED( surf_usm%waste_heat ) )  THEN 
+                   ALLOCATE( surf_usm%waste_heat(1:surf_usm%ns) )
+                   surf_usm%waste_heat(:) = 0.0_wp
+                ENDIF
                 EXIT
              ENDIF
           ENDDO
@@ -1020,9 +1039,13 @@
             i = surf_def%i(m)
             j = surf_def%j(m)
             IF ( i == is  .AND.  j == js )  THEN
-               surface%surface_type = surf_def
+               surface%surface_type => surf_def
                surface%surface_index = m
                found = .TRUE.
+               IF ( .NOT.  ALLOCATED( surf_def%waste_heat ) )  THEN 
+                  ALLOCATE( surf_def%waste_heat(1:surf_def%ns) )
+                  surf_def%waste_heat(:) = 0.0_wp
+               ENDIF
                EXIT
             ENDIF
          ENDDO
@@ -1030,28 +1053,28 @@
 !
 !--    If a match was found add the surface to the point to surface dictionary
        IF ( .NOT. found )  THEN
-          surface%surface_type = surf_def
+          surface%surface_type => surf_def
           surface%surface_index = -9999
           WRITE(message_string, '(A, I0, A)') 'The point source ', point_id, ' could not be attributed to any surface. Ignoring point source.'  
           CALL message( 'ah_point_id_to_surfaces', 'AH0007', 0, 1, 0, 6, 0 )
        ENDIF
 !
 !--    Register the size of the current point source dictoinary and allocate memory for the new entry
-       np = SIZE( point_to_surface_dict%point_id )
-       ALLOCATE( temp_point_to_surface_dict%point_id(1:np+1) )
+       np = SIZE( point_source_surfaces%point_source_ids )
+       ALLOCATE( temp_point_to_surface_dict%point_source_ids(1:np+1) )
        ALLOCATE( temp_point_to_surface_dict%surface_list(1:np+1) )
 !
 !--    Copy the existing point to surface dictionary to the temporary dictionary
-       temp_point_to_surface_dict%point_id(1:np) = point_to_surface_dict%point_id
-       temp_point_to_surface_dict%surface_list(1:np) = point_to_surface_dict%surface_list
+       temp_point_to_surface_dict%point_source_ids(1:np) = point_source_surfaces%point_source_ids
+       temp_point_to_surface_dict%surface_list(1:np) = point_source_surfaces%surface_list
 !
 !--    Add the new point source to the dictionary
        dict_index = np + 1
-       temp_point_to_surface_dict%point_id(dict_index) = point_id
+       temp_point_to_surface_dict%point_source_ids(dict_index) = point_id
        temp_point_to_surface_dict%surface_list(dict_index) = surface
 !
 !--    Update the point to surface dictionary
-       point_to_surface_dict = temp_point_to_surface_dict
+       point_source_surfaces = temp_point_to_surface_dict
        
        ! @todo add treatment of default surfaces (surf_def)
 

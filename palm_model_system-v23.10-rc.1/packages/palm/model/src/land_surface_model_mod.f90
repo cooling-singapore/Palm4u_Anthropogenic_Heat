@@ -1925,9 +1925,9 @@
           surf%ghf(m) = surf%ghf(m) * ( 1.0_wp - fr_urb(j,i) )
        ENDIF
 !--    Add waste heat from anthropogenic heat sources to to the sensible heat flux 
-       IF ( external_anthropogenic_heat )  THEN
+       IF ( external_anthropogenic_heat  .AND.  ALLOCATED( surf%waste_heat ) )  THEN
          surf%shf(m) = surf%shf(m) + surf%waste_heat(m) / c_p  !! TODO: Check if the division by c_p is correct
-      ENDIF
+       ENDIF
 !
 !--    Update the 3d field of rad_lw_out array to have consistent output
        IF ( surf%upward(m) )  THEN

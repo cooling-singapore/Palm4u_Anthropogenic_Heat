@@ -93,6 +93,7 @@
                dt_3d,                                                                              &
                dz,                                                                                 &
                end_time,                                                                           &
+               external_anthropogenic_heat,                                                        &
                humidity,                                                                           &
                indoor_model,                                                                       &
                initializing_actions,                                                               &
@@ -5201,7 +5202,8 @@
        surf%shf(m) = surf%wshf_eb(m) / c_p
 !
 !--    If the indoor model is applied, further add waste heat from buildings to the kinematic flux.
-       IF ( indoor_model )  THEN
+       IF ( indoor_model  .OR.  &
+            ( external_anthropogenic_heat  .AND.  ALLOCATED( surf%waste_heat ) ) )  THEN
           surf%shf(m) = surf%shf(m) + surf%waste_heat(m) / c_p  !! TODO: Check if the division by c_p is correct
        ENDIF
 !
