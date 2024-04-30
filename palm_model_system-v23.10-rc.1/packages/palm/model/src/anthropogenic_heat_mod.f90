@@ -139,6 +139,7 @@
     END TYPE surface_pointer
 
     TYPE point_to_surface_dictionary
+       INTEGER(iwp) :: registered_point_sources = -1                     !< number of registered point sources
        INTEGER(iwp), DIMENSION(:), ALLOCATABLE :: point_source_ids       !< list of point source ids
        TYPE(surface_pointer), DIMENSION(:), ALLOCATABLE :: surface_list  !< list containing surface elements per building
     END TYPE point_to_surface_dictionary 
@@ -303,7 +304,7 @@
     IMPLICIT NONE
 
     INTEGER(iwp) ::  n_buildings  !< number of buildings
-
+    INTEGER(iwp) ::  n_points     !< number of point sources
 
 
     INTEGER(iwp) ::  i           !< running index along x-direction
@@ -328,7 +329,13 @@
 
 
     CALL ah_profiles_netcdf_data_input
-
+!
+!-- Allocate point source surfaces data structure
+    n_points = SIZE( point_ids%val, DIM=1 )
+    ALLOCATE( point_source_surfaces%point_source_ids(0:n_points-1) )
+    ALLOCATE( point_source_surfaces%surface_list(0:n_points-1) )
+!
+!-- Allocate building-surfaces data structure
     n_buildings = SIZE( building_ids%val, DIM=1 )
 !
 !-- Allocate building-data structure array. Note, this is a global array and all buildings with 
@@ -971,6 +978,7 @@
     INTEGER(iwp) ::  p                        !< auxiliary point source index
     INTEGER(iwp) ::  np                       !< number of registered point sources
 
+    LOGICAL ::  on_core                       !< flag to indicate if the point source is on the local processor
     LOGICAL ::  found                         !< flag to indicate if a match was found for the point source
 
     REAL(wp) ::  x_coord_abs                  !< absolute metric x-coordinate of the point source
@@ -991,32 +999,35 @@
        CALL  metric_coords_to_grid_indices( x_coord_abs, y_coord_abs, is, js )
 !
 !--    Check if point is on local processor
-       IF ( is < nxl  .OR. is > nxr .OR. js < nys .OR. js > nyn )  RETURN
+       IF ( is >= nxl  .AND. is <= nxr .AND. js >= nys .AND. js <= nyn ) THEN 
+          on_core = .TRUE.
+       ELSE
+          on_core = .FALSE.
+          surface%surface_type => surf_def
+          surface%surface_index = -9999
+       ENDIF
 !
 !--    Find the surface index of the grid cell in which the point source is located.
 !--    First, search within the land surfaces (lsm)
-       DO  m = 1, surf_lsm%ns
-          i = surf_lsm%i(m)
-          j = surf_lsm%j(m)
-          IF ( i == is  .AND.  j == js )  THEN
-             surface%surface_type => surf_lsm
-             surface%surface_index = m
-             found = .TRUE.
-             IF ( .NOT.  ALLOCATED( surf_lsm%waste_heat ) )  THEN 
-                ALLOCATE( surf_lsm%waste_heat(1:surf_lsm%ns) )
-                surf_lsm%waste_heat(:) = 0.0_wp
+       IF ( on_core )  THEN
+          DO  m = 1, surf_lsm%ns
+             i = surf_lsm%i(m)
+             j = surf_lsm%j(m)
+             IF ( i == is  .AND.  j == js )  THEN
+                surface%surface_type => surf_lsm
+                surface%surface_index = m
+                found = .TRUE.
+                IF ( .NOT.  ALLOCATED( surf_lsm%waste_heat ) )  THEN 
+                   ALLOCATE( surf_lsm%waste_heat(1:surf_lsm%ns) )
+                   surf_lsm%waste_heat(:) = 0.0_wp
+                ENDIF
+                EXIT
              ENDIF
-             EXIT
-          ENDIF
-       ENDDO
-
-       IF ( found )  THEN
-          message_string = 'Point source on lsm surface not implemented yet. Going to ignore point.'  ! @todo add point id to message
-          !  CALL  message( 'ah_point_id_to_surfaces', 'AH0007', 0, 1, 0, 6, 0 )  ! @todo stop calling message for every timestep
+          ENDDO
        ENDIF
 !
 !--    If no match was found in the land surfaces, search the urban surfaces (usm).
-       IF ( .NOT. found )  THEN
+       IF ( on_core .AND. .NOT. found )  THEN
           DO  m = 1, surf_usm%ns
              i = surf_usm%i(m)
              j = surf_usm%j(m)
@@ -1034,7 +1045,7 @@
        ENDIF
 !
 !--    If no match was found in the land or urban surfaces, search the default surfaces (def).
-       IF ( .NOT. found )  THEN
+       IF ( on_core .AND. .NOT. found )  THEN
          DO  m = 1, surf_def%ns
             i = surf_def%i(m)
             j = surf_def%j(m)
@@ -1052,31 +1063,22 @@
        ENDIF
 !
 !--    If a match was found add the surface to the point to surface dictionary
-       IF ( .NOT. found )  THEN
+       IF ( on_core .AND. .NOT. found )  THEN
           surface%surface_type => surf_def
           surface%surface_index = -9999
           WRITE(message_string, '(A, I0, A)') 'The point source ', point_id, ' could not be attributed to any surface. Ignoring point source.'  
           CALL message( 'ah_point_id_to_surfaces', 'AH0007', 0, 1, 0, 6, 0 )
        ENDIF
 !
-!--    Register the size of the current point source dictoinary and allocate memory for the new entry
-       np = SIZE( point_source_surfaces%point_source_ids )
-       ALLOCATE( temp_point_to_surface_dict%point_source_ids(1:np+1) )
-       ALLOCATE( temp_point_to_surface_dict%surface_list(1:np+1) )
+!--    Identify the number of registered point sources
+       np = point_source_surfaces%registered_point_sources
 !
-!--    Copy the existing point to surface dictionary to the temporary dictionary
-       temp_point_to_surface_dict%point_source_ids(1:np) = point_source_surfaces%point_source_ids
-       temp_point_to_surface_dict%surface_list(1:np) = point_source_surfaces%surface_list
+!--    Register the newly identified point source
+       point_source_surfaces%point_source_ids(np + 1) = point_id
+       point_source_surfaces%surface_list(np + 1) = surface
 !
-!--    Add the new point source to the dictionary
-       dict_index = np + 1
-       temp_point_to_surface_dict%point_source_ids(dict_index) = point_id
-       temp_point_to_surface_dict%surface_list(dict_index) = surface
-!
-!--    Update the point to surface dictionary
-       point_source_surfaces = temp_point_to_surface_dict
-       
-       ! @todo add treatment of default surfaces (surf_def)
+!--    Update the number of registered point sources
+       point_source_surfaces%registered_point_sources = np + 1
 
     ENDIF
 
