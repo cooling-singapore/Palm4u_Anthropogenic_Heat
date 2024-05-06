@@ -1133,14 +1133,14 @@
  SUBROUTINE ah_check_parameters
 
     USE control_parameters,                                                                        &
-        ONLY: indoor_model,                                                                        &
+        ONLY: land_surface,                                                                        &
               urban_surface
 
 !
 !-- Check if the indoor module is activated
-    IF ( .NOT. indoor_model )  THEN
+    IF ( .NOT. land_surface )  THEN
 
-       message_string = 'Indoor module is required when using anthropogenic heat module.'
+       message_string = 'Land-surface module is required when using anthropogenic heat module.'
        CALL message( 'ah_check_parameters', 'AH0005', 1, 2, 0, 6, 0 )
 
     ENDIF
