@@ -334,6 +334,9 @@
     n_points = SIZE( point_ids%val, DIM=1 )
     ALLOCATE( point_source_surfaces%point_source_ids(0:n_points-1) )
     ALLOCATE( point_source_surfaces%surface_list(0:n_points-1) )
+
+    point_source_surfaces%point_source_ids(:) = -9999
+
 !
 !-- Allocate building-surfaces data structure
     n_buildings = SIZE( building_ids%val, DIM=1 )
@@ -550,10 +553,6 @@
           ENDIF
        ENDIF
     ENDDO
-!
-!-- Initialize array
-    ALLOCATE( point_source_surfaces%point_source_ids(0:n_points) )
-    point_source_surfaces%point_source_ids(:) = -9999
 
  END SUBROUTINE ah_init
 
@@ -872,8 +871,8 @@
              DO  m = LBOUND(building_surfaces(b)%surf_inds, DIM=1), UBOUND(building_surfaces(b)%surf_inds, DIM=1)
                 b_surf_index = building_surfaces(b)%surf_inds(m)
                 IF ( surf_usm%upward(b_surf_index)  .OR.  surf_usm%downward(b_surf_index) )  THEN
-                   surf_usm%waste_heat(b_surf_index) = ( building_ah%val(b, t_step + 1) * ( t_exact - ah_time(t_step) ) +   &  ! @bug dimensions of val might be wrong!
-                                                       building_ah%val(b, t_step) * ( ah_time(t_step + 1) - t_exact ) )   &
+                   surf_usm%waste_heat(b_surf_index) = ( building_ah%val(t_step + 1, b) * ( t_exact - ah_time(t_step) ) +   &  ! @bug dimensions of val might be wrong!
+                                                       building_ah%val(t_step, b) * ( ah_time(t_step + 1) - t_exact ) )   &
                                                        / ( ah_time(t_step + 1) - ah_time(t_step) )                        &
                                                        / REAL( building_surfaces(b)%num_facades_h, wp )                   &
                                                        / (dx * dy)
@@ -887,8 +886,8 @@
           CALL get_matching_surface(point_ids%val(p), p_surface)
           IF ( .NOT. p_surface%surface_index == -9999 )  THEN
              p_surface%surface_type%waste_heat(p_surface%surface_index) =                                                 &
-                         ( point_ah%val(p, t_step + 1) * ( t_exact - ah_time(t_step) ) +                                  &
-                           point_ah%val(p, t_step) * ( ah_time(t_step + 1) - t_exact ) )                                  &
+                         ( point_ah%val(t_step + 1, p) * ( t_exact - ah_time(t_step) ) +                                  &
+                           point_ah%val(t_step, p) * ( ah_time(t_step + 1) - t_exact ) )                                  &
                          / ( ah_time(t_step + 1) - ah_time(t_step) )                                                      &
                          / (dx * dy)
           ENDIF
@@ -945,7 +944,7 @@
     IF ( .NOT. ANY( point_source_surfaces%point_source_ids == point_id ) ) THEN
        CALL ah_point_id_to_surfaces( point_id, i )
     ELSE
-       i = MINLOC( ABS( point_source_surfaces%point_source_ids - point_id ), DIM = 1 )
+       i = MINLOC( ABS( point_source_surfaces%point_source_ids - point_id ), DIM = 1 ) - 1
     ENDIF
 !
 !-- Assign the corresponding surface pointer to the surface
