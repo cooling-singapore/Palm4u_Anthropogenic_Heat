@@ -552,7 +552,7 @@
     ENDDO
 !
 !-- Initialize array
-    ALLOCATE( point_source_surfaces%point_source_ids(0:0) )
+    ALLOCATE( point_source_surfaces%point_source_ids(0:n_points) )
     point_source_surfaces%point_source_ids(:) = -9999
 
  END SUBROUTINE ah_init
