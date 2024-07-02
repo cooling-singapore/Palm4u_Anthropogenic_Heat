@@ -142,7 +142,7 @@
        INTEGER(iwp) :: registered_point_sources = -1                     !< number of registered point sources
        INTEGER(iwp), DIMENSION(:), ALLOCATABLE :: point_source_ids       !< list of point source ids
        TYPE(surface_pointer), DIMENSION(:), ALLOCATABLE :: surface_list  !< list containing surface elements per building
-    END TYPE point_to_surface_dictionary 
+    END TYPE point_to_surface_dictionary
 
 !
 !-- Define data structure for buidlings.
@@ -327,7 +327,6 @@
     INTEGER(iwp), DIMENSION(:), ALLOCATABLE ::  receive_dum_v       !< dummy array used for MPI_ALLREDUCE
 
 
-
     CALL ah_profiles_netcdf_data_input
 !
 !-- Allocate point source surfaces data structure
@@ -341,9 +340,9 @@
 !-- Allocate building-surfaces data structure
     n_buildings = SIZE( building_ids%val, DIM=1 )
 !
-!-- Allocate building-data structure array. Note, this is a global array and all buildings with 
-!-- anthropogenic heat emission on domain are known by each PE. Height-dependent arrays and 
-!-- surface-element lists, however, are only allocated on PEs where the respective building is 
+!-- Allocate building-data structure array. Note, this is a global array and all buildings with
+!-- anthropogenic heat emission on domain are known by each PE. Height-dependent arrays and
+!-- surface-element lists, however, are only allocated on PEs where the respective building is
 !-- present (in order to reduce memory demands).
     ALLOCATE( buildings_ah(0:n_buildings-1) )
 
@@ -563,26 +562,26 @@
 !> Checks done after the Initialization.
 !
 !> @todo This routine is currently mis-used for additional initialization required to be done after
-!>       the indoor_model init. Remove dependency to indoor_model_mod and move content of this 
+!>       the indoor_model init. Remove dependency to indoor_model_mod and move content of this
 !>       routine to ah_init.
 !--------------------------------------------------------------------------------------------------!
  SUBROUTINE ah_init_checks
- 
+
     INTEGER(iwp) ::  b  !< loop index
 
-   
+
     ALLOCATE( building_surfaces(LBOUND(building_ids%val, DIM=1):UBOUND(building_ids%val, DIM=1)) )
-   
+
     DO  b = LBOUND(building_ids%val, DIM=1), UBOUND(building_ids%val, DIM=1)
-      
+
        building_surfaces(b)%id = building_ids%val(b)
-      
+
        CALL ah_building_id_to_surfaces(building_ids%val(b), building_surfaces(b)%surf_inds, building_surfaces(b)%num_facades_h)
 
     ENDDO
-   
+
     ! @todo Map point sources to surface elements
-   
+
  END SUBROUTINE ah_init_checks
 
 
@@ -664,6 +663,7 @@
          ALLOCATE( point_ids%val(0:n_points-1) )
 
          CALL get_variable( id_netcdf, 'point_id', point_ids%val )
+
       ELSE
          point_ids%from_file = .FALSE.
       ENDIF
@@ -841,7 +841,7 @@
        INTEGER(iwp), DIMENSION(:), ALLOCATABLE :: b_surf_indexes  !< array of building surface indexes
        INTEGER(iwp) ::  num_facades_per_building_h                !< total number of horizontal surfaces (up- and downward) per building
        INTEGER(iwp) :: b_surf_index                               !< building surface index
-       
+
        TYPE(surface_pointer) :: p_surface                         !< pointer to the surface of an anthropogenic heat point source
 
        REAL(wp)  :: t_exact                                       !< copy of time_since_reference_point
@@ -935,17 +935,18 @@
 
     IMPLICIT NONE
 
-    INTEGER(iwp), INTENT(IN) ::  point_id           !< point id  
-    TYPE(surface_pointer), INTENT(OUT) ::  surface  !< surface pointer
+    INTEGER(iwp),          INTENT(IN)  ::  point_id  !< point id
+    TYPE(surface_pointer), INTENT(OUT) ::  surface   !< surface pointer
 
-    INTEGER(iwp) ::  i                              !< index of surface in the surface dictionary
+    INTEGER(iwp)                       ::  i         !< index of surface in the surface dictionary
+
 !
 !-- Check if the point source is already associated with a surface and fetch the correct index
     IF ( .NOT. ANY( point_source_surfaces%point_source_ids == point_id ) ) THEN
-       CALL ah_point_id_to_surfaces( point_id, i )
-    ELSE
-       i = MINLOC( ABS( point_source_surfaces%point_source_ids - point_id ), DIM = 1 ) - 1
+       CALL ah_point_id_to_surfaces( point_id )
     ENDIF
+
+    i = MINLOC( ABS( point_source_surfaces%point_source_ids - point_id ), DIM = 1 ) - 1
 !
 !-- Assign the corresponding surface pointer to the surface
     surface = point_source_surfaces%surface_list(i)
@@ -961,13 +962,11 @@
 !> @todo call routine once during init and save values to reduce computing time and output of
 !>       warning message during every timestep
 !--------------------------------------------------------------------------------------------------!
- SUBROUTINE ah_point_id_to_surfaces( point_id, dict_index )
+ SUBROUTINE ah_point_id_to_surfaces( point_id )
 
     IMPLICIT NONE
 
     INTEGER(iwp), INTENT(IN) ::  point_id     !< point id
-
-    INTEGER(iwp), INTENT(OUT) ::  dict_index  !< index of the found surface in the dictionary
 
     INTEGER(iwp) ::  i                        !< auxiliary surface index
     INTEGER(iwp) ::  is                       !< auxiliary surface index
@@ -998,7 +997,7 @@
        CALL  metric_coords_to_grid_indices( x_coord_abs, y_coord_abs, is, js )
 !
 !--    Check if point is on local processor
-       IF ( is >= nxl  .AND. is <= nxr .AND. js >= nys .AND. js <= nyn ) THEN 
+       IF ( is >= nxl  .AND. is <= nxr .AND. js >= nys .AND. js <= nyn ) THEN
           on_core = .TRUE.
        ELSE
           on_core = .FALSE.
@@ -1016,7 +1015,7 @@
                 surface%surface_type => surf_lsm
                 surface%surface_index = m
                 found = .TRUE.
-                IF ( .NOT.  ALLOCATED( surf_lsm%waste_heat ) )  THEN 
+                IF ( .NOT.  ALLOCATED( surf_lsm%waste_heat ) )  THEN
                    ALLOCATE( surf_lsm%waste_heat(1:surf_lsm%ns) )
                    surf_lsm%waste_heat(:) = 0.0_wp
                 ENDIF
@@ -1034,7 +1033,7 @@
                 surface%surface_type => surf_usm
                 surface%surface_index = m
                 found = .TRUE.
-                IF ( .NOT.  ALLOCATED( surf_usm%waste_heat ) )  THEN 
+                IF ( .NOT.  ALLOCATED( surf_usm%waste_heat ) )  THEN
                    ALLOCATE( surf_usm%waste_heat(1:surf_usm%ns) )
                    surf_usm%waste_heat(:) = 0.0_wp
                 ENDIF
@@ -1052,7 +1051,7 @@
                surface%surface_type => surf_def
                surface%surface_index = m
                found = .TRUE.
-               IF ( .NOT.  ALLOCATED( surf_def%waste_heat ) )  THEN 
+               IF ( .NOT.  ALLOCATED( surf_def%waste_heat ) )  THEN
                   ALLOCATE( surf_def%waste_heat(1:surf_def%ns) )
                   surf_def%waste_heat(:) = 0.0_wp
                ENDIF
@@ -1065,7 +1064,7 @@
        IF ( on_core .AND. .NOT. found )  THEN
           surface%surface_type => surf_def
           surface%surface_index = -9999
-          WRITE(message_string, '(A, I0, A)') 'The point source ', point_id, ' could not be attributed to any surface. Ignoring point source.'  
+          WRITE(message_string, '(A, I0, A)') 'The point source ', point_id, ' could not be attributed to any surface. Ignoring point source.'
           CALL message( 'ah_point_id_to_surfaces', 'AH0007', 0, 1, 0, 6, 0 )
        ENDIF
 !
