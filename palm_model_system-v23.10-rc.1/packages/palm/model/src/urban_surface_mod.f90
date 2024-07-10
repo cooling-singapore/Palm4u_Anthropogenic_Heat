@@ -5578,191 +5578,38 @@
 !
 !-- Define the building_pars
     building_pars(:,1) = (/                                                                        &
-       0.82_wp,        &  !< parameter 0   - [-] wall fraction above ground floor level
-       0.18_wp,        &  !< parameter 1   - [-] window fraction above ground floor level
+       0.40_wp,        &  !< parameter 0   - [-] wall fraction above ground floor level
+       0.60_wp,        &  !< parameter 1   - [-] window fraction above ground floor level
        0.0_wp,         &  !< parameter 2   - [-] green fraction above ground floor level
        0.0_wp,         &  !< parameter 3   - [-] green fraction roof above ground floor level
-       1.5_wp,         &  !< parameter 4   - [m2/m2] LAI (Leaf Area Index) roof
-       1.5_wp,         &  !< parameter 5   - [m2/m2] LAI (Leaf Area Index) on wall above ground floor level
+       2.0_wp,         &  !< parameter 4   - [m2/m2] LAI (Leaf Area Index) roof
+       2.0_wp,         &  !< parameter 5   - [m2/m2] LAI (Leaf Area Index) on wall above ground floor level
        1520000.0_wp,   &  !< parameter 6   - [J/(m3*K)] heat capacity 1st wall layer (outside) above ground floor level
-       1512000.0_wp,   &  !< parameter 7   - [J/(m3*K)] heat capacity 2nd wall layer above ground floor level
-       1512000.0_wp,   &  !< parameter 8   - [J/(m3*K)] heat capacity 3rd wall layer above ground floor level
-       0.93_wp,        &  !< parameter 9   - [W/(m*K)] thermal conductivity 1st wall layer (outside) above ground floor level
-       0.81_wp,        &  !< parameter 10  - [W/(m*K)] thermal conductivity 2nd wall layer above ground floor level
-       0.81_wp,        &  !< parameter 11  - [W/(m*K)] thermal conductivity 3rd wall layer above ground floor level
-       299.15_wp,      &  !< parameter 12  - [K] indoor target summer temperature
-       293.15_wp,      &  !< parameter 13  - [K] indoor target winter temperature
-       0.93_wp,        &  !< parameter 14  - [-] wall emissivity above ground floor level
-       0.86_wp,        &  !< parameter 15  - [-] green emissivity above ground floor level
-       0.91_wp,        &  !< parameter 16  - [-] window emissivity above ground floor level
-       0.7_wp,         &  !< parameter 17  - [-] window transmissivity (not visual transmissivity) above ground floor level
-       0.001_wp,       &  !< parameter 18  - [m] z0 roughness above ground floor level
-       0.0001_wp,      &  !< parameter 19  - [m] z0h/z0g roughness heat/humidity above ground floor level
-       2.9_wp,         &  !< parameter 20  - [m] ground floor level height
-       0.82_wp,        &  !< parameter 21  - [-] wall fraction ground floor level
-       0.18_wp,        &  !< parameter 22  - [-] window fraction ground floor level
-       0.0_wp,         &  !< parameter 23  - [-] green fraction ground floor level
-       0.0_wp,         &  !< parameter 24  - [-] green fraction roof ground floor level
-       1.5_wp,         &  !< parameter 25  - [m2/m2] LAI (Leaf Area Index) on wall ground floor level
-       1520000.0_wp,   &  !< parameter 26  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground floor level
-       1512000.0_wp,   &  !< parameter 27  - [J/(m3*K)] heat capacity 2nd wall layer ground floor level
-       1512000.0_wp,   &  !< parameter 28  - [J/(m3*K)] heat capacity 3rd wall layer ground floor level
-       0.93_wp,        &  !< parameter 29  - [W/(m*K)] thermal conductivity 1st wall layer (outside) ground floor level
-       0.81_wp,        &  !< parameter 30  - [W/(m*K)] thermal conductivity 2nd wall layer ground floor level
-       0.81_wp,        &  !< parameter 31  - [W/(m*K)] thermal conductivity 3rd wall layer ground floor level
-       0.93_wp,        &  !< parameter 32  - [-] wall emissivity ground floor level
-       0.91_wp,        &  !< parameter 33  - [-] window emissivity ground floor level
-       0.86_wp,        &  !< parameter 34  - [-] green emissivity ground floor level
-       0.7_wp,         &  !< parameter 35  - [-] window transmissivity (not visual transmissivity) ground floor level
-       0.001_wp,       &  !< parameter 36  - [m] z0 roughness ground floor level
-       0.0001_wp,      &  !< parameter 37  - [m] z0h/z0q roughness heat/humidity
-       36.0_wp,        &  !< parameter 38  - [-] wall albedo_type above ground floor level  (albedo_type specified in radiation model)
-       5.0_wp,         &  !< parameter 39  - [-] green albedo_type above ground floor level  (albedo_type specified in radiation model)
-       37.0_wp,        &  !< parameter 40  - [-] window albedo_type above ground floor level  (albedo_type specified in radiation model)
-       0.02_wp,        &  !< parameter 41  - [m] 1st cumulative wall layer thickness above ground floor level
-       0.2_wp,         &  !< parameter 42  - [m] 2nd cumulative wall layer thickness above ground floor level
-       0.38_wp,        &  !< parameter 43  - [m] 3rd cumulative wall layer thickness above ground floor level
-       0.4_wp,         &  !< parameter 44  - [m] 4th cumulative wall layer thickness above ground floor level
-       20000.0_wp,     &  !< parameter 45  - [J/(m2*K)] heat capacity wall surface (1 cm air)
-       23.0_wp,        &  !< parameter 46  - [W/(m2*K)] thermal conductivity of wall surface (1 cm air)
-       20000.0_wp,     &  !< parameter 47  - [J/(m2*K)] heat capacity of window surface (1 cm air)
-       20000.0_wp,     &  !< parameter 48  - [J/(m2*K)] heat capacity of green surface
-       23.0_wp,        &  !< parameter 49  - [W/(m2*K)] thermal conductivity of window surface (1 cm air)
-       10.0_wp,        &  !< parameter 50  - [W/(m2*K)] thermal conductivty of green surface
-       1.0_wp,         &  !< parameter 51  - [-] wall fraction ground plate
-       0.18_wp,        &  !< parameter 52  - [m] 1st cumulative wall layer thickness ground plate
-       0.36_wp,        &  !< parameter 53  - [m] 2nd cumulative wall layer thickness ground plate
-       0.42_wp,        &  !< parameter 54  - [m] 3rd cumulative wall layer thickness ground plate
-       0.45_wp,        &  !< parameter 55  - [m] 4th cumulative wall layer thickness ground plate
-       1512000.0_wp,   &  !< parameter 56  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground plate
-       1512000.0_wp,   &  !< parameter 57  - [J/(m3*K)] heat capacity 2nd wall layer ground plate
-       2112000.0_wp,   &  !< parameter 58  - [J/(m3*K)] heat capacity 3rd wall layer ground plate
-       0.52_wp,        &  !< parameter 59  - [W/(m*K)] thermal conductivity 1st wall layer (oustide) ground plate
-       0.52_wp,        &  !< parameter 60  - [W/(m*K)] thermal conductivity 2nd wall layer ground plate
-       2.1_wp,         &  !< parameter 61  - [W/(m*K)] thermal conductivity 3rd wall layer ground plate
-       0.02_wp,        &  !< parameter 62  - [m] 1st cumulative wall layer thickness ground floor level
-       0.2_wp,         &  !< parameter 63  - [m] 2nd cumulative wall layer thickness ground floor level
-       0.38_wp,        &  !< parameter 64  - [m] 3rd cumulative wall layer thickness ground floor level
-       0.4_wp,         &  !< parameter 65  - [m] 4th cumulative wall layer thickness ground floor level
-       36.0_wp,        &  !< parameter 66  - [-] wall albedo_type ground floor level (albedo_type specified in radiation model)
-       0.02_wp,        &  !< parameter 67  - [m] 1st cumulative window layer thickness ground floor level
-       0.04_wp,        &  !< parameter 68  - [m] 2nd cumulative window layer thickness ground floor level
-       0.06_wp,        &  !< parameter 69  - [m] 3rd cumulative window layer thickness ground floor level
-       0.08_wp,        &  !< parameter 70  - [m] 4th cumulative window layer thickness ground floor level
-       1736000.0_wp,   &  !< parameter 71  - [J/(m3*K)] heat capacity 1st window layer (outside) ground floor level
-       1736000.0_wp,   &  !< parameter 72  - [J/(m3*K)] heat capacity 2nd window layer ground floor level
-       1736000.0_wp,   &  !< parameter 73  - [J/(m3*K)] heat capacity 3rd window layer ground floor level
-       0.45_wp,        &  !< parameter 74  - [W/(m*K)] thermal conductivity 1st window layer (outside) ground floor level
-       0.45_wp,        &  !< parameter 75  - [W/(m*K)] thermal conductivity 2nd window layer ground floor level
-       0.45_wp,        &  !< parameter 76  - [W/(m*K)] thermal conductivity 3rd window layer ground floor level
-       37.0_wp,        &  !< parameter 77  - [-] window albedo_type ground floor level (albedo_type specified in radiation model)
-       5.0_wp,         &  !< parameter 78  - [-] green albedo_type ground floor level (albedo_type specified in radiation model)
-       0.02_wp,        &  !< parameter 79  - [m] 1st cumulative window layer thickness above ground floor level
-       0.04_wp,        &  !< parameter 80  - [m] 2nd thickness window layer above ground floor level
-       0.06_wp,        &  !< parameter 81  - [m] 3rd cumulative window layer thickness above ground floor level
-       0.08_wp,        &  !< parameter 82  - [m] 4th cumulative window layer thickness above ground floor level
-       1736000.0_wp,   &  !< parameter 83  - [J/(m3*K)] heat capacity 1st window layer (outside) above ground floor level
-       1736000.0_wp,   &  !< parameter 84  - [J/(m3*K)] heat capacity 2nd window layer above ground floor level
-       1736000.0_wp,   &  !< parameter 85  - [J/(m3*K)] heat capacity 3rd window layer above ground floor level
-       0.45_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 1st window layer (outside) above ground floor level
-       0.45_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 2nd window layer above ground floor level
-       0.45_wp,        &  !< parameter 87  - [W/(m*K)] thermal conductivity 3rd window layer above ground floor level
-       1.0_wp,         &  !< parameter 89  - [-] wall fraction roof
-       0.02_wp,        &  !< parameter 90  - [m] 1st cumulative wall layer thickness roof
-       0.06_wp,        &  !< parameter 91  - [m] 2nd cumulative wall layer thickness roof
-       0.08_wp,        &  !< parameter 92  - [m] 3rd cumulative wall layer thickness roof
-       0.1_wp,         &  !< parameter 93  - [m] 4th cumulative wall layer thickness roof
-       1512000.0_wp,   &  !< parameter 94  - [J/(m3*K)] heat capacity 1st wall layer (outside) roof
-       709650.0_wp,    &  !< parameter 95  - [J/(m3*K)] heat capacity 2nd wall layer roof
-       709650.0_wp,    &  !< parameter 96  - [J/(m3*K)] heat capacity 3rd wall layer roof
-       0.52_wp,        &  !< parameter 97  - [W/(m*K)] thermal conductivity 1st wall layer (outside) roof
-       0.12_wp,        &  !< parameter 98  - [W/(m*K)] thermal conductivity 2nd wall layer roof
-       0.12_wp,        &  !< parameter 99  - [W/(m*K)] thermal conductivity 3rd wall layer roof
-       0.90_wp,        &  !< parameter 100 - [-] wall emissivity roof
-       42.0_wp,        &  !< parameter 101 - [-] wall albedo_type roof (albedo_type specified in radiation model)
-       0.0_wp,         &  !< parameter 102 - [-] window fraction roof
-       0.02_wp,        &  !< parameter 103 - [m] window 1st layer thickness roof
-       0.04_wp,        &  !< parameter 104 - [m] window 2nd layer thickness roof
-       0.06_wp,        &  !< parameter 105 - [m] window 3rd layer thickness roof
-       0.08_wp,        &  !< parameter 106 - [m] window 4th layer thickness roof
-       1736000.0_wp,   &  !< parameter 107 - [J/(m3*K)] heat capacity 1st window layer (outside) roof
-       1736000.0_wp,   &  !< parameter 108 - [J/(m3*K)] heat capacity 2nd window layer roof
-       1736000.0_wp,   &  !< parameter 109 - [J/(m3*K)] heat capacity 3rd window layer roof
-       0.45_wp,        &  !< parameter 110 - [W/(m*K)] thermal conductivity 1st window layer (outside) roof
-       0.45_wp,        &  !< parameter 111 - [W/(m*K)] thermal conductivity 2nd window layer roof
-       0.45_wp,        &  !< parameter 112 - [W/(m*K)] thermal conductivity 3rd window layer roof
-       0.91_wp,        &  !< parameter 113 - [-] window emissivity roof
-       0.7_wp,         &  !< parameter 114 - [-] window transmissivity (not visual transmissivity) roof
-       37.0_wp,        &  !< parameter 115 - [-] window albedo_type roof (albedo_type specified in radiation model)
-       0.86_wp,        &  !< parameter 116 - [-] green emissivity roof
-       5.0_wp,         &  !< parameter 117 - [-] green albedo_type roof (albedo_type specified in radiation model)
-       0.0_wp,         &  !< parameter 118 - [-] green type roof
-       0.75_wp,        &  !< parameter 119 - [-] shading factor
-       0.8_wp,         &  !< parameter 120 - [-] g-value windows
-       2.9_wp,         &  !< parameter 121 - [W/(m2*K)] u-value windows
-       0.5_wp,         &  !< parameter 122 - [1/h] basic airflow without occupancy of the room for - summer 0.5_wp, winter 0.5
-       2.0_wp,         &  !< parameter 123 - [1/h] additional airflow dependent on occupancy of the room for - summer 1.5_wp, winter 0.0
-       0.0_wp,         &  !< parameter 124 - [-] heat recovery efficiency
-       3.0_wp,         &  !< parameter 125 - [m2/m2] dynamic parameter specific effective surface
-       260000.0_wp,    &  !< parameter 126 - [J/(m2*K)] dynamic parameter innner heat storage
-       4.5_wp,         &  !< parameter 127 - [m2/m2] ratio internal surface/floor area
-       100.0_wp,       &  !< parameter 128 - [W] maximal heating capacity
-       0.0_wp,         &  !< parameter 129 - [W] maximal cooling capacity
-       0.0_wp,         &  !< parameter 130 - [W/m2] additional internal heat gains dependent on occupancy of the room
-       4.2_wp,         &  !< parameter 131 - [W/m2] basic internal heat gains without occupancy of the room
-       2.9_wp,         &  !< parameter 132 - [m] storey height
-       0.2_wp,         &  !< parameter 133 - [m] ceiling construction height
-       0.1_wp,         &  !< parameter 134 - [-] anthropogenic heat output for heating
-       1.333_wp,       &  !< parameter 135 - [-] anthropogenic heat output for cooling
-       1526000.0_wp,   &  !< parameter 136 - [J/(m3*K)] heat capacity 4th wall layer (inside) above ground floor level
-       0.7_wp,         &  !< parameter 137 - [W/(m*K)] thermal conductivity 4th wall layer (inside) above ground floor level
-       1526000.0_wp,   &  !< parameter 138 - [J/(m3*K)] capacity 4th wall layer (inside) ground floor level
-       0.7_wp,         &  !< parameter 139 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground floor level
-       709650.0_wp,    &  !< parameter 140 - [J/(m3*K)] heat capacity 4th wall layer (inside) ground plate
-       0.12_wp,        &  !< parameter 141 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground plate
-       1736000.0_wp,   &  !< parameter 142 - [J/(m3*K)] heat capacity 4th window layer (inside) ground floor level
-       0.45_wp,        &  !< parameter 143 - [W/(m*K)] thermal conductivity 4th window layer (inside) ground floor level
-       1736000.0_wp,   &  !< parameter 144 - [J/(m3*K)] heat capacity 4th layer (inside) above ground floor level
-       0.45_wp,        &  !< parameter 145 - [W/(m*K)] thermal conductivity 4th window layer (inside) above ground floor level
-       1526000.0_wp,   &  !< parameter 146 - [J/(m3*K)] heat capacity 4th wall layer (inside) roof
-       0.7_wp,         &  !< parameter 147 - [W/(m*K)] thermal conductivity 4th wall layer (inside) roof
-       1736000.0_wp,   &  !< parameter 148 - [J/(m3*K)] heat capacity 4th window layer (inside) roof
-       0.45_wp         &  !< parameter 149 - [W/(m*K)] thermal conductivity 4th window layer (inside) roof
-                        /)
-
-    building_pars(:,2) = (/                                                                        &
-       0.75_wp,        &  !< parameter 0   - [-] wall fraction above ground floor level
-       0.25_wp,        &  !< parameter 1   - [-] window fraction above ground floor level
-       0.0_wp,         &  !< parameter 2   - [-] green fraction above ground floor level
-       0.0_wp,         &  !< parameter 3   - [-] green fraction roof above ground floor level
-       1.5_wp,         &  !< parameter 4   - [m2/m2] LAI (Leaf Area Index) roof
-       1.5_wp,         &  !< parameter 5   - [m2/m2] LAI (Leaf Area Index) on wall above ground floor level
-       1520000.0_wp,   &  !< parameter 6   - [J/(m3*K)] heat capacity 1st wall layer (outside) above ground floor level
-       79200.0_wp,     &  !< parameter 7   - [J/(m3*K)] heat capacity 2nd wall layer above ground floor level
+       2112000.0_wp,   &  !< parameter 7   - [J/(m3*K)] heat capacity 2nd wall layer above ground floor level
        2112000.0_wp,   &  !< parameter 8   - [J/(m3*K)] heat capacity 3rd wall layer above ground floor level
        0.93_wp,        &  !< parameter 9   - [W/(m*K)] thermal conductivity 1st wall layer (outside) above ground floor level
-       0.046_wp,       &  !< parameter 10  - [W/(m*K)] thermal conductivity 2nd wall layer above ground floor level
-       2.1_wp,         &  !< parameter 11  - [W/(m*K)] thermal conductivity 3rd wall layer above ground floor level
-       299.15_wp,      &  !< parameter 12  - [K] indoor target summer temperature
-       293.15_wp,      &  !< parameter 13  - [K] indoor target winter temperature
+       2.10_wp,        &  !< parameter 10  - [W/(m*K)] thermal conductivity 2nd wall layer above ground floor level
+       2.10_wp,        &  !< parameter 11  - [W/(m*K)] thermal conductivity 3rd wall layer above ground floor level
+       301.15_wp,      &  !< parameter 12  - [K] indoor target summer temperature
+       289.15_wp,      &  !< parameter 13  - [K] indoor target winter temperature
        0.93_wp,        &  !< parameter 14  - [-] wall emissivity above ground floor level
        0.86_wp,        &  !< parameter 15  - [-] green emissivity above ground floor level
        0.87_wp,        &  !< parameter 16  - [-] window emissivity above ground floor level
        0.65_wp,        &  !< parameter 17  - [-] window transmissivity (not visual transmissivity) above ground floor level
        0.001_wp,       &  !< parameter 18  - [m] z0 roughness above ground floor level
        0.0001_wp,      &  !< parameter 19  - [m] z0h/z0g roughness heat/humidity above ground floor level
-       2.5_wp,         &  !< parameter 20  - [m] ground floor level height
-       0.75_wp,        &  !< parameter 21  - [-] wall fraction ground floor level
-       0.25_wp,        &  !< parameter 22  - [-] window fraction ground floor level
+       5.0_wp,         &  !< parameter 20  - [m] ground floor level height
+       0.40_wp,        &  !< parameter 21  - [-] wall fraction ground floor level
+       0.60_wp,        &  !< parameter 22  - [-] window fraction ground floor level
        0.0_wp,         &  !< parameter 23  - [-] green fraction ground floor level
        0.0_wp,         &  !< parameter 24  - [-] green fraction roof ground floor level
-       1.5_wp,         &  !< parameter 25  - [m2/m2] LAI (Leaf Area Index) on wall ground floor level
+       2.0_wp,         &  !< parameter 25  - [m2/m2] LAI (Leaf Area Index) on wall ground floor level
        1520000.0_wp,   &  !< parameter 26  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground floor level
-       79200.0_wp,     &  !< parameter 27  - [J/(m3*K)] heat capacity 2nd wall layer ground floor level
+       2112000.0_wp,   &  !< parameter 27  - [J/(m3*K)] heat capacity 2nd wall layer ground floor level
        2112000.0_wp,   &  !< parameter 28  - [J/(m3*K)] heat capacity 3rd wall layer ground floor level
        0.93_wp,        &  !< parameter 29  - [W/(m*K)] thermal conductivity 1st wall layer (outside) ground floor level
-       0.046_wp,       &  !< parameter 30  - [W/(m*K)] thermal conductivity 2nd wall layer ground floor level
-       2.1_wp,         &  !< parameter 31  - [W/(m*K)] thermal conductivity 3rd wall layer ground floor level
+       2.10_wp,        &  !< parameter 30  - [W/(m*K)] thermal conductivity 2nd wall layer ground floor level
+       2.10_wp,        &  !< parameter 31  - [W/(m*K)] thermal conductivity 3rd wall layer ground floor level
        0.93_wp,        &  !< parameter 32  - [-] wall emissivity ground floor level
        0.87_wp,        &  !< parameter 33  - [-] window emissivity ground floor level
        0.86_wp,        &  !< parameter 34  - [-] green emissivity ground floor level
@@ -5773,7 +5620,7 @@
        5.0_wp,         &  !< parameter 39  - [-] green albedo_type above ground floor level  (albedo_type specified in radiation model)
        37.0_wp,        &  !< parameter 40  - [-] window albedo_type above ground floor level  (albedo_type specified in radiation model)
        0.02_wp,        &  !< parameter 41  - [m] 1st cumulative wall layer thickness above ground floor level
-       0.08_wp,        &  !< parameter 42  - [m] 2nd cumulative wall layer thickness above ground floor level
+       0.17_wp,        &  !< parameter 42  - [m] 2nd cumulative wall layer thickness above ground floor level
        0.32_wp,        &  !< parameter 43  - [m] 3rd cumulative wall layer thickness above ground floor level
        0.34_wp,        &  !< parameter 44  - [m] 4th cumulative wall layer thickness above ground floor level
        20000.0_wp,     &  !< parameter 45  - [J/(m2*K)] heat capacity wall surface (1 cm air)
@@ -5783,18 +5630,18 @@
        23.0_wp,        &  !< parameter 49  - [W/(m2*K)] thermal conductivity of window surface (1 cm air)
        10.0_wp,        &  !< parameter 50  - [W/(m2*K)] thermal conductivty of green surface
        1.0_wp,         &  !< parameter 51  - [-] wall fraction ground plate
-       0.20_wp,        &  !< parameter 52  - [m] 1st cumulative wall layer thickness ground plate
-       0.26_wp,        &  !< parameter 53  - [m] 2nd cumulative wall layer thickness ground plate
-       0.32_wp,        &  !< parameter 54  - [m] 3rd cumulative wall layer thickness ground plate
-       0.34_wp,        &  !< parameter 55  - [m] 4th cumulative wall layer thickness ground plate
+       0.10_wp,        &  !< parameter 52  - [m] 1st cumulative wall layer thickness ground plate
+       0.20_wp,        &  !< parameter 53  - [m] 2nd cumulative wall layer thickness ground plate
+       0.26_wp,        &  !< parameter 54  - [m] 3rd cumulative wall layer thickness ground plate
+       0.30_wp,        &  !< parameter 55  - [m] 4th cumulative wall layer thickness ground plate
        2112000.0_wp,   &  !< parameter 56  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground plate
-       79200.0_wp,     &  !< parameter 57  - [J/(m3*K)] heat capacity 2nd wall layer ground plate
+       2112000.0_wp,   &  !< parameter 57  - [J/(m3*K)] heat capacity 2nd wall layer ground plate
        2112000.0_wp,   &  !< parameter 58  - [J/(m3*K)] heat capacity 3rd wall layer ground plate
-       2.1_wp,         &  !< parameter 59  - [W/(m*K)] thermal conductivity 1st wall layer (oustide) ground plate
-       0.05_wp,        &  !< parameter 60  - [W/(m*K)] thermal conductivity 2nd wall layer ground plate
+       2.10_wp,        &  !< parameter 59  - [W/(m*K)] thermal conductivity 1st wall layer (oustide) ground plate
+       2.10_wp,        &  !< parameter 60  - [W/(m*K)] thermal conductivity 2nd wall layer ground plate
        2.1_wp,         &  !< parameter 61  - [W/(m*K)] thermal conductivity 3rd wall layer ground plate
        0.02_wp,        &  !< parameter 62  - [m] 1st cumulative wall layer thickness ground floor level
-       0.08_wp,        &  !< parameter 63  - [m] 2nd cumulative wall layer thickness ground floor level
+       0.17_wp,        &  !< parameter 63  - [m] 2nd cumulative wall layer thickness ground floor level
        0.32_wp,        &  !< parameter 64  - [m] 3rd cumulative wall layer thickness ground floor level
        0.34_wp,        &  !< parameter 65  - [m] 4th cumulative wall layer thickness ground floor level
        36.0_wp,        &  !< parameter 66  - [-] wall albedo_type ground floor level (albedo_type specified in radiation model)
@@ -5808,6 +5655,465 @@
        0.19_wp,        &  !< parameter 74  - [W/(m*K)] thermal conductivity 1st window layer (outside) ground floor level
        0.19_wp,        &  !< parameter 75  - [W/(m*K)] thermal conductivity 2nd window layer ground floor level
        0.19_wp,        &  !< parameter 76  - [W/(m*K)] thermal conductivity 3rd window layer ground floor level
+       37.0_wp,        &  !< parameter 77  - [-] window albedo_type ground floor level (albedo_type specified in radiation model)
+       5.0_wp,         &  !< parameter 78  - [-] green albedo_type ground floor level (albedo_type specified in radiation model)
+       0.02_wp,        &  !< parameter 79  - [m] 1st cumulative window layer thickness above ground floor level
+       0.04_wp,        &  !< parameter 80  - [m] 2nd thickness window layer above ground floor level
+       0.06_wp,        &  !< parameter 81  - [m] 3rd cumulative window layer thickness above ground floor level
+       0.08_wp,        &  !< parameter 82  - [m] 4th cumulative window layer thickness above ground floor level
+       1736000.0_wp,   &  !< parameter 83  - [J/(m3*K)] heat capacity 1st window layer (outside) above ground floor level
+       1736000.0_wp,   &  !< parameter 84  - [J/(m3*K)] heat capacity 2nd window layer above ground floor level
+       1736000.0_wp,   &  !< parameter 85  - [J/(m3*K)] heat capacity 3rd window layer above ground floor level
+       0.19_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 1st window layer (outside) above ground floor level
+       0.19_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 2nd window layer above ground floor level
+       0.19_wp,        &  !< parameter 87  - [W/(m*K)] thermal conductivity 3rd window layer above ground floor level
+       1.0_wp,         &  !< parameter 89  - [-] wall fraction roof
+       0.02_wp,        &  !< parameter 90  - [m] 1st cumulative wall layer thickness roof
+       0.17_wp,        &  !< parameter 91  - [m] 2nd cumulative wall layer thickness roof
+       0.32_wp,        &  !< parameter 92  - [m] 3rd cumulative wall layer thickness roof
+       0.34_wp,        &  !< parameter 93  - [m] 4th cumulative wall layer thickness roof
+       1520000.0_wp,   &  !< parameter 94  - [J/(m3*K)] heat capacity 1st wall layer (outside) roof
+       2112000.0_wp,   &  !< parameter 95  - [J/(m3*K)] heat capacity 2nd wall layer roof
+       2112000.0_wp,   &  !< parameter 96  - [J/(m3*K)] heat capacity 3rd wall layer roof
+       0.93_wp,        &  !< parameter 97  - [W/(m*K)] thermal conductivity 1st wall layer (outside) roof
+       2.10_wp,        &  !< parameter 98  - [W/(m*K)] thermal conductivity 2nd wall layer roof
+       2.10_wp,        &  !< parameter 99  - [W/(m*K)] thermal conductivity 3rd wall layer roof
+       0.93_wp,        &  !< parameter 100 - [-] wall emissivity roof
+       42.0_wp,        &  !< parameter 101 - [-] wall albedo_type roof (albedo_type specified in radiation model)
+       0.0_wp,         &  !< parameter 102 - [-] window fraction roof
+       0.02_wp,        &  !< parameter 103 - [m] window 1st layer thickness roof
+       0.04_wp,        &  !< parameter 104 - [m] window 2nd layer thickness roof
+       0.06_wp,        &  !< parameter 105 - [m] window 3rd layer thickness roof
+       0.08_wp,        &  !< parameter 106 - [m] window 4th layer thickness roof
+       1736000.0_wp,   &  !< parameter 107 - [J/(m3*K)] heat capacity 1st window layer (outside) roof
+       1736000.0_wp,   &  !< parameter 108 - [J/(m3*K)] heat capacity 2nd window layer roof
+       1736000.0_wp,   &  !< parameter 109 - [J/(m3*K)] heat capacity 3rd window layer roof
+       0.19_wp,        &  !< parameter 110 - [W/(m*K)] thermal conductivity 1st window layer (outside) roof
+       0.19_wp,        &  !< parameter 111 - [W/(m*K)] thermal conductivity 2nd window layer roof
+       0.19_wp,        &  !< parameter 112 - [W/(m*K)] thermal conductivity 3rd window layer roof
+       0.87_wp,        &  !< parameter 113 - [-] window emissivity roof
+       0.65_wp,        &  !< parameter 114 - [-] window transmissivity (not visual transmissivity) roof
+       37.0_wp,        &  !< parameter 115 - [-] window albedo_type roof (albedo_type specified in radiation model)
+       0.86_wp,        &  !< parameter 116 - [-] green emissivity roof
+       5.0_wp,         &  !< parameter 117 - [-] green albedo_type roof (albedo_type specified in radiation model)
+       0.0_wp,         &  !< parameter 118 - [-] green type roof
+       0.75_wp,        &  !< parameter 119 - [-] shading factor
+       0.70_wp,        &  !< parameter 120 - [-] g-value windows
+       1.7_wp,         &  !< parameter 121 - [W/(m2*K)] u-value windows
+       0.5_wp,         &  !< parameter 122 - [1/h] basic airflow without occupancy of the room for - summer 0.5_wp, winter 0.5
+       2.0_wp,         &  !< parameter 123 - [1/h] additional airflow dependent on occupancy of the room for - summer 1.5_wp, winter 0.0
+       0.6_wp,         &  !< parameter 124 - [-] heat recovery efficiency
+       2.5_wp,         &  !< parameter 125 - [m2/m2] dynamic parameter specific effective surface
+       165000.0_wp,    &  !< parameter 126 - [J/(m2*K)] dynamic parameter innner heat storage
+       4.5_wp,         &  !< parameter 127 - [m2/m2] ratio internal surface/floor area
+       0.0_wp,         &  !< parameter 128 - [W] maximal heating capacity
+       -80.0_wp,       &  !< parameter 129 - [W] maximal cooling capacity
+       5.0_wp,         &  !< parameter 130 - [W/m2] additional internal heat gains dependent on occupancy of the room
+       2.1_wp,         &  !< parameter 131 - [W/m2] basic internal heat gains without occupancy of the room
+       5.0_wp,         &  !< parameter 132 - [m] storey height
+       0.2_wp,         &  !< parameter 133 - [m] ceiling construction height
+       0.0_wp,         &  !< parameter 134 - [-] anthropogenic heat output for heating
+       1.0_wp,         &  !< parameter 135 - [-] anthropogenic heat output for cooling
+       1526000.0_wp,   &  !< parameter 136 - [J/(m3*K)] heat capacity 4th wall layer (inside) above ground floor level
+       0.93_wp,        &  !< parameter 137 - [W/(m*K)] thermal conductivity 4th wall layer (inside) above ground floor level
+       1526000.0_wp,   &  !< parameter 138 - [J/(m3*K)] capacity 4th wall layer (inside) ground floor level
+       0.93_wp,        &  !< parameter 139 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground floor level
+       709650.0_wp,    &  !< parameter 140 - [J/(m3*K)] heat capacity 4th wall layer (inside) ground plate
+       0.12_wp,        &  !< parameter 141 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground plate
+       1736000.0_wp,   &  !< parameter 142 - [J/(m3*K)] heat capacity 4th window layer (inside) ground floor level
+       0.19_wp,        &  !< parameter 143 - [W/(m*K)] thermal conductivity 4th window layer (inside) ground floor level
+       1736000.0_wp,   &  !< parameter 144 - [J/(m3*K)] heat capacity 4th layer (inside) above ground floor level
+       0.45_wp,        &  !< parameter 145 - [W/(m*K)] thermal conductivity 4th window layer (inside) above ground floor level
+       1526000.0_wp,   &  !< parameter 146 - [J/(m3*K)] heat capacity 4th wall layer (inside) roof
+       0.93_wp,        &  !< parameter 147 - [W/(m*K)] thermal conductivity 4th wall layer (inside) roof
+       1736000.0_wp,   &  !< parameter 148 - [J/(m3*K)] heat capacity 4th window layer (inside) roof
+       0.19_wp         &  !< parameter 149 - [W/(m*K)] thermal conductivity 4th window layer (inside) roof
+                        /)
+
+    building_pars(:,2) = (/                                                                        &
+       0.40_wp,        &  !< parameter 0   - [-] wall fraction above ground floor level
+       0.60_wp,        &  !< parameter 1   - [-] window fraction above ground floor level
+       0.0_wp,         &  !< parameter 2   - [-] green fraction above ground floor level
+       0.0_wp,         &  !< parameter 3   - [-] green fraction roof above ground floor level
+       2.0_wp,         &  !< parameter 4   - [m2/m2] LAI (Leaf Area Index) roof
+       2.0_wp,         &  !< parameter 5   - [m2/m2] LAI (Leaf Area Index) on wall above ground floor level
+       1520000.0_wp,   &  !< parameter 6   - [J/(m3*K)] heat capacity 1st wall layer (outside) above ground floor level
+       2112000.0_wp,   &  !< parameter 7   - [J/(m3*K)] heat capacity 2nd wall layer above ground floor level
+       2112000.0_wp,   &  !< parameter 8   - [J/(m3*K)] heat capacity 3rd wall layer above ground floor level
+       0.93_wp,        &  !< parameter 9   - [W/(m*K)] thermal conductivity 1st wall layer (outside) above ground floor level
+       2.10_wp,        &  !< parameter 10  - [W/(m*K)] thermal conductivity 2nd wall layer above ground floor level
+       2.10_wp,        &  !< parameter 11  - [W/(m*K)] thermal conductivity 3rd wall layer above ground floor level
+       301.15_wp,      &  !< parameter 12  - [K] indoor target summer temperature
+       289.15_wp,      &  !< parameter 13  - [K] indoor target winter temperature
+       0.93_wp,        &  !< parameter 14  - [-] wall emissivity above ground floor level
+       0.86_wp,        &  !< parameter 15  - [-] green emissivity above ground floor level
+       0.87_wp,        &  !< parameter 16  - [-] window emissivity above ground floor level
+       0.65_wp,        &  !< parameter 17  - [-] window transmissivity (not visual transmissivity) above ground floor level
+       0.001_wp,       &  !< parameter 18  - [m] z0 roughness above ground floor level
+       0.0001_wp,      &  !< parameter 19  - [m] z0h/z0g roughness heat/humidity above ground floor level
+       5.0_wp,         &  !< parameter 20  - [m] ground floor level height
+       0.40_wp,        &  !< parameter 21  - [-] wall fraction ground floor level
+       0.60_wp,        &  !< parameter 22  - [-] window fraction ground floor level
+       0.0_wp,         &  !< parameter 23  - [-] green fraction ground floor level
+       0.0_wp,         &  !< parameter 24  - [-] green fraction roof ground floor level
+       2.0_wp,         &  !< parameter 25  - [m2/m2] LAI (Leaf Area Index) on wall ground floor level
+       1520000.0_wp,   &  !< parameter 26  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground floor level
+       2112000.0_wp,   &  !< parameter 27  - [J/(m3*K)] heat capacity 2nd wall layer ground floor level
+       2112000.0_wp,   &  !< parameter 28  - [J/(m3*K)] heat capacity 3rd wall layer ground floor level
+       0.93_wp,        &  !< parameter 29  - [W/(m*K)] thermal conductivity 1st wall layer (outside) ground floor level
+       2.10_wp,        &  !< parameter 30  - [W/(m*K)] thermal conductivity 2nd wall layer ground floor level
+       2.10_wp,        &  !< parameter 31  - [W/(m*K)] thermal conductivity 3rd wall layer ground floor level
+       0.93_wp,        &  !< parameter 32  - [-] wall emissivity ground floor level
+       0.87_wp,        &  !< parameter 33  - [-] window emissivity ground floor level
+       0.86_wp,        &  !< parameter 34  - [-] green emissivity ground floor level
+       0.65_wp,        &  !< parameter 35  - [-] window transmissivity (not visual transmissivity) ground floor level
+       0.001_wp,       &  !< parameter 36  - [m] z0 roughness ground floor level
+       0.0001_wp,      &  !< parameter 37  - [m] z0h/z0q roughness heat/humidity
+       36.0_wp,        &  !< parameter 38  - [-] wall albedo_type above ground floor level  (albedo_type specified in radiation model)
+       5.0_wp,         &  !< parameter 39  - [-] green albedo_type above ground floor level  (albedo_type specified in radiation model)
+       37.0_wp,        &  !< parameter 40  - [-] window albedo_type above ground floor level  (albedo_type specified in radiation model)
+       0.02_wp,        &  !< parameter 41  - [m] 1st cumulative wall layer thickness above ground floor level
+       0.17_wp,        &  !< parameter 42  - [m] 2nd cumulative wall layer thickness above ground floor level
+       0.32_wp,        &  !< parameter 43  - [m] 3rd cumulative wall layer thickness above ground floor level
+       0.34_wp,        &  !< parameter 44  - [m] 4th cumulative wall layer thickness above ground floor level
+       20000.0_wp,     &  !< parameter 45  - [J/(m2*K)] heat capacity wall surface (1 cm air)
+       23.0_wp,        &  !< parameter 46  - [W/(m2*K)] thermal conductivity of wall surface (1 cm air)
+       20000.0_wp,     &  !< parameter 47  - [J/(m2*K)] heat capacity of window surface (1 cm air)
+       20000.0_wp,     &  !< parameter 48  - [J/(m2*K)] heat capacity of green surface
+       23.0_wp,        &  !< parameter 49  - [W/(m2*K)] thermal conductivity of window surface (1 cm air)
+       10.0_wp,        &  !< parameter 50  - [W/(m2*K)] thermal conductivty of green surface
+       1.0_wp,         &  !< parameter 51  - [-] wall fraction ground plate
+       0.10_wp,        &  !< parameter 52  - [m] 1st cumulative wall layer thickness ground plate
+       0.20_wp,        &  !< parameter 53  - [m] 2nd cumulative wall layer thickness ground plate
+       0.26_wp,        &  !< parameter 54  - [m] 3rd cumulative wall layer thickness ground plate
+       0.30_wp,        &  !< parameter 55  - [m] 4th cumulative wall layer thickness ground plate
+       2112000.0_wp,   &  !< parameter 56  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground plate
+       2112000.0_wp,   &  !< parameter 57  - [J/(m3*K)] heat capacity 2nd wall layer ground plate
+       2112000.0_wp,   &  !< parameter 58  - [J/(m3*K)] heat capacity 3rd wall layer ground plate
+       2.10_wp,        &  !< parameter 59  - [W/(m*K)] thermal conductivity 1st wall layer (oustide) ground plate
+       2.10_wp,        &  !< parameter 60  - [W/(m*K)] thermal conductivity 2nd wall layer ground plate
+       2.1_wp,         &  !< parameter 61  - [W/(m*K)] thermal conductivity 3rd wall layer ground plate
+       0.02_wp,        &  !< parameter 62  - [m] 1st cumulative wall layer thickness ground floor level
+       0.17_wp,        &  !< parameter 63  - [m] 2nd cumulative wall layer thickness ground floor level
+       0.32_wp,        &  !< parameter 64  - [m] 3rd cumulative wall layer thickness ground floor level
+       0.34_wp,        &  !< parameter 65  - [m] 4th cumulative wall layer thickness ground floor level
+       36.0_wp,        &  !< parameter 66  - [-] wall albedo_type ground floor level (albedo_type specified in radiation model)
+       0.02_wp,        &  !< parameter 67  - [m] 1st cumulative window layer thickness ground floor level
+       0.04_wp,        &  !< parameter 68  - [m] 2nd cumulative window layer thickness ground floor level
+       0.06_wp,        &  !< parameter 69  - [m] 3rd cumulative window layer thickness ground floor level
+       0.08_wp,        &  !< parameter 70  - [m] 4th cumulative window layer thickness ground floor level
+       1736000.0_wp,   &  !< parameter 71  - [J/(m3*K)] heat capacity 1st window layer (outside) ground floor level
+       1736000.0_wp,   &  !< parameter 72  - [J/(m3*K)] heat capacity 2nd window layer ground floor level
+       1736000.0_wp,   &  !< parameter 73  - [J/(m3*K)] heat capacity 3rd window layer ground floor level
+       0.19_wp,        &  !< parameter 74  - [W/(m*K)] thermal conductivity 1st window layer (outside) ground floor level
+       0.19_wp,        &  !< parameter 75  - [W/(m*K)] thermal conductivity 2nd window layer ground floor level
+       0.19_wp,        &  !< parameter 76  - [W/(m*K)] thermal conductivity 3rd window layer ground floor level
+       37.0_wp,        &  !< parameter 77  - [-] window albedo_type ground floor level (albedo_type specified in radiation model)
+       5.0_wp,         &  !< parameter 78  - [-] green albedo_type ground floor level (albedo_type specified in radiation model)
+       0.02_wp,        &  !< parameter 79  - [m] 1st cumulative window layer thickness above ground floor level
+       0.04_wp,        &  !< parameter 80  - [m] 2nd thickness window layer above ground floor level
+       0.06_wp,        &  !< parameter 81  - [m] 3rd cumulative window layer thickness above ground floor level
+       0.08_wp,        &  !< parameter 82  - [m] 4th cumulative window layer thickness above ground floor level
+       1736000.0_wp,   &  !< parameter 83  - [J/(m3*K)] heat capacity 1st window layer (outside) above ground floor level
+       1736000.0_wp,   &  !< parameter 84  - [J/(m3*K)] heat capacity 2nd window layer above ground floor level
+       1736000.0_wp,   &  !< parameter 85  - [J/(m3*K)] heat capacity 3rd window layer above ground floor level
+       0.19_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 1st window layer (outside) above ground floor level
+       0.19_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 2nd window layer above ground floor level
+       0.19_wp,        &  !< parameter 87  - [W/(m*K)] thermal conductivity 3rd window layer above ground floor level
+       1.0_wp,         &  !< parameter 89  - [-] wall fraction roof
+       0.02_wp,        &  !< parameter 90  - [m] 1st cumulative wall layer thickness roof
+       0.17_wp,        &  !< parameter 91  - [m] 2nd cumulative wall layer thickness roof
+       0.32_wp,        &  !< parameter 92  - [m] 3rd cumulative wall layer thickness roof
+       0.34_wp,        &  !< parameter 93  - [m] 4th cumulative wall layer thickness roof
+       1520000.0_wp,   &  !< parameter 94  - [J/(m3*K)] heat capacity 1st wall layer (outside) roof
+       2112000.0_wp,   &  !< parameter 95  - [J/(m3*K)] heat capacity 2nd wall layer roof
+       2112000.0_wp,   &  !< parameter 96  - [J/(m3*K)] heat capacity 3rd wall layer roof
+       0.93_wp,        &  !< parameter 97  - [W/(m*K)] thermal conductivity 1st wall layer (outside) roof
+       2.10_wp,        &  !< parameter 98  - [W/(m*K)] thermal conductivity 2nd wall layer roof
+       2.10_wp,        &  !< parameter 99  - [W/(m*K)] thermal conductivity 3rd wall layer roof
+       0.93_wp,        &  !< parameter 100 - [-] wall emissivity roof
+       42.0_wp,        &  !< parameter 101 - [-] wall albedo_type roof (albedo_type specified in radiation model)
+       0.0_wp,         &  !< parameter 102 - [-] window fraction roof
+       0.02_wp,        &  !< parameter 103 - [m] window 1st layer thickness roof
+       0.04_wp,        &  !< parameter 104 - [m] window 2nd layer thickness roof
+       0.06_wp,        &  !< parameter 105 - [m] window 3rd layer thickness roof
+       0.08_wp,        &  !< parameter 106 - [m] window 4th layer thickness roof
+       1736000.0_wp,   &  !< parameter 107 - [J/(m3*K)] heat capacity 1st window layer (outside) roof
+       1736000.0_wp,   &  !< parameter 108 - [J/(m3*K)] heat capacity 2nd window layer roof
+       1736000.0_wp,   &  !< parameter 109 - [J/(m3*K)] heat capacity 3rd window layer roof
+       0.19_wp,        &  !< parameter 110 - [W/(m*K)] thermal conductivity 1st window layer (outside) roof
+       0.19_wp,        &  !< parameter 111 - [W/(m*K)] thermal conductivity 2nd window layer roof
+       0.19_wp,        &  !< parameter 112 - [W/(m*K)] thermal conductivity 3rd window layer roof
+       0.87_wp,        &  !< parameter 113 - [-] window emissivity roof
+       0.65_wp,        &  !< parameter 114 - [-] window transmissivity (not visual transmissivity) roof
+       37.0_wp,        &  !< parameter 115 - [-] window albedo_type roof (albedo_type specified in radiation model)
+       0.86_wp,        &  !< parameter 116 - [-] green emissivity roof
+       5.0_wp,         &  !< parameter 117 - [-] green albedo_type roof (albedo_type specified in radiation model)
+       0.0_wp,         &  !< parameter 118 - [-] green type roof
+       0.75_wp,        &  !< parameter 119 - [-] shading factor
+       0.70_wp,        &  !< parameter 120 - [-] g-value windows
+       1.7_wp,         &  !< parameter 121 - [W/(m2*K)] u-value windows
+       0.5_wp,         &  !< parameter 122 - [1/h] basic airflow without occupancy of the room for - summer 0.5_wp, winter 0.5
+       2.0_wp,         &  !< parameter 123 - [1/h] additional airflow dependent on occupancy of the room for - summer 1.5_wp, winter 0.0
+       0.6_wp,         &  !< parameter 124 - [-] heat recovery efficiency
+       2.5_wp,         &  !< parameter 125 - [m2/m2] dynamic parameter specific effective surface
+       165000.0_wp,    &  !< parameter 126 - [J/(m2*K)] dynamic parameter innner heat storage
+       4.5_wp,         &  !< parameter 127 - [m2/m2] ratio internal surface/floor area
+       0.0_wp,         &  !< parameter 128 - [W] maximal heating capacity
+       -80.0_wp,       &  !< parameter 129 - [W] maximal cooling capacity
+       5.0_wp,         &  !< parameter 130 - [W/m2] additional internal heat gains dependent on occupancy of the room
+       2.1_wp,         &  !< parameter 131 - [W/m2] basic internal heat gains without occupancy of the room
+       5.0_wp,         &  !< parameter 132 - [m] storey height
+       0.2_wp,         &  !< parameter 133 - [m] ceiling construction height
+       0.0_wp,         &  !< parameter 134 - [-] anthropogenic heat output for heating
+       1.0_wp,         &  !< parameter 135 - [-] anthropogenic heat output for cooling
+       1526000.0_wp,   &  !< parameter 136 - [J/(m3*K)] heat capacity 4th wall layer (inside) above ground floor level
+       0.93_wp,        &  !< parameter 137 - [W/(m*K)] thermal conductivity 4th wall layer (inside) above ground floor level
+       1526000.0_wp,   &  !< parameter 138 - [J/(m3*K)] capacity 4th wall layer (inside) ground floor level
+       0.93_wp,        &  !< parameter 139 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground floor level
+       709650.0_wp,    &  !< parameter 140 - [J/(m3*K)] heat capacity 4th wall layer (inside) ground plate
+       0.12_wp,        &  !< parameter 141 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground plate
+       1736000.0_wp,   &  !< parameter 142 - [J/(m3*K)] heat capacity 4th window layer (inside) ground floor level
+       0.19_wp,        &  !< parameter 143 - [W/(m*K)] thermal conductivity 4th window layer (inside) ground floor level
+       1736000.0_wp,   &  !< parameter 144 - [J/(m3*K)] heat capacity 4th layer (inside) above ground floor level
+       0.45_wp,        &  !< parameter 145 - [W/(m*K)] thermal conductivity 4th window layer (inside) above ground floor level
+       1526000.0_wp,   &  !< parameter 146 - [J/(m3*K)] heat capacity 4th wall layer (inside) roof
+       0.93_wp,        &  !< parameter 147 - [W/(m*K)] thermal conductivity 4th wall layer (inside) roof
+       1736000.0_wp,   &  !< parameter 148 - [J/(m3*K)] heat capacity 4th window layer (inside) roof
+       0.19_wp         &  !< parameter 149 - [W/(m*K)] thermal conductivity 4th window layer (inside) roof
+                        /)
+
+    building_pars(:,3) = (/                                                                        &
+       0.6_wp,         &  !< parameter 0   - [-] wall fraction above ground floor level  
+       0.4_wp,         &  !< parameter 1   - [-] window fraction above ground floor level  
+       0.0_wp,         &  !< parameter 2   - [-] green fraction above ground floor level  
+       0.0_wp,         &  !< parameter 3   - [-] green fraction roof above ground floor level  
+       1.5_wp,         &  !< parameter 4   - [m2/m2] LAI (Leaf Area Index) roof  
+       1.5_wp,         &  !< parameter 5   - [m2/m2] LAI (Leaf Area Index) on wall above ground floor level  
+       1488000.0_wp,   &  !< parameter 6   - [J/(m3*K)] heat capacity 1st wall layer (outside) above ground floor level  
+       898800.0_wp,    &  !< parameter 7   - [J/(m3*K)] heat capacity 2nd wall layer above ground floor level  
+       898800.0_wp,    &  !< parameter 8   - [J/(m3*K)] heat capacity 3rd wall layer above ground floor level  
+       0.72_wp,        &  !< parameter 9   - [W/(m*K)] thermal conductivity 1st wall layer (outside) above ground floor level  
+       0.22_wp,        &  !< parameter 10  - [W/(m*K)] thermal conductivity 2nd wall layer above ground floor level  
+       0.22_wp,        &  !< parameter 11  - [W/(m*K)] thermal conductivity 3rd wall layer above ground floor level  
+       301.15_wp,      &  !< parameter 12  - [K] indoor target summer temperature  
+       293.15_wp,      &  !< parameter 13  - [K] indoor target winter temperature  
+       0.84_wp,        &  !< parameter 14  - [-] wall emissivity above ground floor level  
+       0.86_wp,        &  !< parameter 15  - [-] green emissivity above ground floor level  
+       0.89_wp,        &  !< parameter 16  - [-] window emissivity above ground floor level  
+       0.85_wp,        &  !< parameter 17  - [-] window transmissivity (not visual transmissivity) above ground floor level  
+       0.001_wp,       &  !< parameter 18  - [m] z0 roughness above ground floor level  
+       0.0001_wp,      &  !< parameter 19  - [m] z0h/z0g roughness heat/humidity above ground floor level  
+       3.0_wp,         &  !< parameter 20  - [m] ground floor level height  
+       0.6_wp,         &  !< parameter 21  - [-] wall fraction ground floor level  
+       0.4_wp,         &  !< parameter 22  - [-] window fraction ground floor level  
+       0.0_wp,         &  !< parameter 23  - [-] green fraction ground floor level  
+       0.0_wp,         &  !< parameter 24  - [-] green fraction roof ground floor level  
+       1.5_wp,         &  !< parameter 25  - [m2/m2] LAI (Leaf Area Index) on wall ground floor level  
+       1488000.0_wp,   &  !< parameter 26  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground floor level  
+       898800.0_wp,    &  !< parameter 27  - [J/(m3*K)] heat capacity 2nd wall layer ground floor level  
+       898800.0_wp,    &  !< parameter 28  - [J/(m3*K)] heat capacity 3rd wall layer ground floor level  
+       0.72_wp,        &  !< parameter 29  - [W/(m*K)] thermal conductivity 1st wall layer (outside) ground floor level  
+       0.22_wp,        &  !< parameter 30  - [W/(m*K)] thermal conductivity 2nd wall layer ground floor level  
+       0.22_wp,        &  !< parameter 31  - [W/(m*K)] thermal conductivity 3rd wall layer ground floor level  
+       0.84_wp,        &  !< parameter 32  - [-] wall emissivity ground floor level  
+       0.89_wp,        &  !< parameter 33  - [-] window emissivity ground floor level  
+       0.86_wp,        &  !< parameter 34  - [-] green emissivity ground floor level  
+       0.85_wp,        &  !< parameter 35  - [-] window transmissivity (not visual transmissivity) ground floor level  
+       0.001_wp,       &  !< parameter 36  - [m] z0 roughness ground floor level  
+       0.0001_wp,      &  !< parameter 37  - [m] z0h/z0q roughness heat/humidity  
+       35.0_wp,        &  !< parameter 38  - [-] wall albedo_type above ground floor level  (albedo_type specified in radiation model)  
+       5.0_wp,         &  !< parameter 39  - [-] green albedo_type above ground floor level  (albedo_type specified in radiation model)  
+       37.0_wp,        &  !< parameter 40  - [-] window albedo_type above ground floor level  (albedo_type specified in radiation model)  
+       0.02_wp,        &  !< parameter 41  - [m] 1st cumulative wall layer thickness above ground floor level  
+       0.15_wp,        &  !< parameter 42  - [m] 2nd cumulative wall layer thickness above ground floor level  
+       0.28_wp,        &  !< parameter 43  - [m] 3rd cumulative wall layer thickness above ground floor level  
+       0.30_wp,        &  !< parameter 44  - [m] 4th cumulative wall layer thickness above ground floor level  
+       20000.0_wp,     &  !< parameter 45  - [J/(m2*K)] heat capacity wall surface (1 cm air)  
+       23.0_wp,        &  !< parameter 46  - [W/(m2*K)] thermal conductivity of wall surface (1 cm air)  
+       20000.0_wp,     &  !< parameter 47  - [J/(m2*K)] heat capacity of window surface (1 cm air)  
+       20000.0_wp,     &  !< parameter 48  - [J/(m2*K)] heat capacity of green surface  
+       23.0_wp,        &  !< parameter 49  - [W/(m2*K)] thermal conductivity of window surface (1 cm air)  
+       10.0_wp,        &  !< parameter 50  - [W/(m2*K)] thermal conductivty of green surface  
+       1.0_wp,         &  !< parameter 51  - [-] wall fraction ground plate  
+       0.1_wp,         &  !< parameter 52  - [m] 1st cumulative wall layer thickness ground plate  
+       0.2_wp,         &  !< parameter 53  - [m] 2nd cumulative wall layer thickness ground plate  
+       0.28_wp,        &  !< parameter 54  - [m] 3rd cumulative wall layer thickness ground plate  
+       0.3_wp,         &  !< parameter 55  - [m] 4th cumulative wall layer thickness ground plate  
+       2112000.0_wp,   &  !< parameter 56  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground plate  
+       2112000.0_wp,   &  !< parameter 57  - [J/(m3*K)] heat capacity 2nd wall layer ground plate  
+       1008000.0_wp,   &  !< parameter 58  - [J/(m3*K)] heat capacity 3rd wall layer ground plate  
+       2.1_wp,         &  !< parameter 59  - [W/(m*K)] thermal conductivity 1st wall layer (oustide) ground plate  
+       2.1_wp,         &  !< parameter 60  - [W/(m*K)] thermal conductivity 2nd wall layer ground plate  
+       0.14_wp,        &  !< parameter 61  - [W/(m*K)] thermal conductivity 3rd wall layer ground plate  
+       0.02_wp,        &  !< parameter 62  - [m] 1st cumulative wall layer thickness ground floor level  
+       0.15_wp,        &  !< parameter 63  - [m] 2nd cumulative wall layer thickness ground floor level  
+       0.28_wp,        &  !< parameter 64  - [m] 3rd cumulative wall layer thickness ground floor level  
+       0.3_wp,         &  !< parameter 65  - [m] 4th cumulative wall layer thickness ground floor level  
+       35.0_wp,        &  !< parameter 66  - [-] wall albedo_type ground floor level (albedo_type specified in radiation model)  
+       0.02_wp,        &  !< parameter 67  - [m] 1st cumulative window layer thickness ground floor level  
+       0.04_wp,        &  !< parameter 68  - [m] 2nd cumulative window layer thickness ground floor level  
+       0.06_wp,        &  !< parameter 69  - [m] 3rd cumulative window layer thickness ground floor level  
+       0.08_wp,        &  !< parameter 70  - [m] 4th cumulative window layer thickness ground floor level  
+       1736000.0_wp,   &  !< parameter 71  - [J/(m3*K)] heat capacity 1st window layer (outside) ground floor level  
+       1736000.0_wp,   &  !< parameter 72  - [J/(m3*K)] heat capacity 2nd window layer ground floor level  
+       1736000.0_wp,   &  !< parameter 73  - [J/(m3*K)] heat capacity 3rd window layer ground floor level  
+       0.38_wp,        &  !< parameter 74  - [W/(m*K)] thermal conductivity 1st window layer (outside) ground floor level  
+       0.38_wp,        &  !< parameter 75  - [W/(m*K)] thermal conductivity 2nd window layer ground floor level  
+       0.38_wp,        &  !< parameter 76  - [W/(m*K)] thermal conductivity 3rd window layer ground floor level  
+       37.0_wp,        &  !< parameter 77  - [-] window albedo_type ground floor level (albedo_type specified in radiation model)  
+       5.0_wp,         &  !< parameter 78  - [-] green albedo_type ground floor level (albedo_type specified in radiation model)  
+       0.02_wp,        &  !< parameter 79  - [m] 1st cumulative window layer thickness above ground floor level  
+       0.04_wp,        &  !< parameter 80  - [m] 2nd cumulative window layer thickness above ground floor level  
+       0.06_wp,        &  !< parameter 81  - [m] 3rd cumulative window layer thickness above ground floor level  
+       0.08_wp,        &  !< parameter 82  - [m] 4th cumulative window layer thickness above ground floor level  
+       1736000.0_wp,   &  !< parameter 83  - [J/(m3*K)] heat capacity 1st window layer (outside) above ground floor level  
+       1736000.0_wp,   &  !< parameter 84  - [J/(m3*K)] heat capacity 2nd window layer above ground floor level  
+       1736000.0_wp,   &  !< parameter 85  - [J/(m3*K)] heat capacity 3rd window layer above ground floor level  
+       0.38_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 1st window layer (outside) above ground floor level  
+       0.38_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 2nd window layer above ground floor level  
+       0.38_wp,        &  !< parameter 87  - [W/(m*K)] thermal conductivity 3rd window layer above ground floor level  
+       1.0_wp,         &  !< parameter 89  - [-] wall fraction roof  
+       0.02_wp,        &  !< parameter 90  - [m] 1st cumulative wall layer thickness roof  
+       0.2_wp,         &  !< parameter 91  - [m] 2nd cumulative wall layer thickness roof  
+       0.38_wp,        &  !< parameter 92  - [m] 3rd cumulative wall layer thickness roof  
+       0.4_wp,         &  !< parameter 93  - [m] 4th cumulative wall layer thickness roof  
+       1488000.0_wp,   &  !< parameter 94  - [J/(m3*K)] heat capacity 1st wall layer (outside) roof  
+       898800.0_wp,    &  !< parameter 95  - [J/(m3*K)] heat capacity 2nd wall layer roof  
+       898800.0_wp,    &  !< parameter 96  - [J/(m3*K)] heat capacity 3rd wall layer roof  
+       0.72_wp,        &  !< parameter 97  - [W/(m*K)] thermal conductivity 1st wall layer (outside) roof  
+       0.22_wp,        &  !< parameter 98  - [W/(m*K)] thermal conductivity 2nd wall layer roof  
+       0.22_wp,        &  !< parameter 99  - [W/(m*K)] thermal conductivity 3rd wall layer roof  
+       0.94_wp,        &  !< parameter 100 - [-] wall emissivity roof  
+       20.0_wp,        &  !< parameter 101 - [-] wall albedo_type roof (albedo_type specified in radiation model)  
+       0.0_wp,         &  !< parameter 102 - [-] window fraction roof  
+       0.02_wp,        &  !< parameter 103 - [m] window 1st layer thickness roof  
+       0.04_wp,        &  !< parameter 104 - [m] window 2nd layer thickness roof  
+       0.06_wp,        &  !< parameter 105 - [m] window 3rd layer thickness roof  
+       0.08_wp,        &  !< parameter 106 - [m] window 4th layer thickness roof  
+       1736000.0_wp,   &  !< parameter 107 - [J/(m3*K)] heat capacity 1st window layer (outside) roof  
+       1736000.0_wp,   &  !< parameter 108 - [J/(m3*K)] heat capacity 2nd window layer roof  
+       1736000.0_wp,   &  !< parameter 109 - [J/(m3*K)] heat capacity 3rd window layer roof  
+       0.38_wp,        &  !< parameter 110 - [W/(m*K)] thermal conductivity 1st window layer (outside) roof  
+       0.38_wp,        &  !< parameter 111 - [W/(m*K)] thermal conductivity 2nd window layer roof  
+       0.38_wp,        &  !< parameter 112 - [W/(m*K)] thermal conductivity 3rd window layer roof  
+       0.89_wp,        &  !< parameter 113 - [-] window emissivity roof  
+       0.85_wp,        &  !< parameter 114 - [-] window transmissivity (not visual transmissivity) roof  
+       37.0_wp,        &  !< parameter 115 - [-] window albedo_type roof (albedo_type specified in radiation model)  
+       0.86_wp,        &  !< parameter 116 - [-] green emissivity roof  
+       5.0_wp,         &  !< parameter 117 - [-] green albedo_type roof (albedo_type specified in radiation model)  
+       0.0_wp,         &  !< parameter 118 - [-] green type roof  
+       0.15_wp,        &  !< parameter 119 - [-] shading factor  
+       0.85_wp,        &  !< parameter 120 - [-] g-value windows  
+       4.8_wp,         &  !< parameter 121 - [W/(m2*K)] u-value windows  
+       0.5_wp,         &  !< parameter 122 - [1/h] basic airflow without occupancy of the room for - summer 0.5_wp, winter 0.5  
+       1.5_wp,         &  !< parameter 123 - [1/h] additional airflow dependent on occupancy of the room for - summer 1.5_wp, winter 0.0  
+       0.0_wp,         &  !< parameter 124 - [-] heat recovery efficiency  
+       3.5_wp,         &  !< parameter 125 - [m2/m2] dynamic parameter specific effective surface  
+       370000.0_wp,    &  !< parameter 126 - [J/(m2*K)] dynamic parameter innner heat storage  
+       4.5_wp,         &  !< parameter 127 - [m2/m2] ratio internal surface/floor area  
+       0.0_wp,         &  !< parameter 128 - [W] maximal heating capacity  
+       -80.0_wp,       &  !< parameter 129 - [W] maximal cooling capacity  
+       1.75_wp,        &  !< parameter 130 - [W/m2] additional internal heat gains dependent on occupancy of the room  
+       11.0_wp,        &  !< parameter 131 - [W/m2] basic internal heat gains without occupancy of the room  
+       3.0_wp,         &  !< parameter 132 - [m] storey height  
+       0.2_wp,         &  !< parameter 133 - [m] ceiling construction height  
+       0.0_wp,         &  !< parameter 134 - [-] anthropogenic heat output for heating  
+       1.0_wp,         &  !< parameter 135 - [-] anthropogenic heat output for cooling  
+       1488000.0_wp,   &  !< parameter 136 - [J/(m3*K)] heat capacity 4th wall layer (inside) above ground floor level  
+       0.72_wp,        &  !< parameter 137 - [W/(m*K)] thermal conductivity 4th wall layer (inside) above ground floor level  
+       1488000.0_wp,   &  !< parameter 138 - [J/(m3*K)] capacity 4th wall layer (inside) ground floor level  
+       0.72_wp,        &  !< parameter 139 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground floor level  
+       940800.0_wp,    &  !< parameter 140 - [J/(m3*K)] heat capacity 4th wall layer (inside) ground plate  
+       0.57_wp,        &  !< parameter 141 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground plate  
+       1736000.0_wp,   &  !< parameter 142 - [J/(m3*K)] heat capacity 4th window layer (inside) ground floor level  
+       0.38_wp,        &  !< parameter 143 - [W/(m*K)] thermal conductivity 4th window layer (inside) ground floor level  
+       1736000.0_wp,   &  !< parameter 144 - [J/(m3*K)] heat capacity 4th layer (inside) above ground floor level  
+       0.38_wp,        &  !< parameter 145 - [W/(m*K)] thermal conductivity 4th window layer (inside) above ground floor level  
+       1488000.0_wp,   &  !< parameter 146 - [J/(m3*K)] heat capacity 4th wall layer (inside) roof  
+       0.72_wp,        &  !< parameter 147 - [W/(m*K)] thermal conductivity 4th wall layer (inside) roof  
+       1736000.0_wp,   &  !< parameter 148 - [J/(m3*K)] heat capacity 4th window layer (inside) roof  
+       0.38_wp         &  !< parameter 149 - [W/(m*K)] thermal conductivity 4th window layer (inside) roof  
+                        /)
+
+    building_pars(:,4) = (/                                                                        &
+       0.4_wp,         &  !< parameter 0   - [-] wall fraction above ground floor level
+       0.6_wp,         &  !< parameter 1   - [-] window fraction above ground floor level
+       0.0_wp,         &  !< parameter 2   - [-] green fraction above ground floor level
+       0.0_wp,         &  !< parameter 3   - [-] green fraction roof above ground floor level
+       1.5_wp,         &  !< parameter 4   - [m2/m2] LAI (Leaf Area Index) roof
+       1.5_wp,         &  !< parameter 5   - [m2/m2] LAI (Leaf Area Index) on wall above ground floor level
+       1488000.0_wp,   &  !< parameter 6   - [J/(m3*K)] heat capacity 1st wall layer (outside) above ground floor level
+       898800.0_wp,    &  !< parameter 7   - [J/(m3*K)] heat capacity 2nd wall layer above ground floor level
+       898800.0_wp,    &  !< parameter 8   - [J/(m3*K)] heat capacity 3rd wall layer above ground floor level
+       0.72_wp,        &  !< parameter 9   - [W/(m*K)] thermal conductivity 1st wall layer (outside) above ground floor level
+       0.07_wp,        &  !< parameter 10  - [W/(m*K)] thermal conductivity 2nd wall layer above ground floor level
+       0.07_wp,        &  !< parameter 11  - [W/(m*K)] thermal conductivity 3rd wall layer above ground floor level
+       295.15_wp,      &  !< parameter 12  - [K] indoor target summer temperature
+       293.15_wp,      &  !< parameter 13  - [K] indoor target winter temperature
+       0.92_wp,        &  !< parameter 14  - [-] wall emissivity above ground floor level
+       0.86_wp,        &  !< parameter 15  - [-] green emissivity above ground floor level
+       0.89_wp,        &  !< parameter 16  - [-] window emissivity above ground floor level
+       0.75_wp,        &  !< parameter 17  - [-] window transmissivity (not visual transmissivity) above ground floor level
+       0.001_wp,       &  !< parameter 18  - [m] z0 roughness above ground floor level
+       0.0001_wp,      &  !< parameter 19  - [m] z0h/z0g roughness heat/humidity above ground floor level
+       4.0_wp,         &  !< parameter 20  - [m] ground floor level height
+       0.4_wp,         &  !< parameter 21  - [-] wall fraction ground floor level
+       0.6_wp,         &  !< parameter 22  - [-] window fraction ground floor level
+       0.0_wp,         &  !< parameter 23  - [-] green fraction ground floor level
+       0.0_wp,         &  !< parameter 24  - [-] green fraction roof ground floor level
+       1.5_wp,         &  !< parameter 25  - [m2/m2] LAI (Leaf Area Index) on wall ground floor level
+       1488000.0_wp,   &  !< parameter 26  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground floor level
+       898800.0_wp,    &  !< parameter 27  - [J/(m3*K)] heat capacity 2nd wall layer ground floor level
+       898800.0_wp,    &  !< parameter 28  - [J/(m3*K)] heat capacity 3rd wall layer ground floor level
+       0.72_wp,        &  !< parameter 29  - [W/(m*K)] thermal conductivity 1st wall layer (outside) ground floor level
+       0.07_wp,        &  !< parameter 30  - [W/(m*K)] thermal conductivity 2nd wall layer ground floor level
+       0.07_wp,        &  !< parameter 31  - [W/(m*K)] thermal conductivity 3rd wall layer ground floor level
+       0.92_wp,        &  !< parameter 32  - [-] wall emissivity ground floor level
+       0.89_wp,        &  !< parameter 33  - [-] window emissivity ground floor level
+       0.86_wp,        &  !< parameter 34  - [-] green emissivity ground floor level
+       0.75_wp,        &  !< parameter 35  - [-] window transmissivity (not visual transmissivity) ground floor level
+       0.001_wp,       &  !< parameter 36  - [m] z0 roughness ground floor level
+       0.0001_wp,      &  !< parameter 37  - [m] z0h/z0q roughness heat/humidity
+       36.0_wp,        &  !< parameter 38  - [-] wall albedo_type above ground floor level  (albedo_type specified in radiation model)
+       5.0_wp,         &  !< parameter 39  - [-] green albedo_type above ground floor level  (albedo_type specified in radiation model)
+       37.0_wp,        &  !< parameter 40  - [-] window albedo_type above ground floor level  (albedo_type specified in radiation model)
+       0.02_wp,        &  !< parameter 41  - [m] 1st cumulative wall layer thickness above ground floor level
+       0.15_wp,        &  !< parameter 42  - [m] 2nd cumulative wall layer thickness above ground floor level
+       0.28_wp,        &  !< parameter 43  - [m] 3rd cumulative wall layer thickness above ground floor level
+       0.3_wp,         &  !< parameter 44  - [m] 4th cumulative wall layer thickness above ground floor level
+       20000.0_wp,     &  !< parameter 45  - [J/(m2*K)] heat capacity wall surface (1 cm air)
+       23.0_wp,        &  !< parameter 46  - [W/(m2*K)] thermal conductivity of wall surface (1 cm air)
+       20000.0_wp,     &  !< parameter 47  - [J/(m2*K)] heat capacity of window surface (1 cm air)
+       20000.0_wp,     &  !< parameter 48  - [J/(m2*K)] heat capacity of green surface
+       23.0_wp,        &  !< parameter 49  - [W/(m2*K)] thermal conductivity of window surface (1 cm air)
+       10.0_wp,        &  !< parameter 50  - [W/(m2*K)] thermal conductivty of green surface
+       1.0_wp,         &  !< parameter 51  - [-] wall fraction ground plate
+       0.1_wp,         &  !< parameter 52  - [m] 1st cumulative wall layer thickness ground plate
+       0.2_wp,         &  !< parameter 53  - [m] 2nd cumulative wall layer thickness ground plate
+       0.28_wp,        &  !< parameter 54  - [m] 3rd cumulative wall layer thickness ground plate
+       0.3_wp,         &  !< parameter 55  - [m] 4th cumulative wall layer thickness ground plate
+       2112000.0_wp,   &  !< parameter 56  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground plate
+       2112000.0_wp,   &  !< parameter 57  - [J/(m3*K)] heat capacity 2nd wall layer ground plate
+       1008000.0_wp,   &  !< parameter 58  - [J/(m3*K)] heat capacity 3rd wall layer ground plate
+       2.1_wp,         &  !< parameter 59  - [W/(m*K)] thermal conductivity 1st wall layer (oustide) ground plate
+       2.1_wp,         &  !< parameter 60  - [W/(m*K)] thermal conductivity 2nd wall layer ground plate
+       0.41_wp,        &  !< parameter 61  - [W/(m*K)] thermal conductivity 3rd wall layer ground plate
+       0.02_wp,        &  !< parameter 62  - [m] 1st cumulative wall layer thickness ground floor level
+       0.15_wp,        &  !< parameter 63  - [m] 2nd cumulative wall layer thickness ground floor level
+       0.28_wp,        &  !< parameter 64  - [m] 3rd cumulative wall layer thickness ground floor level
+       0.3_wp,         &  !< parameter 65  - [m] 4th cumulative wall layer thickness ground floor level
+       36.0_wp,        &  !< parameter 66  - [-] wall albedo_type ground floor level (albedo_type specified in radiation model)
+       0.02_wp,        &  !< parameter 67  - [m] 1st cumulative window layer thickness ground floor level
+       0.04_wp,        &  !< parameter 68  - [m] 2nd cumulative window layer thickness ground floor level
+       0.06_wp,        &  !< parameter 69  - [m] 3rd cumulative window layer thickness ground floor level
+       0.08_wp,        &  !< parameter 70  - [m] 4th cumulative window layer thickness ground floor level
+       1736000.0_wp,   &  !< parameter 71  - [J/(m3*K)] heat capacity 1st window layer (outside) ground floor level
+       1736000.0_wp,   &  !< parameter 72  - [J/(m3*K)] heat capacity 2nd window layer ground floor level
+       1736000.0_wp,   &  !< parameter 73  - [J/(m3*K)] heat capacity 3rd window layer ground floor level
+       0.25_wp,        &  !< parameter 74  - [W/(m*K)] thermal conductivity 1st window layer (outside) ground floor level
+       0.25_wp,        &  !< parameter 75  - [W/(m*K)] thermal conductivity 2nd window layer ground floor level
+       0.25_wp,        &  !< parameter 76  - [W/(m*K)] thermal conductivity 3rd window layer ground floor level
        37.0_wp,        &  !< parameter 77  - [-] window albedo_type ground floor level (albedo_type specified in radiation model)
        5.0_wp,         &  !< parameter 78  - [-] green albedo_type ground floor level (albedo_type specified in radiation model)
        0.02_wp,        &  !< parameter 79  - [m] 1st cumulative window layer thickness above ground floor level
@@ -5817,22 +6123,22 @@
        1736000.0_wp,   &  !< parameter 83  - [J/(m3*K)] heat capacity 1st window layer (outside) above ground floor level
        1736000.0_wp,   &  !< parameter 84  - [J/(m3*K)] heat capacity 2nd window layer above ground floor level
        1736000.0_wp,   &  !< parameter 85  - [J/(m3*K)] heat capacity 3rd window layer above ground floor level
-       0.19_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 1st window layer (outside) above ground floor level
-       0.19_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 2nd window layer above ground floor level
-       0.19_wp,        &  !< parameter 87  - [W/(m*K)] thermal conductivity 3rd window layer above ground floor level
+       0.25_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 1st window layer (outside) above ground floor level
+       0.25_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 2nd window layer above ground floor level
+       0.25_wp,        &  !< parameter 87  - [W/(m*K)] thermal conductivity 3rd window layer above ground floor level
        1.0_wp,         &  !< parameter 89  - [-] wall fraction roof
        0.02_wp,        &  !< parameter 90  - [m] 1st cumulative wall layer thickness roof
-       0.17_wp,        &  !< parameter 91  - [m] 2nd cumulative wall layer thickness roof
-       0.37_wp,        &  !< parameter 92  - [m] 3rd cumulative wall layer thickness roof
-       0.39_wp,        &  !< parameter 93  - [m] 4th cumulative wall layer thickness roof
-       1700000.0_wp,   &  !< parameter 94  - [J/(m3*K)] heat capacity 1st wall layer (outside) roof
-       79200.0_wp,     &  !< parameter 95  - [J/(m3*K)] heat capacity 2nd wall layer roof
-       2112000.0_wp,   &  !< parameter 96  - [J/(m3*K)] heat capacity 3rd wall layer roof
-       0.16_wp,        &  !< parameter 97  - [W/(m*K)] thermal conductivity 1st wall layer (outside) roof
-       0.046_wp,       &  !< parameter 98  - [W/(m*K)] thermal conductivity 2nd wall layer roof
-       2.1_wp,         &  !< parameter 99  - [W/(m*K)] thermal conductivity 3rd wall layer roof
-       0.93_wp,        &  !< parameter 100 - [-] wall emissivity roof
-       42.0_wp,        &  !< parameter 101 - [-] wall albedo_type roof (albedo_type specified in radiation model)
+       0.2_wp,         &  !< parameter 91  - [m] 2nd cumulative wall layer thickness roof
+       0.38_wp,        &  !< parameter 92  - [m] 3rd cumulative wall layer thickness roof
+       0.4_wp,         &  !< parameter 93  - [m] 4th cumulative wall layer thickness roof
+       1488000.0_wp,   &  !< parameter 94  - [J/(m3*K)] heat capacity 1st wall layer (outside) roof
+       898800.0_wp,    &  !< parameter 95  - [J/(m3*K)] heat capacity 2nd wall layer roof
+       898800.0_wp,    &  !< parameter 96  - [J/(m3*K)] heat capacity 3rd wall layer roof
+       0.72_wp,        &  !< parameter 97  - [W/(m*K)] thermal conductivity 1st wall layer (outside) roof
+       0.22_wp,        &  !< parameter 98  - [W/(m*K)] thermal conductivity 2nd wall layer roof
+       0.22_wp,        &  !< parameter 99  - [W/(m*K)] thermal conductivity 3rd wall layer roof
+       0.94_wp,        &  !< parameter 100 - [-] wall emissivity roof
+       20.0_wp,        &  !< parameter 101 - [-] wall albedo_type roof (albedo_type specified in radiation model)
        0.0_wp,         &  !< parameter 102 - [-] window fraction roof
        0.02_wp,        &  !< parameter 103 - [m] window 1st layer thickness roof
        0.04_wp,        &  !< parameter 104 - [m] window 2nd layer thickness roof
@@ -5841,400 +6147,94 @@
        1736000.0_wp,   &  !< parameter 107 - [J/(m3*K)] heat capacity 1st window layer (outside) roof
        1736000.0_wp,   &  !< parameter 108 - [J/(m3*K)] heat capacity 2nd window layer roof
        1736000.0_wp,   &  !< parameter 109 - [J/(m3*K)] heat capacity 3rd window layer roof
-       0.19_wp,        &  !< parameter 110 - [W/(m*K)] thermal conductivity 1st window layer (outside) roof
-       0.19_wp,        &  !< parameter 111 - [W/(m*K)] thermal conductivity 2nd window layer roof
-       0.19_wp,        &  !< parameter 112 - [W/(m*K)] thermal conductivity 3rd window layer roof
-       0.87_wp,        &  !< parameter 113 - [-] window emissivity roof
-       0.65_wp,        &  !< parameter 114 - [-] window transmissivity (not visual transmissivity) roof
+       0.25_wp,        &  !< parameter 110 - [W/(m*K)] thermal conductivity 1st window layer (outside) roof
+       0.25_wp,        &  !< parameter 111 - [W/(m*K)] thermal conductivity 2nd window layer roof
+       0.25_wp,        &  !< parameter 112 - [W/(m*K)] thermal conductivity 3rd window layer roof
+       0.89_wp,        &  !< parameter 113 - [-] window emissivity roof
+       0.75_wp,        &  !< parameter 114 - [-] window transmissivity (not visual transmissivity) roof
        37.0_wp,        &  !< parameter 115 - [-] window albedo_type roof (albedo_type specified in radiation model)
        0.86_wp,        &  !< parameter 116 - [-] green emissivity roof
        5.0_wp,         &  !< parameter 117 - [-] green albedo_type roof (albedo_type specified in radiation model)
        0.0_wp,         &  !< parameter 118 - [-] green type roof
-       0.75_wp,        &  !< parameter 119 - [-] shading factor
-       0.7_wp,         &  !< parameter 120 - [-] g-value windows
-       1.7_wp,         &  !< parameter 121 - [W/(m2*K)] u-value windows
-       0.5_wp,         &  !< parameter 122 - [1/h] basic airflow without occupancy of the room for - summer 0.5_wp, winter 0.5
-       1.5_wp,         &  !< parameter 123 - [1/h] additional airflow dependent on occupancy of the room for - summer 1.5_wp, winter 0.0
-       0.0_wp,         &  !< parameter 124 - [-] heat recovery efficiency
-       3.5_wp,         &  !< parameter 125 - [m2/m2] dynamic parameter specific effective surface
-       370000.0_wp,    &  !< parameter 126 - [J/(m2*K)] dynamic parameter innner heat storage
-       4.5_wp,         &  !< parameter 127 - [m2/m2] ratio internal surface/floor area
-       80.0_wp,        &  !< parameter 128 - [W] maximal heating capacity
-       0.0_wp,         &  !< parameter 129 - [W] maximal cooling capacity
-       0.0_wp,         &  !< parameter 130 - [W/m2] additional internal heat gains dependent on occupancy of the room
-       4.2_wp,         &  !< parameter 131 - [W/m2] basic internal heat gains without occupancy of the room
-       2.5_wp,         &  !< parameter 132 - [m] storey height
-       0.2_wp,         &  !< parameter 133 - [m] ceiling construction height
-       0.0_wp,         &  !< parameter 134 - [-] anthropogenic heat output for heating
-       2.54_wp,        &  !< parameter 135 - [-] anthropogenic heat output for cooling
-       1526000.0_wp,   &  !< parameter 136 - [J/(m3*K)] heat capacity 4th wall layer (inside) above ground floor level
-       0.7_wp,         &  !< parameter 137 - [W/(m*K)] thermal conductivity 4th wall layer (inside) above ground floor level
-       1526000.0_wp,   &  !< parameter 138 - [J/(m3*K)] capacity 4th wall layer (inside) ground floor level
-       0.7_wp,         &  !< parameter 139 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground floor level
-       357200.0_wp,    &  !< parameter 140 - [J/(m3*K)] heat capacity 4th wall layer (inside) ground plate
-       0.04_wp,        &  !< parameter 141 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground plate
-       1736000.0_wp,   &  !< parameter 142 - [J/(m3*K)] heat capacity 4th window layer (inside) ground floor level
-       0.19_wp,        &  !< parameter 143 - [W/(m*K)] thermal conductivity 4th window layer (inside) ground floor level
-       1736000.0_wp,   &  !< parameter 144 - [J/(m3*K)] heat capacity 4th layer (inside) above ground floor level
-       0.19_wp,        &  !< parameter 145 - [W/(m*K)] thermal conductivity 4th window layer (inside) above ground floor level
-       1526000.0_wp,   &  !< parameter 146 - [J/(m3*K)] heat capacity 4th wall layer (inside) roof
-       0.7_wp,         &  !< parameter 147 - [W/(m*K)] thermal conductivity 4th wall layer (inside) roof
-       1736000.0_wp,   &  !< parameter 148 - [J/(m3*K)] heat capacity 4th window layer (inside) roof
-       0.19_wp         &  !< parameter 149 - [W/(m*K)] thermal conductivity 4th window layer (inside) roof
-                        /)
-
-    building_pars(:,3) = (/                                                                        &
-       0.71_wp,        &  !< parameter 0   - [-] wall fraction above ground floor level
-       0.29_wp,        &  !< parameter 1   - [-] window fraction above ground floor level
-       0.0_wp,         &  !< parameter 2   - [-] green fraction above ground floor level
-       0.0_wp,         &  !< parameter 3   - [-] green fraction roof above ground floor level
-       1.5_wp,         &  !< parameter 4   - [m2/m2] LAI (Leaf Area Index) roof
-       1.5_wp,         &  !< parameter 5   - [m2/m2] LAI (Leaf Area Index) on wall above ground floor level
-       1520000.0_wp,   &  !< parameter 6   - [J/(m3*K)] heat capacity 1st wall layer (outside) above ground floor level
-       79200.0_wp,     &  !< parameter 7   - [J/(m3*K)] heat capacity 2nd wall layer above ground floor level
-       1344000.0_wp,   &  !< parameter 8   - [J/(m3*K)] heat capacity 3rd wall layer above ground floor level
-       0.93_wp,        &  !< parameter 9   - [W/(m*K)] thermal conductivity 1st wall layer (outside) above ground floor level
-       0.035_wp,       &  !< parameter 10  - [W/(m*K)] thermal conductivity 2nd wall layer above ground floor level
-       0.68_wp,        &  !< parameter 11  - [W/(m*K)] thermal conductivity 3rd wall layer above ground floor level
-       299.15_wp,      &  !< parameter 12  - [K] indoor target summer temperature
-       293.15_wp,      &  !< parameter 13  - [K] indoor target winter temperature
-       0.93_wp,        &  !< parameter 14  - [-] wall emissivity above ground floor level
-       0.86_wp,        &  !< parameter 15  - [-] green emissivity above ground floor level
-       0.8_wp,         &  !< parameter 16  - [-] window emissivity above ground floor level
-       0.57_wp,        &  !< parameter 17  - [-] window transmissivity (not visual transmissivity) above ground floor level
-       0.001_wp,       &  !< parameter 18  - [m] z0 roughness above ground floor level
-       0.0001_wp,      &  !< parameter 19  - [m] z0h/z0g roughness heat/humidity above ground floor level
-       2.7_wp,         &  !< parameter 20  - [m] ground floor level height
-       0.71_wp,        &  !< parameter 21  - [-] wall fraction ground floor level
-       0.29_wp,        &  !< parameter 22  - [-] window fraction ground floor level
-       0.0_wp,         &  !< parameter 23  - [-] green fraction ground floor level
-       0.0_wp,         &  !< parameter 24  - [-] green fraction roof ground floor level
-       1.5_wp,         &  !< parameter 25  - [m2/m2] LAI (Leaf Area Index) on wall ground floor level
-       1520000.0_wp,   &  !< parameter 26  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground floor level
-       79200.0_wp,     &  !< parameter 27  - [J/(m3*K)] heat capacity 2nd wall layer ground floor level
-       1344000.0_wp,   &  !< parameter 28  - [J/(m3*K)] heat capacity 3rd wall layer ground floor level
-       0.93_wp,        &  !< parameter 29  - [W/(m*K)] thermal conductivity 1st wall layer (outside) ground floor level
-       0.035_wp,       &  !< parameter 30  - [W/(m*K)] thermal conductivity 2nd wall layer ground floor level
-       0.68_wp,        &  !< parameter 31  - [W/(m*K)] thermal conductivity 3rd wall layer ground floor level
-       0.93_wp,        &  !< parameter 32  - [-] wall emissivity ground floor level
-       0.8_wp,         &  !< parameter 33  - [-] window emissivity ground floor level
-       0.86_wp,        &  !< parameter 34  - [-] green emissivity ground floor level
-       0.57_wp,        &  !< parameter 35  - [-] window transmissivity (not visual transmissivity) ground floor level
-       0.001_wp,       &  !< parameter 36  - [m] z0 roughness ground floor level
-       0.0001_wp,      &  !< parameter 37  - [m] z0h/z0q roughness heat/humidity
-       36.0_wp,        &  !< parameter 38  - [-] wall albedo_type above ground floor level  (albedo_type specified in radiation model)
-       5.0_wp,         &  !< parameter 39  - [-] green albedo_type above ground floor level  (albedo_type specified in radiation model)
-       38.0_wp,        &  !< parameter 40  - [-] window albedo_type above ground floor level  (albedo_type specified in radiation model)
-       0.02_wp,        &  !< parameter 41  - [m] 1st cumulative wall layer thickness above ground floor level
-       0.22_wp,        &  !< parameter 42  - [m] 2nd cumulative wall layer thickness above ground floor level
-       0.58_wp,        &  !< parameter 43  - [m] 3rd cumulative wall layer thickness above ground floor level
-       0.6_wp,         &  !< parameter 44  - [m] 4th cumulative wall layer thickness above ground floor level
-       20000.0_wp,     &  !< parameter 45  - [J/(m2*K)] heat capacity wall surface (1 cm air)
-       23.0_wp,        &  !< parameter 46  - [W/(m2*K)] thermal conductivity of wall surface (1 cm air)
-       20000.0_wp,     &  !< parameter 47  - [J/(m2*K)] heat capacity of window surface (1 cm air)
-       20000.0_wp,     &  !< parameter 48  - [J/(m2*K)] heat capacity of green surface
-       23.0_wp,        &  !< parameter 49  - [W/(m2*K)] thermal conductivity of window surface (1 cm air)
-       10.0_wp,        &  !< parameter 50  - [W/(m2*K)] thermal conductivty of green surface
-       1.0_wp,         &  !< parameter 51  - [-] wall fraction ground plate
-       0.20_wp,        &  !< parameter 52  - [m] 1st cumulative wall layer thickness ground plate
-       0.32_wp,        &  !< parameter 53  - [m] 2nd cumulative wall layer thickness ground plate
-       0.38_wp,        &  !< parameter 54  - [m] 3rd cumulative wall layer thickness ground plate
-       0.41_wp,        &  !< parameter 55  - [m] 4th cumulative wall layer thickness ground plate
-       2112000.0_wp,   &  !< parameter 56  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground plate
-       79200.0_wp,     &  !< parameter 57  - [J/(m3*K)] heat capacity 2nd wall layer ground plate
-       2112000.0_wp,   &  !< parameter 58  - [J/(m3*K)] heat capacity 3rd wall layer ground plate
-       2.1_wp,         &  !< parameter 59  - [W/(m*K)] thermal conductivity 1st wall layer (oustide) ground plate
-       0.05_wp,        &  !< parameter 60  - [W/(m*K)] thermal conductivity 2nd wall layer ground plate
-       2.1_wp,         &  !< parameter 61  - [W/(m*K)] thermal conductivity 3rd wall layer ground plate
-       0.02_wp,        &  !< parameter 62  - [m] 1st cumulative wall layer thickness ground floor level
-       0.22_wp,        &  !< parameter 63  - [m] 2nd cumulative wall layer thickness ground floor level
-       0.58_wp,        &  !< parameter 64  - [m] 3rd cumulative wall layer thickness ground floor level
-       0.6_wp,         &  !< parameter 65  - [m] 4th cumulative wall layer thickness ground floor level
-       36.0_wp,        &  !< parameter 66  - [-] wall albedo_type ground floor level (albedo_type specified in radiation model)
-       0.03_wp,        &  !< parameter 67  - [m] 1st cumulative window layer thickness ground floor level
-       0.06_wp,        &  !< parameter 68  - [m] 2nd cumulative window layer thickness ground floor level
-       0.09_wp,        &  !< parameter 69  - [m] 3rd cumulative window layer thickness ground floor level
-       0.12_wp,        &  !< parameter 70  - [m] 4th cumulative window layer thickness ground floor level
-       1736000.0_wp,   &  !< parameter 71  - [J/(m3*K)] heat capacity 1st window layer (outside) ground floor level
-       1736000.0_wp,   &  !< parameter 72  - [J/(m3*K)] heat capacity 2nd window layer ground floor level
-       1736000.0_wp,   &  !< parameter 73  - [J/(m3*K)] heat capacity 3rd window layer ground floor level
-       0.11_wp,        &  !< parameter 74  - [W/(m*K)] thermal conductivity 1st window layer (outside) ground floor level
-       0.11_wp,        &  !< parameter 75  - [W/(m*K)] thermal conductivity 2nd window layer ground floor level
-       0.11_wp,        &  !< parameter 76  - [W/(m*K)] thermal conductivity 3rd window layer ground floor level
-       38.0_wp,        &  !< parameter 77  - [-] window albedo_type ground floor level (albedo_type specified in radiation model)
-       5.0_wp,         &  !< parameter 78  - [-] green albedo_type ground floor level (albedo_type specified in radiation model)
-       0.03_wp,        &  !< parameter 79  - [m] 1st cumulative window layer thickness above ground floor level
-       0.06_wp,        &  !< parameter 80  - [m] 2nd cumulative window layer thickness above ground floor level
-       0.09_wp,        &  !< parameter 81  - [m] 3rd cumulative window layer thickness above ground floor level
-       0.12_wp,        &  !< parameter 82  - [m] 4th cumulative window layer thickness above ground floor level
-       1736000.0_wp,   &  !< parameter 83  - [J/(m3*K)] heat capacity 1st window layer (outside) above ground floor level
-       1736000.0_wp,   &  !< parameter 84  - [J/(m3*K)] heat capacity 2nd window layer above ground floor level
-       1736000.0_wp,   &  !< parameter 85  - [J/(m3*K)] heat capacity 3rd window layer above ground floor level
-       0.11_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 1st window layer (outside) above ground floor level
-       0.11_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 2nd window layer above ground floor level
-       0.11_wp,        &  !< parameter 87  - [W/(m*K)] thermal conductivity 3rd window layer above ground floor level
-       1.0_wp,         &  !< parameter 89  - [-] wall fraction roof
-       0.02_wp,        &  !< parameter 90  - [m] 1st cumulative wall layer thickness roof
-       0.06_wp,        &  !< parameter 91  - [m] 2nd cumulative wall layer thickness roof
-       0.36_wp,        &  !< parameter 92  - [m] 3rd cumulative wall layer thickness roof
-       0.38_wp,        &  !< parameter 93  - [m] 4th cumulative wall layer thickness roof
-       3753600.0_wp,   &  !< parameter 94  - [J/(m3*K)] heat capacity 1st wall layer (outside) roof
-       709650.0_wp,    &  !< parameter 95  - [J/(m3*K)] heat capacity 2nd wall layer roof
-       79200.0_wp,     &  !< parameter 96  - [J/(m3*K)] heat capacity 3rd wall layer roof
-       0.52_wp,        &  !< parameter 97  - [W/(m*K)] thermal conductivity 1st wall layer (outside) roof
-       0.12_wp,        &  !< parameter 98  - [W/(m*K)] thermal conductivity 2nd wall layer roof
-       0.035_wp,       &  !< parameter 99  - [W/(m*K)] thermal conductivity 3rd wall layer roof
-       0.93_wp,        &  !< parameter 100 - [-] wall emissivity roof
-       42.0_wp,        &  !< parameter 101 - [-] wall albedo_type roof (albedo_type specified in radiation model)
-       0.0_wp,         &  !< parameter 102 - [-] window fraction roof
-       0.03_wp,        &  !< parameter 103 - [m] window 1st layer thickness roof
-       0.06_wp,        &  !< parameter 104 - [m] window 2nd layer thickness roof
-       0.09_wp,        &  !< parameter 105 - [m] window 3rd layer thickness roof
-       0.12_wp,        &  !< parameter 106 - [m] window 4th layer thickness roof
-       1736000.0_wp,   &  !< parameter 107 - [J/(m3*K)] heat capacity 1st window layer (outside) roof
-       1736000.0_wp,   &  !< parameter 108 - [J/(m3*K)] heat capacity 2nd window layer roof
-       1736000.0_wp,   &  !< parameter 109 - [J/(m3*K)] heat capacity 3rd window layer roof
-       0.11_wp,        &  !< parameter 110 - [W/(m*K)] thermal conductivity 1st window layer (outside) roof
-       0.11_wp,        &  !< parameter 111 - [W/(m*K)] thermal conductivity 2nd window layer roof
-       0.11_wp,        &  !< parameter 112 - [W/(m*K)] thermal conductivity 3rd window layer roof
-       0.8_wp,         &  !< parameter 113 - [-] window emissivity roof
-       0.57_wp,        &  !< parameter 114 - [-] window transmissivity (not visual transmissivity) roof
-       38.0_wp,        &  !< parameter 115 - [-] window albedo_type roof (albedo_type specified in radiation model)
-       0.86_wp,        &  !< parameter 116 - [-] green emissivity roof
-       5.0_wp,         &  !< parameter 117 - [-] green albedo_type roof (albedo_type specified in radiation model)
-       0.0_wp,         &  !< parameter 118 - [-] green type roof
-       0.15_wp,        &  !< parameter 119 - [-] shading factor
-       0.6_wp,         &  !< parameter 120 - [-] g-value windows
-       0.8_wp,         &  !< parameter 121 - [W/(m2*K)] u-value windows
+       1.0_wp,         &  !< parameter 119 - [-] shading factor
+       0.75_wp,        &  !< parameter 120 - [-] g-value windows
+       3.1_wp,         &  !< parameter 121 - [W/(m2*K)] u-value windows
        0.5_wp,         &  !< parameter 122 - [1/h] basic airflow without occupancy of the room for - summer 0.5_wp, winter 0.5_wp
        1.5_wp,         &  !< parameter 123 - [1/h] additional airflow dependent on occupancy of the room for - summer 1.5_wp, winter 0.0_wp
-       0.8_wp,         &  !< parameter 124 - [-] heat recovery efficiency
+       0.75_wp,        &  !< parameter 124 - [-] heat recovery efficiency
        2.5_wp,         &  !< parameter 125 - [m2/m2] dynamic parameter specific effective surface
        165000.0_wp,    &  !< parameter 126 - [J/(m2*K)] dynamic parameter innner heat storage
        4.5_wp,         &  !< parameter 127 - [m2/m2] ratio internal surface/floor area
-       40.0_wp,        &  !< parameter 128 - [W] maximal heating capacity
-       0.0_wp,         &  !< parameter 129 - [W] maximal cooling capacity
+       0.0_wp,         &  !< parameter 128 - [W] maximal heating capacity
+       -80.0_wp,       &  !< parameter 129 - [W] maximal cooling capacity
        0.0_wp,         &  !< parameter 130 - [W/m2] additional internal heat gains dependent on occupancy of the room
        4.2_wp,         &  !< parameter 131 - [W/m2] basic internal heat gains without occupancy of the room
-       2.7_wp,         &  !< parameter 132 - [m] storey height
+       3.0_wp,         &  !< parameter 132 - [m] storey height
        0.2_wp,         &  !< parameter 133 - [m] ceiling construction height
-       -2.0_wp,        &  !< parameter 134 - [-] anthropogenic heat output for heating
+       0.0_wp,         &  !< parameter 134 - [-] anthropogenic heat output for heating
        1.25_wp,        &  !< parameter 135 - [-] anthropogenic heat output for cooling
-       1526000.0_wp,   &  !< parameter 136 - [J/(m3*K)] heat capacity 4th wall layer (inside) above ground floor level
-       0.7_wp,         &  !< parameter 137 - [W/(m*K)] thermal conductivity 4th wall layer (inside) above ground floor level
-       1526000.0_wp,   &  !< parameter 138 - [J/(m3*K)] capacity 4th wall layer (inside) ground floor level
-       0.7_wp,         &  !< parameter 139 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground floor level
-       709650.0_wp,    &  !< parameter 140 - [J/(m3*K)] heat capacity 4th wall layer (inside) ground plate
-       0.12_wp,        &  !< parameter 141 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground plate
+       1488000.0_wp,   &  !< parameter 136 - [J/(m3*K)] heat capacity 4th wall layer (inside) above ground floor level
+       0.72_wp,        &  !< parameter 137 - [W/(m*K)] thermal conductivity 4th wall layer (inside) above ground floor level
+       1488000.0_wp,   &  !< parameter 138 - [J/(m3*K)] capacity 4th wall layer (inside) ground floor level
+       0.72_wp,        &  !< parameter 139 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground floor level
+       940800.0_wp,    &  !< parameter 140 - [J/(m3*K)] heat capacity 4th wall layer (inside) ground plate
+       0.57_wp,        &  !< parameter 141 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground plate
        1736000.0_wp,   &  !< parameter 142 - [J/(m3*K)] heat capacity 4th window layer (inside) ground floor level
-       0.11_wp,        &  !< parameter 143 - [W/(m*K)] thermal conductivity 4th window layer (inside) ground floor level
+       0.25_wp,        &  !< parameter 143 - [W/(m*K)] thermal conductivity 4th window layer (inside) ground floor level
        1736000.0_wp,   &  !< parameter 144 - [J/(m3*K)] heat capacity 4th layer (inside) above ground floor level
-       0.11_wp,        &  !< parameter 145 - [W/(m*K)] thermal conductivity 4th window layer (inside) above ground floor level
-       1526000.0_wp,   &  !< parameter 146 - [J/(m3*K)] heat capacity 4th wall layer (inside) roof
-       0.7_wp,         &  !< parameter 147 - [W/(m*K)] thermal conductivity 4th wall layer (inside) roof
+       0.25_wp,        &  !< parameter 145 - [W/(m*K)] thermal conductivity 4th window layer (inside) above ground floor level
+       1488000.0_wp,   &  !< parameter 146 - [J/(m3*K)] heat capacity 4th wall layer (inside) roof
+       0.72_wp,        &  !< parameter 147 - [W/(m*K)] thermal conductivity 4th wall layer (inside) roof
        1736000.0_wp,   &  !< parameter 148 - [J/(m3*K)] heat capacity 4th window layer (inside) roof
-       0.11_wp         &  !< parameter 149 - [W/(m*K)] thermal conductivity 4th window layer (inside) roof
-                        /)
-
-   building_pars(:,4) = (/                                                                        &
-       0.82_wp,        &  !< parameter 0   - [-] wall fraction above ground floor level
-       0.18_wp,        &  !< parameter 1   - [-] window fraction above ground floor level
-       0.0_wp,         &  !< parameter 2   - [-] green fraction above ground floor level
-       0.0_wp,         &  !< parameter 3   - [-] green fraction roof above ground floor level
-       1.5_wp,         &  !< parameter 4   - [m2/m2] LAI (Leaf Area Index) roof
-       1.5_wp,         &  !< parameter 5   - [m2/m2] LAI (Leaf Area Index) on wall above ground floor level
-       1520000.0_wp,   &  !< parameter 6   - [J/(m3*K)] heat capacity 1st wall layer (outside) above ground floor level
-       1512000.0_wp,   &  !< parameter 7   - [J/(m3*K)] heat capacity 2nd wall layer above ground floor level
-       1512000.0_wp,   &  !< parameter 8   - [J/(m3*K)] heat capacity 3rd wall layer above ground floor level
-       0.93_wp,        &  !< parameter 9   - [W/(m*K)] thermal conductivity 1st wall layer (outside) above ground floor level
-       0.81_wp,        &  !< parameter 10  - [W/(m*K)] thermal conductivity 2nd wall layer above ground floor level
-       0.81_wp,        &  !< parameter 11  - [W/(m*K)] thermal conductivity 3rd wall layer above ground floor level
-       299.15_wp,      &  !< parameter 12  - [K] indoor target summer temperature
-       293.15_wp,      &  !< parameter 13  - [K] indoor target winter temperature
-       0.93_wp,        &  !< parameter 14  - [-] wall emissivity above ground floor level
-       0.86_wp,        &  !< parameter 15  - [-] green emissivity above ground floor level
-       0.91_wp,        &  !< parameter 16  - [-] window emissivity above ground floor level
-       0.7_wp,         &  !< parameter 17  - [-] window transmissivity (not visual transmissivity) above ground floor level
-       0.001_wp,       &  !< parameter 18  - [m] z0 roughness above ground floor level
-       0.0001_wp,      &  !< parameter 19  - [m] z0h/z0g roughness heat/humidity above ground floor level
-       2.9_wp,         &  !< parameter 20  - [m] ground floor level height
-       0.82_wp,        &  !< parameter 21  - [-] wall fraction ground floor level
-       0.18_wp,        &  !< parameter 22  - [-] window fraction ground floor level
-       0.0_wp,         &  !< parameter 23  - [-] green fraction ground floor level
-       0.0_wp,         &  !< parameter 24  - [-] green fraction roof ground floor level
-       1.5_wp,         &  !< parameter 25  - [m2/m2] LAI (Leaf Area Index) on wall ground floor level
-       1520000.0_wp,   &  !< parameter 26  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground floor level
-       1512000.0_wp,   &  !< parameter 27  - [J/(m3*K)] heat capacity 2nd wall layer ground floor level
-       1512000.0_wp,   &  !< parameter 28  - [J/(m3*K)] heat capacity 3rd wall layer ground floor level
-       0.93_wp,        &  !< parameter 29  - [W/(m*K)] thermal conductivity 1st wall layer (outside) ground floor level
-       0.81_wp,        &  !< parameter 30  - [W/(m*K)] thermal conductivity 2nd wall layer ground floor level
-       0.81_wp,        &  !< parameter 31  - [W/(m*K)] thermal conductivity 3rd wall layer ground floor level
-       0.93_wp,        &  !< parameter 32  - [-] wall emissivity ground floor level
-       0.91_wp,        &  !< parameter 33  - [-] window emissivity ground floor level
-       0.86_wp,        &  !< parameter 34  - [-] green emissivity ground floor level
-       0.7_wp,         &  !< parameter 35  - [-] window transmissivity (not visual transmissivity) ground floor level
-       0.001_wp,       &  !< parameter 36  - [m] z0 roughness ground floor level
-       0.0001_wp,      &  !< parameter 37  - [m] z0h/z0q roughness heat/humidity
-       36.0_wp,        &  !< parameter 38  - [-] wall albedo_type above ground floor level  (albedo_type specified in radiation model)
-       5.0_wp,         &  !< parameter 39  - [-] green albedo_type above ground floor level  (albedo_type specified in radiation model)
-       37.0_wp,        &  !< parameter 40  - [-] window albedo_type above ground floor level  (albedo_type specified in radiation model)
-       0.02_wp,        &  !< parameter 41  - [m] 1st cumulative wall layer thickness above ground floor level
-       0.2_wp,         &  !< parameter 42  - [m] 2nd cumulative wall layer thickness above ground floor level
-       0.38_wp,        &  !< parameter 43  - [m] 3rd cumulative wall layer thickness above ground floor level
-       0.4_wp,         &  !< parameter 44  - [m] 4th cumulative wall layer thickness above ground floor level
-       20000.0_wp,     &  !< parameter 45  - [J/(m2*K)] heat capacity wall surface (1 cm air)
-       23.0_wp,        &  !< parameter 46  - [W/(m2*K)] thermal conductivity of wall surface (1 cm air)
-       20000.0_wp,     &  !< parameter 47  - [J/(m2*K)] heat capacity of window surface (1 cm air)
-       20000.0_wp,     &  !< parameter 48  - [J/(m2*K)] heat capacity of green surface
-       23.0_wp,        &  !< parameter 49  - [W/(m2*K)] thermal conductivity of window surface (1 cm air)
-       10.0_wp,        &  !< parameter 50  - [W/(m2*K)] thermal conductivty of green surface
-       1.0_wp,         &  !< parameter 51  - [-] wall fraction ground plate
-       0.18_wp,        &  !< parameter 52  - [m] 1st cumulative wall layer thickness ground plate
-       0.36_wp,        &  !< parameter 53  - [m] 2nd cumulative wall layer thickness ground plate
-       0.42_wp,        &  !< parameter 54  - [m] 3rd cumulative wall layer thickness ground plate
-       0.45_wp,        &  !< parameter 55  - [m] 4th cumulative wall layer thickness ground plate
-       1512000.0_wp,   &  !< parameter 56  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground plate
-       1512000.0_wp,   &  !< parameter 57  - [J/(m3*K)] heat capacity 2nd wall layer ground plate
-       2112000.0_wp,   &  !< parameter 58  - [J/(m3*K)] heat capacity 3rd wall layer ground plate
-       0.52_wp,        &  !< parameter 59  - [W/(m*K)] thermal conductivity 1st wall layer (oustide) ground plate
-       0.52_wp,        &  !< parameter 60  - [W/(m*K)] thermal conductivity 2nd wall layer ground plate
-       2.1_wp,         &  !< parameter 61  - [W/(m*K)] thermal conductivity 3rd wall layer ground plate
-       0.02_wp,        &  !< parameter 62  - [m] 1st cumulative wall layer thickness ground floor level
-       0.2_wp,         &  !< parameter 63  - [m] 2nd cumulative wall layer thickness ground floor level
-       0.38_wp,        &  !< parameter 64  - [m] 3rd cumulative wall layer thickness ground floor level
-       0.4_wp,         &  !< parameter 65  - [m] 4th cumulative wall layer thickness ground floor level
-       36.0_wp,        &  !< parameter 66  - [-] wall albedo_type ground floor level (albedo_type specified in radiation model)
-       0.02_wp,        &  !< parameter 67  - [m] 1st cumulative window layer thickness ground floor level
-       0.04_wp,        &  !< parameter 68  - [m] 2nd cumulative window layer thickness ground floor level
-       0.06_wp,        &  !< parameter 69  - [m] 3rd cumulative window layer thickness ground floor level
-       0.08_wp,        &  !< parameter 70  - [m] 4th cumulative window layer thickness ground floor level
-       1736000.0_wp,   &  !< parameter 71  - [J/(m3*K)] heat capacity 1st window layer (outside) ground floor level
-       1736000.0_wp,   &  !< parameter 72  - [J/(m3*K)] heat capacity 2nd window layer ground floor level
-       1736000.0_wp,   &  !< parameter 73  - [J/(m3*K)] heat capacity 3rd window layer ground floor level
-       0.45_wp,        &  !< parameter 74  - [W/(m*K)] thermal conductivity 1st window layer (outside) ground floor level
-       0.45_wp,        &  !< parameter 75  - [W/(m*K)] thermal conductivity 2nd window layer ground floor level
-       0.45_wp,        &  !< parameter 76  - [W/(m*K)] thermal conductivity 3rd window layer ground floor level
-       37.0_wp,        &  !< parameter 77  - [-] window albedo_type ground floor level (albedo_type specified in radiation model)
-       5.0_wp,         &  !< parameter 78  - [-] green albedo_type ground floor level (albedo_type specified in radiation model)
-       0.02_wp,        &  !< parameter 79  - [m] 1st cumulative window layer thickness above ground floor level
-       0.04_wp,        &  !< parameter 80  - [m] 2nd thickness window layer above ground floor level
-       0.06_wp,        &  !< parameter 81  - [m] 3rd cumulative window layer thickness above ground floor level
-       0.08_wp,        &  !< parameter 82  - [m] 4th cumulative window layer thickness above ground floor level
-       1736000.0_wp,   &  !< parameter 83  - [J/(m3*K)] heat capacity 1st window layer (outside) above ground floor level
-       1736000.0_wp,   &  !< parameter 84  - [J/(m3*K)] heat capacity 2nd window layer above ground floor level
-       1736000.0_wp,   &  !< parameter 85  - [J/(m3*K)] heat capacity 3rd window layer above ground floor level
-       0.45_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 1st window layer (outside) above ground floor level
-       0.45_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 2nd window layer above ground floor level
-       0.45_wp,        &  !< parameter 87  - [W/(m*K)] thermal conductivity 3rd window layer above ground floor level
-       1.0_wp,         &  !< parameter 89  - [-] wall fraction roof
-       0.02_wp,        &  !< parameter 90  - [m] 1st cumulative wall layer thickness roof
-       0.06_wp,        &  !< parameter 91  - [m] 2nd cumulative wall layer thickness roof
-       0.08_wp,        &  !< parameter 92  - [m] 3rd cumulative wall layer thickness roof
-       0.1_wp,         &  !< parameter 93  - [m] 4th cumulative wall layer thickness roof
-       1512000.0_wp,   &  !< parameter 94  - [J/(m3*K)] heat capacity 1st wall layer (outside) roof
-       709650.0_wp,    &  !< parameter 95  - [J/(m3*K)] heat capacity 2nd wall layer roof
-       709650.0_wp,    &  !< parameter 96  - [J/(m3*K)] heat capacity 3rd wall layer roof
-       0.52_wp,        &  !< parameter 97  - [W/(m*K)] thermal conductivity 1st wall layer (outside) roof
-       0.12_wp,        &  !< parameter 98  - [W/(m*K)] thermal conductivity 2nd wall layer roof
-       0.12_wp,        &  !< parameter 99  - [W/(m*K)] thermal conductivity 3rd wall layer roof
-       0.90_wp,        &  !< parameter 100 - [-] wall emissivity roof
-       42.0_wp,        &  !< parameter 101 - [-] wall albedo_type roof (albedo_type specified in radiation model)
-       0.0_wp,         &  !< parameter 102 - [-] window fraction roof
-       0.02_wp,        &  !< parameter 103 - [m] window 1st layer thickness roof
-       0.04_wp,        &  !< parameter 104 - [m] window 2nd layer thickness roof
-       0.06_wp,        &  !< parameter 105 - [m] window 3rd layer thickness roof
-       0.08_wp,        &  !< parameter 106 - [m] window 4th layer thickness roof
-       1736000.0_wp,   &  !< parameter 107 - [J/(m3*K)] heat capacity 1st window layer (outside) roof
-       1736000.0_wp,   &  !< parameter 108 - [J/(m3*K)] heat capacity 2nd window layer roof
-       1736000.0_wp,   &  !< parameter 109 - [J/(m3*K)] heat capacity 3rd window layer roof
-       0.45_wp,        &  !< parameter 110 - [W/(m*K)] thermal conductivity 1st window layer (outside) roof
-       0.45_wp,        &  !< parameter 111 - [W/(m*K)] thermal conductivity 2nd window layer roof
-       0.45_wp,        &  !< parameter 112 - [W/(m*K)] thermal conductivity 3rd window layer roof
-       0.91_wp,        &  !< parameter 113 - [-] window emissivity roof
-       0.7_wp,         &  !< parameter 114 - [-] window transmissivity (not visual transmissivity) roof
-       37.0_wp,        &  !< parameter 115 - [-] window albedo_type roof (albedo_type specified in radiation model)
-       0.86_wp,        &  !< parameter 116 - [-] green emissivity roof
-       5.0_wp,         &  !< parameter 117 - [-] green albedo_type roof (albedo_type specified in radiation model)
-       0.0_wp,         &  !< parameter 118 - [-] green type roof
-       0.75_wp,        &  !< parameter 119 - [-] shading factor
-       0.8_wp,         &  !< parameter 120 - [-] g-value windows
-       2.9_wp,         &  !< parameter 121 - [W/(m2*K)] u-value windows
-       1.0_wp,         &  !< parameter 122 - [1/h] basic airflow without occupancy of the room for - summer 1.0_wp, winter 0.2
-       1.0_wp,         &  !< parameter 123 - [1/h] additional airflow dependent on occupancy of the room for - summer 1.0_wp, winter 0.8
-       0.0_wp,         &  !< parameter 124 - [-] heat recovery efficiency
-       3.0_wp,         &  !< parameter 125 - [m2/m2] dynamic parameter specific effective surface
-       260000.0_wp,    &  !< parameter 126 - [J/(m2*K)] dynamic parameter innner heat storage
-       4.5_wp,         &  !< parameter 127 - [m2/m2] ratio internal surface/floor area
-       100.0_wp,       &  !< parameter 128 - [W] maximal heating capacity
-       0.0_wp,         &  !< parameter 129 - [W] maximal cooling capacity
-       7.0_wp,         &  !< parameter 130 - [W/m2] additional internal heat gains dependent on occupancy of the room
-       3.0_wp,         &  !< parameter 131 - [W/m2] basic internal heat gains without occupancy of the room
-       2.9_wp,         &  !< parameter 132 - [m] storey height
-       0.2_wp,         &  !< parameter 133 - [m] ceiling construction height
-       0.1_wp,         &  !< parameter 134 - [-] anthropogenic heat output for heating
-       1.333_wp,       &  !< parameter 135 - [-] anthropogenic heat output for cooling
-       1526000.0_wp,   &  !< parameter 136 - [J/(m3*K)] heat capacity 4th wall layer (inside) above ground floor level
-       0.7_wp,         &  !< parameter 137 - [W/(m*K)] thermal conductivity 4th wall layer (inside) above ground floor level
-       1526000.0_wp,   &  !< parameter 138 - [J/(m3*K)] capacity 4th wall layer (inside) ground floor level
-       0.7_wp,         &  !< parameter 139 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground floor level
-       709650.0_wp,    &  !< parameter 140 - [J/(m3*K)] heat capacity 4th wall layer (inside) ground plate
-       0.12_wp,        &  !< parameter 141 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground plate
-       1736000.0_wp,   &  !< parameter 142 - [J/(m3*K)] heat capacity 4th window layer (inside) ground floor level
-       0.45_wp,        &  !< parameter 143 - [W/(m*K)] thermal conductivity 4th window layer (inside) ground floor level
-       1736000.0_wp,   &  !< parameter 144 - [J/(m3*K)] heat capacity 4th layer (inside) above ground floor level
-       0.45_wp,        &  !< parameter 145 - [W/(m*K)] thermal conductivity 4th window layer (inside) above ground floor level
-       1526000.0_wp,   &  !< parameter 146 - [J/(m3*K)] heat capacity 4th wall layer (inside) roof
-       0.7_wp,         &  !< parameter 147 - [W/(m*K)] thermal conductivity 4th wall layer (inside) roof
-       1736000.0_wp,   &  !< parameter 148 - [J/(m3*K)] heat capacity 4th window layer (inside) roof
-       0.45_wp         &  !< parameter 149 - [W/(m*K)] thermal conductivity 4th window layer (inside) roof
+       0.25_wp         &  !< parameter 149 - [W/(m*K)] thermal conductivity 4th window layer (inside) roof
                         /)
 
     building_pars(:,5) = (/                                                                        &
-       0.75_wp,        &  !< parameter 0   - [-] wall fraction above ground floor level
-       0.25_wp,        &  !< parameter 1   - [-] window fraction above ground floor level
+       0.2_wp,         &  !< parameter 0   - [-] wall fraction above ground floor level
+       0.8_wp,         &  !< parameter 1   - [-] window fraction above ground floor level
        0.0_wp,         &  !< parameter 2   - [-] green fraction above ground floor level
        0.0_wp,         &  !< parameter 3   - [-] green fraction roof above ground floor level
        1.5_wp,         &  !< parameter 4   - [m2/m2] LAI (Leaf Area Index) roof
        1.5_wp,         &  !< parameter 5   - [m2/m2] LAI (Leaf Area Index) on wall above ground floor level
-       1520000.0_wp,   &  !< parameter 6   - [J/(m3*K)] heat capacity 1st wall layer (outside) above ground floor level
-       79200.0_wp,     &  !< parameter 7   - [J/(m3*K)] heat capacity 2nd wall layer above ground floor level
-       2112000.0_wp,   &  !< parameter 8   - [J/(m3*K)] heat capacity 3rd wall layer above ground floor level
-       0.93_wp,        &  !< parameter 9   - [W/(m*K)] thermal conductivity 1st wall layer (outside) above ground floor level
-       0.046_wp,       &  !< parameter 10  - [W/(m*K)] thermal conductivity 2nd wall layer above ground floor level
-       2.1_wp,         &  !< parameter 11  - [W/(m*K)] thermal conductivity 3rd wall layer above ground floor level
-       299.15_wp,      &  !< parameter 12  - [K] indoor target summer temperature
+       1250000.0_wp,   &  !< parameter 6   - [J/(m3*K)] heat capacity 1st wall layer (outside) above ground floor level
+       898800.0_wp,    &  !< parameter 7   - [J/(m3*K)] heat capacity 2nd wall layer above ground floor level
+       898800.0_wp,    &  !< parameter 8   - [J/(m3*K)] heat capacity 3rd wall layer above ground floor level
+       0.29_wp,        &  !< parameter 9   - [W/(m*K)] thermal conductivity 1st wall layer (outside) above ground floor level
+       0.22_wp,        &  !< parameter 10  - [W/(m*K)] thermal conductivity 2nd wall layer above ground floor level
+       0.22_wp,        &  !< parameter 11  - [W/(m*K)] thermal conductivity 3rd wall layer above ground floor level
+       298.15_wp,      &  !< parameter 12  - [K] indoor target summer temperature
        293.15_wp,      &  !< parameter 13  - [K] indoor target winter temperature
-       0.93_wp,        &  !< parameter 14  - [-] wall emissivity above ground floor level
+       0.95_wp,        &  !< parameter 14  - [-] wall emissivity above ground floor level
        0.86_wp,        &  !< parameter 15  - [-] green emissivity above ground floor level
-       0.87_wp,        &  !< parameter 16  - [-] window emissivity above ground floor level
-       0.65_wp,        &  !< parameter 17  - [-] window transmissivity (not visual transmissivity) above ground floor level
+       0.89_wp,        &  !< parameter 16  - [-] window emissivity above ground floor level
+       0.75_wp,        &  !< parameter 17  - [-] window transmissivity (not visual transmissivity) above ground floor level
        0.001_wp,       &  !< parameter 18  - [m] z0 roughness above ground floor level
        0.0001_wp,      &  !< parameter 19  - [m] z0h/z0g roughness heat/humidity above ground floor level
-       2.5_wp,         &  !< parameter 20  - [m] ground floor level height
-       0.75_wp,        &  !< parameter 21  - [-] wall fraction ground floor level
-       0.25_wp,        &  !< parameter 22  - [-] window fraction ground floor level
+       5.0_wp,         &  !< parameter 20  - [m] ground floor level height
+       0.2_wp,         &  !< parameter 21  - [-] wall fraction ground floor level
+       0.8_wp,         &  !< parameter 22  - [-] window fraction ground floor level
        0.0_wp,         &  !< parameter 23  - [-] green fraction ground floor level
        0.0_wp,         &  !< parameter 24  - [-] green fraction roof ground floor level
        1.5_wp,         &  !< parameter 25  - [m2/m2] LAI (Leaf Area Index) on wall ground floor level
-       1520000.0_wp,   &  !< parameter 26  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground floor level
-       79200.0_wp,     &  !< parameter 27  - [J/(m3*K)] heat capacity 2nd wall layer ground floor level
-       2112000.0_wp,   &  !< parameter 28  - [J/(m3*K)] heat capacity 3rd wall layer ground floor level
-       0.93_wp,        &  !< parameter 29  - [W/(m*K)] thermal conductivity 1st wall layer (outside) ground floor level
-       0.046_wp,       &  !< parameter 30  - [W/(m*K)] thermal conductivity 2nd wall layer ground floor level
-       2.1_wp,         &  !< parameter 31  - [W/(m*K)] thermal conductivity 3rd wall layer ground floor level
-       0.93_wp,        &  !< parameter 32  - [-] wall emissivity ground floor level
-       0.87_wp,        &  !< parameter 33  - [-] window emissivity ground floor level
+       1250000.0_wp,   &  !< parameter 26  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground floor level
+       898800.0_wp,    &  !< parameter 27  - [J/(m3*K)] heat capacity 2nd wall layer ground floor level
+       898800.0_wp,    &  !< parameter 28  - [J/(m3*K)] heat capacity 3rd wall layer ground floor level
+       0.29_wp,        &  !< parameter 29  - [W/(m*K)] thermal conductivity 1st wall layer (outside) ground floor level
+       0.22_wp,        &  !< parameter 30  - [W/(m*K)] thermal conductivity 2nd wall layer ground floor level
+       0.22_wp,        &  !< parameter 31  - [W/(m*K)] thermal conductivity 3rd wall layer ground floor level
+       0.95_wp,        &  !< parameter 32  - [-] wall emissivity ground floor level
+       0.89_wp,        &  !< parameter 33  - [-] window emissivity ground floor level
        0.86_wp,        &  !< parameter 34  - [-] green emissivity ground floor level
-       0.65_wp,        &  !< parameter 35  - [-] window transmissivity (not visual transmissivity) ground floor level
+       0.75_wp,        &  !< parameter 35  - [-] window transmissivity (not visual transmissivity) ground floor level
        0.001_wp,       &  !< parameter 36  - [m] z0 roughness ground floor level
        0.0001_wp,      &  !< parameter 37  - [m] z0h/z0q roughness heat/humidity
-       36.0_wp,        &  !< parameter 38  - [-] wall albedo_type above ground floor level  (albedo_type specified in radiation model)
+       34.0_wp,        &  !< parameter 38  - [-] wall albedo_type above ground floor level  (albedo_type specified in radiation model)
        5.0_wp,         &  !< parameter 39  - [-] green albedo_type above ground floor level  (albedo_type specified in radiation model)
        37.0_wp,        &  !< parameter 40  - [-] window albedo_type above ground floor level  (albedo_type specified in radiation model)
-       0.02_wp,        &  !< parameter 41  - [m] 1st cumulative wall layer thickness above ground floor level
-       0.08_wp,        &  !< parameter 42  - [m] 2nd cumulative wall layer thickness above ground floor level
-       0.32_wp,        &  !< parameter 43  - [m] 3rd cumulative wall layer thickness above ground floor level
-       0.34_wp,        &  !< parameter 44  - [m] 4th cumulative wall layer thickness above ground floor level
+       0.05_wp,        &  !< parameter 41  - [m] 1st cumulative wall layer thickness above ground floor level
+       0.15_wp,        &  !< parameter 42  - [m] 2nd cumulative wall layer thickness above ground floor level
+       0.28_wp,        &  !< parameter 43  - [m] 3rd cumulative wall layer thickness above ground floor level
+       0.3_wp,         &  !< parameter 44  - [m] 4th cumulative wall layer thickness above ground floor level
        20000.0_wp,     &  !< parameter 45  - [J/(m2*K)] heat capacity wall surface (1 cm air)
        23.0_wp,        &  !< parameter 46  - [W/(m2*K)] thermal conductivity of wall surface (1 cm air)
        20000.0_wp,     &  !< parameter 47  - [J/(m2*K)] heat capacity of window surface (1 cm air)
@@ -6242,21 +6242,21 @@
        23.0_wp,        &  !< parameter 49  - [W/(m2*K)] thermal conductivity of window surface (1 cm air)
        10.0_wp,        &  !< parameter 50  - [W/(m2*K)] thermal conductivty of green surface
        1.0_wp,         &  !< parameter 51  - [-] wall fraction ground plate
-       0.20_wp,        &  !< parameter 52  - [m] 1st cumulative wall layer thickness ground plate
-       0.26_wp,        &  !< parameter 53  - [m] 2nd cumulative wall layer thickness ground plate
-       0.32_wp,        &  !< parameter 54  - [m] 3rd cumulative wall layer thickness ground plate
-       0.34_wp,        &  !< parameter 55  - [m] 4th cumulative wall layer thickness ground plate
+       0.1_wp,         &  !< parameter 52  - [m] 1st cumulative wall layer thickness ground plate
+       0.2_wp,         &  !< parameter 53  - [m] 2nd cumulative wall layer thickness ground plate
+       0.28_wp,        &  !< parameter 54  - [m] 3rd cumulative wall layer thickness ground plate
+       0.3_wp,         &  !< parameter 55  - [m] 4th cumulative wall layer thickness ground plate
        2112000.0_wp,   &  !< parameter 56  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground plate
-       79200.0_wp,     &  !< parameter 57  - [J/(m3*K)] heat capacity 2nd wall layer ground plate
-       2112000.0_wp,   &  !< parameter 58  - [J/(m3*K)] heat capacity 3rd wall layer ground plate
+       2112000.0_wp,   &  !< parameter 57  - [J/(m3*K)] heat capacity 2nd wall layer ground plate
+       1008000.0_wp,   &  !< parameter 58  - [J/(m3*K)] heat capacity 3rd wall layer ground plate
        2.1_wp,         &  !< parameter 59  - [W/(m*K)] thermal conductivity 1st wall layer (oustide) ground plate
-       0.05_wp,        &  !< parameter 60  - [W/(m*K)] thermal conductivity 2nd wall layer ground plate
-       2.1_wp,         &  !< parameter 61  - [W/(m*K)] thermal conductivity 3rd wall layer ground plate
-       0.02_wp,        &  !< parameter 62  - [m] 1st cumulative wall layer thickness ground floor level
-       0.08_wp,        &  !< parameter 63  - [m] 2nd cumulative wall layer thickness ground floor level
-       0.32_wp,        &  !< parameter 64  - [m] 3rd cumulative wall layer thickness ground floor level
-       0.34_wp,        &  !< parameter 65  - [m] 4th cumulative wall layer thickness ground floor level
-       36.0_wp,        &  !< parameter 66  - [-] wall albedo_type ground floor level (albedo_type specified in radiation model)
+       2.1_wp,         &  !< parameter 60  - [W/(m*K)] thermal conductivity 2nd wall layer ground plate
+       0.41_wp,        &  !< parameter 61  - [W/(m*K)] thermal conductivity 3rd wall layer ground plate
+       0.05_wp,        &  !< parameter 62  - [m] 1st cumulative wall layer thickness ground floor level
+       0.15_wp,        &  !< parameter 63  - [m] 2nd cumulative wall layer thickness ground floor level
+       0.28_wp,        &  !< parameter 64  - [m] 3rd cumulative wall layer thickness ground floor level
+       0.3_wp,         &  !< parameter 65  - [m] 4th cumulative wall layer thickness ground floor level
+       34.0_wp,        &  !< parameter 66  - [-] wall albedo_type ground floor level (albedo_type specified in radiation model)
        0.02_wp,        &  !< parameter 67  - [m] 1st cumulative window layer thickness ground floor level
        0.04_wp,        &  !< parameter 68  - [m] 2nd cumulative window layer thickness ground floor level
        0.06_wp,        &  !< parameter 69  - [m] 3rd cumulative window layer thickness ground floor level
@@ -6264,9 +6264,9 @@
        1736000.0_wp,   &  !< parameter 71  - [J/(m3*K)] heat capacity 1st window layer (outside) ground floor level
        1736000.0_wp,   &  !< parameter 72  - [J/(m3*K)] heat capacity 2nd window layer ground floor level
        1736000.0_wp,   &  !< parameter 73  - [J/(m3*K)] heat capacity 3rd window layer ground floor level
-       0.19_wp,        &  !< parameter 74  - [W/(m*K)] thermal conductivity 1st window layer (outside) ground floor level
-       0.19_wp,        &  !< parameter 75  - [W/(m*K)] thermal conductivity 2nd window layer ground floor level
-       0.19_wp,        &  !< parameter 76  - [W/(m*K)] thermal conductivity 3rd window layer ground floor level
+       0.25_wp,        &  !< parameter 74  - [W/(m*K)] thermal conductivity 1st window layer (outside) ground floor level
+       0.25_wp,        &  !< parameter 75  - [W/(m*K)] thermal conductivity 2nd window layer ground floor level
+       0.25_wp,        &  !< parameter 76  - [W/(m*K)] thermal conductivity 3rd window layer ground floor level
        37.0_wp,        &  !< parameter 77  - [-] window albedo_type ground floor level (albedo_type specified in radiation model)
        5.0_wp,         &  !< parameter 78  - [-] green albedo_type ground floor level (albedo_type specified in radiation model)
        0.02_wp,        &  !< parameter 79  - [m] 1st cumulative window layer thickness above ground floor level
@@ -6276,22 +6276,22 @@
        1736000.0_wp,   &  !< parameter 83  - [J/(m3*K)] heat capacity 1st window layer (outside) above ground floor level
        1736000.0_wp,   &  !< parameter 84  - [J/(m3*K)] heat capacity 2nd window layer above ground floor level
        1736000.0_wp,   &  !< parameter 85  - [J/(m3*K)] heat capacity 3rd window layer above ground floor level
-       0.19_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 1st window layer (outside) above ground floor level
-       0.19_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 2nd window layer above ground floor level
-       0.19_wp,        &  !< parameter 87  - [W/(m*K)] thermal conductivity 3rd window layer above ground floor level
+       0.25_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 1st window layer (outside) above ground floor level
+       0.25_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 2nd window layer above ground floor level
+       0.25_wp,        &  !< parameter 87  - [W/(m*K)] thermal conductivity 3rd window layer above ground floor level
        1.0_wp,         &  !< parameter 89  - [-] wall fraction roof
        0.02_wp,        &  !< parameter 90  - [m] 1st cumulative wall layer thickness roof
-       0.17_wp,        &  !< parameter 91  - [m] 2nd cumulative wall layer thickness roof
-       0.37_wp,        &  !< parameter 92  - [m] 3rd cumulative wall layer thickness roof
-       0.39_wp,        &  !< parameter 93  - [m] 4th cumulative wall layer thickness roof
-       1700000.0_wp,   &  !< parameter 94  - [J/(m3*K)] heat capacity 1st wall layer (outside) roof
-       79200.0_wp,     &  !< parameter 95  - [J/(m3*K)] heat capacity 2nd wall layer roof
-       2112000.0_wp,   &  !< parameter 96  - [J/(m3*K)] heat capacity 3rd wall layer roof
-       0.16_wp,        &  !< parameter 97  - [W/(m*K)] thermal conductivity 1st wall layer (outside) roof
-       0.046_wp,       &  !< parameter 98  - [W/(m*K)] thermal conductivity 2nd wall layer roof
-       2.1_wp,         &  !< parameter 99  - [W/(m*K)] thermal conductivity 3rd wall layer roof
-       0.93_wp,        &  !< parameter 100 - [-] wall emissivity roof
-       42.0_wp,        &  !< parameter 101 - [-] wall albedo_type roof (albedo_type specified in radiation model)
+       0.2_wp,         &  !< parameter 91  - [m] 2nd cumulative wall layer thickness roof
+       0.38_wp,        &  !< parameter 92  - [m] 3rd cumulative wall layer thickness roof
+       0.4_wp,         &  !< parameter 93  - [m] 4th cumulative wall layer thickness roof
+       1488000.0_wp,   &  !< parameter 94  - [J/(m3*K)] heat capacity 1st wall layer (outside) roof
+       898800.0_wp,    &  !< parameter 95  - [J/(m3*K)] heat capacity 2nd wall layer roof
+       898800.0_wp,    &  !< parameter 96  - [J/(m3*K)] heat capacity 3rd wall layer roof
+       0.72_wp,        &  !< parameter 97  - [W/(m*K)] thermal conductivity 1st wall layer (outside) roof
+       0.22_wp,        &  !< parameter 98  - [W/(m*K)] thermal conductivity 2nd wall layer roof
+       0.22_wp,        &  !< parameter 99  - [W/(m*K)] thermal conductivity 3rd wall layer roof
+       0.94_wp,        &  !< parameter 100 - [-] wall emissivity roof
+       20.0_wp,        &  !< parameter 101 - [-] wall albedo_type roof (albedo_type specified in radiation model)
        0.0_wp,         &  !< parameter 102 - [-] window fraction roof
        0.02_wp,        &  !< parameter 103 - [m] window 1st layer thickness roof
        0.04_wp,        &  !< parameter 104 - [m] window 2nd layer thickness roof
@@ -6300,46 +6300,46 @@
        1736000.0_wp,   &  !< parameter 107 - [J/(m3*K)] heat capacity 1st window layer (outside) roof
        1736000.0_wp,   &  !< parameter 108 - [J/(m3*K)] heat capacity 2nd window layer roof
        1736000.0_wp,   &  !< parameter 109 - [J/(m3*K)] heat capacity 3rd window layer roof
-       0.19_wp,        &  !< parameter 110 - [W/(m*K)] thermal conductivity 1st window layer (outside) roof
-       0.19_wp,        &  !< parameter 111 - [W/(m*K)] thermal conductivity 2nd window layer roof
-       0.19_wp,        &  !< parameter 112 - [W/(m*K)] thermal conductivity 3rd window layer roof
-       0.87_wp,        &  !< parameter 113 - [-] window emissivity roof
-       0.65_wp,        &  !< parameter 114 - [-] window transmissivity (not visual transmissivity) roof
+       0.25_wp,        &  !< parameter 110 - [W/(m*K)] thermal conductivity 1st window layer (outside) roof
+       0.25_wp,        &  !< parameter 111 - [W/(m*K)] thermal conductivity 2nd window layer roof
+       0.25_wp,        &  !< parameter 112 - [W/(m*K)] thermal conductivity 3rd window layer roof
+       0.89_wp,        &  !< parameter 113 - [-] window emissivity roof
+       0.75_wp,        &  !< parameter 114 - [-] window transmissivity (not visual transmissivity) roof
        37.0_wp,        &  !< parameter 115 - [-] window albedo_type roof (albedo_type specified in radiation model)
        0.86_wp,        &  !< parameter 116 - [-] green emissivity roof
        5.0_wp,         &  !< parameter 117 - [-] green albedo_type roof (albedo_type specified in radiation model)
        0.0_wp,         &  !< parameter 118 - [-] green type roof
-       0.75_wp,        &  !< parameter 119 - [-] shading factor
-       0.7_wp,         &  !< parameter 120 - [-] g-value windows
-       1.7_wp,         &  !< parameter 121 - [W/(m2*K)] u-value windows
-       1.0_wp,         &  !< parameter 122 - [1/h] basic airflow without occupancy of the room for - summer 1.0_wp, winter 0.2
-       1.0_wp,         &  !< parameter 123 - [1/h] additional airflow dependent on occupancy of the room for - summer 1.0_wp, winter 0.8
-       0.0_wp,         &  !< parameter 124 - [-] heat recovery efficiency
-       3.5_wp,         &  !< parameter 125 - [m2/m2] dynamic parameter specific effective surface
-       370000.0_wp,    &  !< parameter 126 - [J/(m2*K)] dynamic parameter innner heat storage
+       1.0_wp,         &  !< parameter 119 - [-] shading factor
+       0.75_wp,        &  !< parameter 120 - [-] g-value windows
+       3.1_wp,         &  !< parameter 121 - [W/(m2*K)] u-value windows
+       0.5_wp,         &  !< parameter 122 - [1/h] basic airflow without occupancy of the room for - summer 1.0_wp, winter 0.2
+       1.5_wp,         &  !< parameter 123 - [1/h] additional airflow dependent on occupancy of the room for - summer 1.0_wp, winter 0.8
+       0.75_wp,        &  !< parameter 124 - [-] heat recovery efficiency
+       3.0_wp,         &  !< parameter 125 - [m2/m2] dynamic parameter specific effective surface
+       260000.0_wp,    &  !< parameter 126 - [J/(m2*K)] dynamic parameter innner heat storage
        4.5_wp,         &  !< parameter 127 - [m2/m2] ratio internal surface/floor area
-       80.0_wp,        &  !< parameter 128 - [W] maximal heating capacity
-       0.0_wp,         &  !< parameter 129 - [W] maximal cooling capacity
+       0.0_wp,         &  !< parameter 128 - [W] maximal heating capacity
+       -80.0_wp,       &  !< parameter 129 - [W] maximal cooling capacity
        7.0_wp,         &  !< parameter 130 - [W/m2] additional internal heat gains dependent on occupancy of the room
        3.0_wp,         &  !< parameter 131 - [W/m2] basic internal heat gains without occupancy of the room
-       2.5_wp,         &  !< parameter 132 - [m] storey height
+       3.0_wp,         &  !< parameter 132 - [m] storey height
        0.2_wp,         &  !< parameter 133 - [m] ceiling construction height
        0.0_wp,         &  !< parameter 134 - [-] anthropogenic heat output for heating
-       2.54_wp,        &  !< parameter 135 - [-] anthropogenic heat output for cooling
-       1526000.0_wp,   &  !< parameter 136 - [J/(m3*K)] heat capacity 4th wall layer (inside) above ground floor level
-       0.7_wp,         &  !< parameter 137 - [W/(m*K)] thermal conductivity 4th wall layer (inside) above ground floor level
-       1526000.0_wp,   &  !< parameter 138 - [J/(m3*K)] capacity 4th wall layer (inside) ground floor level
-       0.7_wp,         &  !< parameter 139 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground floor level
-       357200.0_wp,    &  !< parameter 140 - [J/(m3*K)] heat capacity 4th wall layer (inside) ground plate
-       0.04_wp,        &  !< parameter 141 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground plate
+       1.0_wp,         &  !< parameter 135 - [-] anthropogenic heat output for cooling
+       1488000.0_wp,   &  !< parameter 136 - [J/(m3*K)] heat capacity 4th wall layer (inside) above ground floor level
+       0.72_wp,        &  !< parameter 137 - [W/(m*K)] thermal conductivity 4th wall layer (inside) above ground floor level
+       1488000.0_wp,   &  !< parameter 138 - [J/(m3*K)] capacity 4th wall layer (inside) ground floor level
+       0.72_wp,        &  !< parameter 139 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground floor level
+       940800.0_wp,    &  !< parameter 140 - [J/(m3*K)] heat capacity 4th wall layer (inside) ground plate
+       0.57_wp,        &  !< parameter 141 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground plate
        1736000.0_wp,   &  !< parameter 142 - [J/(m3*K)] heat capacity 4th window layer (inside) ground floor level
-       0.19_wp,        &  !< parameter 143 - [W/(m*K)] thermal conductivity 4th window layer (inside) ground floor level
+       0.25_wp,        &  !< parameter 143 - [W/(m*K)] thermal conductivity 4th window layer (inside) ground floor level
        1736000.0_wp,   &  !< parameter 144 - [J/(m3*K)] heat capacity 4th layer (inside) above ground floor level
-       0.19_wp,        &  !< parameter 145 - [W/(m*K)] thermal conductivity 4th window layer (inside) above ground floor level
-       1526000.0_wp,   &  !< parameter 146 - [J/(m3*K)] heat capacity 4th wall layer (inside) roof
-       0.7_wp,         &  !< parameter 147 - [W/(m*K)] thermal conductivity 4th wall layer (inside) roof
+       0.25_wp,        &  !< parameter 145 - [W/(m*K)] thermal conductivity 4th window layer (inside) above ground floor level
+       1488000.0_wp,   &  !< parameter 146 - [J/(m3*K)] heat capacity 4th wall layer (inside) roof
+       0.72_wp,        &  !< parameter 147 - [W/(m*K)] thermal conductivity 4th wall layer (inside) roof
        1736000.0_wp,   &  !< parameter 148 - [J/(m3*K)] heat capacity 4th window layer (inside) roof
-       0.19_wp         &  !< parameter 149 - [W/(m*K)] thermal conductivity 4th window layer (inside) roof
+       0.25_wp         &  !< parameter 149 - [W/(m*K)] thermal conductivity 4th window layer (inside) roof
                         /)
 
     building_pars(:,6) = (/                                                                        &
@@ -6349,45 +6349,45 @@
        0.0_wp,         &  !< parameter 3   - [-] green fraction roof above ground floor level
        1.5_wp,         &  !< parameter 4   - [m2/m2] LAI (Leaf Area Index) roof
        1.5_wp,         &  !< parameter 5   - [m2/m2] LAI (Leaf Area Index) on wall above ground floor level
-       1520000.0_wp,   &  !< parameter 6   - [J/(m3*K)] heat capacity 1st wall layer (outside) above ground floor level
-       79200.0_wp,     &  !< parameter 7   - [J/(m3*K)] heat capacity 2nd wall layer above ground floor level
-       1344000.0_wp,   &  !< parameter 8   - [J/(m3*K)] heat capacity 3rd wall layer above ground floor level
-       0.93_wp,        &  !< parameter 9   - [W/(m*K)] thermal conductivity 1st wall layer (outside) above ground floor level
-       0.035_wp,       &  !< parameter 10  - [W/(m*K)] thermal conductivity 2nd wall layer above ground floor level
-       0.68_wp,        &  !< parameter 11  - [W/(m*K)] thermal conductivity 3rd wall layer above ground floor level
-       299.15_wp,      &  !< parameter 12  - [K] indoor target summer temperature
+       1488000.0_wp,   &  !< parameter 6   - [J/(m3*K)] heat capacity 1st wall layer (outside) above ground floor level
+       898800.0_wp,    &  !< parameter 7   - [J/(m3*K)] heat capacity 2nd wall layer above ground floor level
+       898800.0_wp,    &  !< parameter 8   - [J/(m3*K)] heat capacity 3rd wall layer above ground floor level
+       0.72_wp,        &  !< parameter 9   - [W/(m*K)] thermal conductivity 1st wall layer (outside) above ground floor level
+       0.22_wp,        &  !< parameter 10  - [W/(m*K)] thermal conductivity 2nd wall layer above ground floor level
+       0.22_wp,        &  !< parameter 11  - [W/(m*K)] thermal conductivity 3rd wall layer above ground floor level
+       297.15_wp,      &  !< parameter 12  - [K] indoor target summer temperature
        293.15_wp,      &  !< parameter 13  - [K] indoor target winter temperature
-       0.93_wp,        &  !< parameter 14  - [-] wall emissivity above ground floor level
+       0.84_wp,        &  !< parameter 14  - [-] wall emissivity above ground floor level
        0.86_wp,        &  !< parameter 15  - [-] green emissivity above ground floor level
-       0.8_wp,         &  !< parameter 16  - [-] window emissivity above ground floor level
-       0.57_wp,        &  !< parameter 17  - [-] window transmissivity (not visual transmissivity) above ground floor level
+       0.89_wp,        &  !< parameter 16  - [-] window emissivity above ground floor level
+       0.85_wp,        &  !< parameter 17  - [-] window transmissivity (not visual transmissivity) above ground floor level
        0.001_wp,       &  !< parameter 18  - [m] z0 roughness above ground floor level
        0.0001_wp,      &  !< parameter 19  - [m] z0h/z0g roughness heat/humidity above ground floor level
-       2.7_wp,         &  !< parameter 20  - [m] ground floor level height
+       3.0_wp,         &  !< parameter 20  - [m] ground floor level height
        0.71_wp,        &  !< parameter 21  - [-] wall fraction ground floor level
        0.29_wp,        &  !< parameter 22  - [-] window fraction ground floor level
        0.0_wp,         &  !< parameter 23  - [-] green fraction ground floor level
        0.0_wp,         &  !< parameter 24  - [-] green fraction roof ground floor level
        1.5_wp,         &  !< parameter 25  - [m2/m2] LAI (Leaf Area Index) on wall ground floor level
-       1520000.0_wp,   &  !< parameter 26  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground floor level
-       79200.0_wp,     &  !< parameter 27  - [J/(m3*K)] heat capacity 2nd wall layer ground floor level
-       1344000.0_wp,   &  !< parameter 28  - [J/(m3*K)] heat capacity 3rd wall layer ground floor level
-       0.93_wp,        &  !< parameter 29  - [W/(m*K)] thermal conductivity 1st wall layer (outside) ground floor level
-       0.035_wp,       &  !< parameter 30  - [W/(m*K)] thermal conductivity 2nd wall layer ground floor level
-       0.68_wp,        &  !< parameter 31  - [W/(m*K)] thermal conductivity 3rd wall layer ground floor level
-       0.93_wp,        &  !< parameter 32  - [-] wall emissivity ground floor level
-       0.8_wp,         &  !< parameter 33  - [-] window emissivity ground floor level
+       1488000.0_wp,   &  !< parameter 26  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground floor level
+       898800.0_wp,    &  !< parameter 27  - [J/(m3*K)] heat capacity 2nd wall layer ground floor level
+       898800.0_wp,    &  !< parameter 28  - [J/(m3*K)] heat capacity 3rd wall layer ground floor level
+       0.72_wp,        &  !< parameter 29  - [W/(m*K)] thermal conductivity 1st wall layer (outside) ground floor level
+       0.22_wp,        &  !< parameter 30  - [W/(m*K)] thermal conductivity 2nd wall layer ground floor level
+       0.22_wp,        &  !< parameter 31  - [W/(m*K)] thermal conductivity 3rd wall layer ground floor level
+       0.84_wp,        &  !< parameter 32  - [-] wall emissivity ground floor level
+       0.89_wp,        &  !< parameter 33  - [-] window emissivity ground floor level
        0.86_wp,        &  !< parameter 34  - [-] green emissivity ground floor level
-       0.57_wp,        &  !< parameter 35  - [-] window transmissivity (not visual transmissivity) ground floor level
+       0.85_wp,        &  !< parameter 35  - [-] window transmissivity (not visual transmissivity) ground floor level
        0.001_wp,       &  !< parameter 36  - [m] z0 roughness ground floor level
        0.0001_wp,      &  !< parameter 37  - [m] z0h/z0q roughness heat/humidity
        36.0_wp,        &  !< parameter 38  - [-] wall albedo_type above ground floor level  (albedo_type specified in radiation model)
        5.0_wp,         &  !< parameter 39  - [-] green albedo_type above ground floor level  (albedo_type specified in radiation model)
-       38.0_wp,        &  !< parameter 40  - [-] window albedo_type above ground floor level  (albedo_type specified in radiation model)
+       37.0_wp,        &  !< parameter 40  - [-] window albedo_type above ground floor level  (albedo_type specified in radiation model)
        0.02_wp,        &  !< parameter 41  - [m] 1st cumulative wall layer thickness above ground floor level
-       0.22_wp,        &  !< parameter 42  - [m] 2nd cumulative wall layer thickness above ground floor level
-       0.58_wp,        &  !< parameter 43  - [m] 3rd cumulative wall layer thickness above ground floor level
-       0.6_wp,         &  !< parameter 44  - [m] 4th cumulative wall layer thickness above ground floor level
+       0.15_wp,        &  !< parameter 42  - [m] 2nd cumulative wall layer thickness above ground floor level
+       0.28_wp,        &  !< parameter 43  - [m] 3rd cumulative wall layer thickness above ground floor level
+       0.3_wp,         &  !< parameter 44  - [m] 4th cumulative wall layer thickness above ground floor level
        20000.0_wp,     &  !< parameter 45  - [J/(m2*K)] heat capacity wall surface (1 cm air)
        23.0_wp,        &  !< parameter 46  - [W/(m2*K)] thermal conductivity of wall surface (1 cm air)
        20000.0_wp,     &  !< parameter 47  - [J/(m2*K)] heat capacity of window surface (1 cm air)
@@ -6395,258 +6395,259 @@
        23.0_wp,        &  !< parameter 49  - [W/(m2*K)] thermal conductivity of window surface (1 cm air)
        10.0_wp,        &  !< parameter 50  - [W/(m2*K)] thermal conductivty of green surface
        1.0_wp,         &  !< parameter 51  - [-] wall fraction ground plate
-       0.20_wp,        &  !< parameter 52  - [m] 1st cumulative wall layer thickness ground plate
-       0.32_wp,        &  !< parameter 53  - [m] 2nd cumulative wall layer thickness ground plate
-       0.38_wp,        &  !< parameter 54  - [m] 3rd cumulative wall layer thickness ground plate
-       0.41_wp,        &  !< parameter 55  - [m] 4th cumulative wall layer thickness ground plate
+       0.1_wp,         &  !< parameter 52  - [m] 1st cumulative wall layer thickness ground plate
+       0.2_wp,         &  !< parameter 53  - [m] 2nd cumulative wall layer thickness ground plate
+       0.28_wp,        &  !< parameter 54  - [m] 3rd cumulative wall layer thickness ground plate
+       0.3_wp,         &  !< parameter 55  - [m] 4th cumulative wall layer thickness ground plate
        2112000.0_wp,   &  !< parameter 56  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground plate
-       79200.0_wp,     &  !< parameter 57  - [J/(m3*K)] heat capacity 2nd wall layer ground plate
-       2112000.0_wp,   &  !< parameter 58  - [J/(m3*K)] heat capacity 3rd wall layer ground plate
+       2112000.0_wp,   &  !< parameter 57  - [J/(m3*K)] heat capacity 2nd wall layer ground plate
+       1008000.0_wp,   &  !< parameter 58  - [J/(m3*K)] heat capacity 3rd wall layer ground plate
        2.1_wp,         &  !< parameter 59  - [W/(m*K)] thermal conductivity 1st wall layer (oustide) ground plate
-       0.05_wp,        &  !< parameter 60  - [W/(m*K)] thermal conductivity 2nd wall layer ground plate
-       2.1_wp,         &  !< parameter 61  - [W/(m*K)] thermal conductivity 3rd wall layer ground plate
+       2.1_wp,         &  !< parameter 60  - [W/(m*K)] thermal conductivity 2nd wall layer ground plate
+       0.41_wp,        &  !< parameter 61  - [W/(m*K)] thermal conductivity 3rd wall layer ground plate
        0.02_wp,        &  !< parameter 62  - [m] 1st cumulative wall layer thickness ground floor level
-       0.22_wp,        &  !< parameter 63  - [m] 2nd cumulative wall layer thickness ground floor level
-       0.58_wp,        &  !< parameter 64  - [m] 3rd cumulative wall layer thickness ground floor level
-       0.6_wp,         &  !< parameter 65  - [m] 4th cumulative wall layer thickness ground floor level
+       0.15_wp,        &  !< parameter 63  - [m] 2nd cumulative wall layer thickness ground floor level
+       0.28_wp,        &  !< parameter 64  - [m] 3rd cumulative wall layer thickness ground floor level
+       0.3_wp,         &  !< parameter 65  - [m] 4th cumulative wall layer thickness ground floor level
        36.0_wp,        &  !< parameter 66  - [-] wall albedo_type ground floor level (albedo_type specified in radiation model)
-       0.03_wp,        &  !< parameter 67  - [m] 1st cumulative window layer thickness ground floor level
-       0.06_wp,        &  !< parameter 68  - [m] 2nd cumulative window layer thickness ground floor level
-       0.09_wp,        &  !< parameter 69  - [m] 3rd cumulative window layer thickness ground floor level
-       0.12_wp,       &  !< parameter 70  - [m] 4th cumulative window layer thickness ground floor level
+       0.02_wp,        &  !< parameter 67  - [m] 1st cumulative window layer thickness ground floor level
+       0.04_wp,        &  !< parameter 68  - [m] 2nd cumulative window layer thickness ground floor level
+       0.06_wp,        &  !< parameter 69  - [m] 3rd cumulative window layer thickness ground floor level
+       0.08_wp,        &  !< parameter 70  - [m] 4th cumulative window layer thickness ground floor level
        1736000.0_wp,   &  !< parameter 71  - [J/(m3*K)] heat capacity 1st window layer (outside) ground floor level
        1736000.0_wp,   &  !< parameter 72  - [J/(m3*K)] heat capacity 2nd window layer ground floor level
        1736000.0_wp,   &  !< parameter 73  - [J/(m3*K)] heat capacity 3rd window layer ground floor level
-       0.11_wp,        &  !< parameter 74  - [W/(m*K)] thermal conductivity 1st window layer (outside) ground floor level
-       0.11_wp,        &  !< parameter 75  - [W/(m*K)] thermal conductivity 2nd window layer ground floor level
-       0.11_wp,        &  !< parameter 76  - [W/(m*K)] thermal conductivity 3rd window layer ground floor level
-       38.0_wp,        &  !< parameter 77  - [-] window albedo_type ground floor level (albedo_type specified in radiation model)
+       0.43_wp,        &  !< parameter 74  - [W/(m*K)] thermal conductivity 1st window layer (outside) ground floor level
+       0.43_wp,        &  !< parameter 75  - [W/(m*K)] thermal conductivity 2nd window layer ground floor level
+       0.43_wp,        &  !< parameter 76  - [W/(m*K)] thermal conductivity 3rd window layer ground floor level
+       37.0_wp,        &  !< parameter 77  - [-] window albedo_type ground floor level (albedo_type specified in radiation model)
        5.0_wp,         &  !< parameter 78  - [-] green albedo_type ground floor level (albedo_type specified in radiation model)
-       0.03_wp,        &  !< parameter 79  - [m] 1st cumulative window layer thickness above ground floor level
-       0.06_wp,        &  !< parameter 80  - [m] 2nd cumulative window layer thickness above ground floor level
-       0.09_wp,        &  !< parameter 81  - [m] 3rd cumulative window layer thickness above ground floor level
-       0.12_wp,        &  !< parameter 82  - [m] 4th cumulative window layer thickness above ground floor level
+       0.02_wp,        &  !< parameter 79  - [m] 1st cumulative window layer thickness above ground floor level
+       0.04_wp,        &  !< parameter 80  - [m] 2nd thickness window layer above ground floor level
+       0.06_wp,        &  !< parameter 81  - [m] 3rd cumulative window layer thickness above ground floor level
+       0.08_wp,        &  !< parameter 82  - [m] 4th cumulative window layer thickness above ground floor level
        1736000.0_wp,   &  !< parameter 83  - [J/(m3*K)] heat capacity 1st window layer (outside) above ground floor level
        1736000.0_wp,   &  !< parameter 84  - [J/(m3*K)] heat capacity 2nd window layer above ground floor level
        1736000.0_wp,   &  !< parameter 85  - [J/(m3*K)] heat capacity 3rd window layer above ground floor level
-       0.11_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 1st window layer (outside) above ground floor level
-       0.11_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 2nd window layer above ground floor level
-       0.11_wp,        &  !< parameter 87  - [W/(m*K)] thermal conductivity 3rd window layer above ground floor level
+       0.43_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 1st window layer (outside) above ground floor level
+       0.43_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 2nd window layer above ground floor level
+       0.43_wp,        &  !< parameter 87  - [W/(m*K)] thermal conductivity 3rd window layer above ground floor level
        1.0_wp,         &  !< parameter 89  - [-] wall fraction roof
        0.02_wp,        &  !< parameter 90  - [m] 1st cumulative wall layer thickness roof
-       0.06_wp,        &  !< parameter 91  - [m] 2nd cumulative wall layer thickness roof
-       0.36_wp,        &  !< parameter 92  - [m] 3rd cumulative wall layer thickness roof
-       0.38_wp,        &  !< parameter 93  - [m] 4th cumulative wall layer thickness roof
-       3753600.0_wp,   &  !< parameter 94  - [J/(m3*K)] heat capacity 1st wall layer (outside) roof
-       709650.0_wp,    &  !< parameter 95  - [J/(m3*K)] heat capacity 2nd wall layer roof
-       79200.0_wp,     &  !< parameter 96  - [J/(m3*K)] heat capacity 3rd wall layer roof
-       0.52_wp,        &  !< parameter 97  - [W/(m*K)] thermal conductivity 1st wall layer (outside) roof
-       0.12_wp,        &  !< parameter 98  - [W/(m*K)] thermal conductivity 2nd wall layer roof
-       0.035_wp,       &  !< parameter 99  - [W/(m*K)] thermal conductivity 3rd wall layer roof
-       0.93_wp,        &  !< parameter 100 - [-] wall emissivity roof
-       42.0_wp,        &  !< parameter 101 - [-] wall albedo_type roof (albedo_type specified in radiation model)
+       0.2_wp,         &  !< parameter 91  - [m] 2nd cumulative wall layer thickness roof
+       0.38_wp,        &  !< parameter 92  - [m] 3rd cumulative wall layer thickness roof
+       0.4_wp,         &  !< parameter 93  - [m] 4th cumulative wall layer thickness roof
+       1488000.0_wp,   &  !< parameter 94  - [J/(m3*K)] heat capacity 1st wall layer (outside) roof
+       898800.0_wp,    &  !< parameter 95  - [J/(m3*K)] heat capacity 2nd wall layer roof
+       898800.0_wp,    &  !< parameter 96  - [J/(m3*K)] heat capacity 3rd wall layer roof
+       0.72_wp,        &  !< parameter 97  - [W/(m*K)] thermal conductivity 1st wall layer (outside) roof
+       0.22_wp,        &  !< parameter 98  - [W/(m*K)] thermal conductivity 2nd wall layer roof
+       0.22_wp,        &  !< parameter 99  - [W/(m*K)] thermal conductivity 3rd wall layer roof
+       0.94_wp,        &  !< parameter 100 - [-] wall emissivity roof
+       20.0_wp,        &  !< parameter 101 - [-] wall albedo_type roof (albedo_type specified in radiation model)
        0.0_wp,         &  !< parameter 102 - [-] window fraction roof
-       0.03_wp,        &  !< parameter 103 - [m] window 1st layer thickness roof
-       0.06_wp,        &  !< parameter 104 - [m] window 2nd layer thickness roof
-       0.09_wp,        &  !< parameter 105 - [m] window 3rd layer thickness roof
-       0.12_wp,        &  !< parameter 106 - [m] window 4th layer thickness roof
+       0.02_wp,        &  !< parameter 103 - [m] window 1st layer thickness roof
+       0.04_wp,        &  !< parameter 104 - [m] window 2nd layer thickness roof
+       0.06_wp,        &  !< parameter 105 - [m] window 3rd layer thickness roof
+       0.08_wp,        &  !< parameter 106 - [m] window 4th layer thickness roof
        1736000.0_wp,   &  !< parameter 107 - [J/(m3*K)] heat capacity 1st window layer (outside) roof
        1736000.0_wp,   &  !< parameter 108 - [J/(m3*K)] heat capacity 2nd window layer roof
        1736000.0_wp,   &  !< parameter 109 - [J/(m3*K)] heat capacity 3rd window layer roof
-       0.11_wp,        &  !< parameter 110 - [W/(m*K)] thermal conductivity 1st window layer (outside) roof
-       0.11_wp,        &  !< parameter 111 - [W/(m*K)] thermal conductivity 2nd window layer roof
-       0.11_wp,        &  !< parameter 112 - [W/(m*K)] thermal conductivity 3rd window layer roof
-       0.8_wp,         &  !< parameter 113 - [-] window emissivity roof
-       0.57_wp,        &  !< parameter 114 - [-] window transmissivity (not visual transmissivity) roof
-       38.0_wp,        &  !< parameter 115 - [-] window albedo_type roof (albedo_type specified in radiation model)
+       0.43_wp,        &  !< parameter 110 - [W/(m*K)] thermal conductivity 1st window layer (outside) roof
+       0.43_wp,        &  !< parameter 111 - [W/(m*K)] thermal conductivity 2nd window layer roof
+       0.43_wp,        &  !< parameter 112 - [W/(m*K)] thermal conductivity 3rd window layer roof
+       0.89_wp,        &  !< parameter 113 - [-] window emissivity roof
+       0.85_wp,        &  !< parameter 114 - [-] window transmissivity (not visual transmissivity) roof
+       37.0_wp,        &  !< parameter 115 - [-] window albedo_type roof (albedo_type specified in radiation model)
        0.86_wp,        &  !< parameter 116 - [-] green emissivity roof
        5.0_wp,         &  !< parameter 117 - [-] green albedo_type roof (albedo_type specified in radiation model)
        0.0_wp,         &  !< parameter 118 - [-] green type roof
-       0.15_wp,        &  !< parameter 119 - [-] shading factor
-       0.6_wp,         &  !< parameter 120 - [-] g-value windows
-       0.8_wp,         &  !< parameter 121 - [W/(m2*K)] u-value windows
-       1.0_wp,         &  !< parameter 122 - [1/h] basic airflow without occupancy of the room for - summer 1.0_wp, winter 0.2
-       1.0_wp,         &  !< parameter 123 - [1/h] additional airflow dependent on occupancy of the room for - summer 1.0_wp, winter 0.8
-       0.8_wp,         &  !< parameter 124 - [-] heat recovery efficiency
-       2.5_wp,         &  !< parameter 125 - [m2/m2] dynamic parameter specific effective surface
-       165000.0_wp,    &  !< parameter 126 - [J/(m2*K)] dynamic parameter innner heat storage
+       1.0_wp,         &  !< parameter 119 - [-] shading factor
+       0.85_wp,        &  !< parameter 120 - [-] g-value windows
+       5.4_wp,         &  !< parameter 121 - [W/(m2*K)] u-value windows
+       0.5_wp,         &  !< parameter 122 - [1/h] basic airflow without occupancy of the room for - summer 1.0_wp, winter 0.2
+       1.5_wp,         &  !< parameter 123 - [1/h] additional airflow dependent on occupancy of the room for - summer 1.0_wp, winter 0.8
+       0.0_wp,         &  !< parameter 124 - [-] heat recovery efficiency
+       3.5_wp,         &  !< parameter 125 - [m2/m2] dynamic parameter specific effective surface
+       370000.0_wp,    &  !< parameter 126 - [J/(m2*K)] dynamic parameter innner heat storage
        4.5_wp,         &  !< parameter 127 - [m2/m2] ratio internal surface/floor area
-       40.0_wp,        &  !< parameter 128 - [W] maximal heating capacity
-       -80.0_wp,       &  !< parameter 129 - [W] maximal cooling capacity
+       0.0_wp,         &  !< parameter 128 - [W] maximal heating capacity
+       -80.0_wp,         &  !< parameter 129 - [W] maximal cooling capacity
        7.0_wp,         &  !< parameter 130 - [W/m2] additional internal heat gains dependent on occupancy of the room
        3.0_wp,         &  !< parameter 131 - [W/m2] basic internal heat gains without occupancy of the room
-       2.7_wp,         &  !< parameter 132 - [m] storey height
+       3.0_wp,         &  !< parameter 132 - [m] storey height
        0.2_wp,         &  !< parameter 133 - [m] ceiling construction height
-       -2.0_wp,        &  !< parameter 134 - [-] anthropogenic heat output for heating
-       1.25_wp,        &  !< parameter 135 - [-] anthropogenic heat output for cooling
-       1526000.0_wp,   &  !< parameter 136 - [J/(m3*K)] heat capacity 4th wall layer (inside) above ground floor level
-       0.7_wp,         &  !< parameter 137 - [W/(m*K)] thermal conductivity 4th wall layer (inside) above ground floor level
-       1526000.0_wp,   &  !< parameter 138 - [J/(m3*K)] capacity 4th wall layer (inside) ground floor level
-       0.7_wp,         &  !< parameter 139 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground floor level
-       709650.0_wp,    &  !< parameter 140 - [J/(m3*K)] heat capacity 4th wall layer (inside) ground plate
-       0.12_wp,        &  !< parameter 141 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground plate
+       0.0_wp,         &  !< parameter 134 - [-] anthropogenic heat output for heating
+       1.0_wp,         &  !< parameter 135 - [-] anthropogenic heat output for cooling
+       1488000.0_wp,   &  !< parameter 136 - [J/(m3*K)] heat capacity 4th wall layer (inside) above ground floor level
+       0.72_wp,        &  !< parameter 137 - [W/(m*K)] thermal conductivity 4th wall layer (inside) above ground floor level
+       1488000.0_wp,   &  !< parameter 138 - [J/(m3*K)] capacity 4th wall layer (inside) ground floor level
+       0.72_wp,        &  !< parameter 139 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground floor level
+       940800.0_wp,    &  !< parameter 140 - [J/(m3*K)] heat capacity 4th wall layer (inside) ground plate
+       0.57_wp,        &  !< parameter 141 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground plate
        1736000.0_wp,   &  !< parameter 142 - [J/(m3*K)] heat capacity 4th window layer (inside) ground floor level
-       0.11_wp,        &  !< parameter 143 - [W/(m*K)] thermal conductivity 4th window layer (inside) ground floor level
+       0.43_wp,        &  !< parameter 143 - [W/(m*K)] thermal conductivity 4th window layer (inside) ground floor level
        1736000.0_wp,   &  !< parameter 144 - [J/(m3*K)] heat capacity 4th layer (inside) above ground floor level
-       0.11_wp,        &  !< parameter 145 - [W/(m*K)] thermal conductivity 4th window layer (inside) above ground floor level
-       1526000.0_wp,   &  !< parameter 146 - [J/(m3*K)] heat capacity 4th wall layer (inside) roof
-       0.7_wp,         &  !< parameter 147 - [W/(m*K)] thermal conductivity 4th wall layer (inside) roof
+       0.43_wp,        &  !< parameter 145 - [W/(m*K)] thermal conductivity 4th window layer (inside) above ground floor level
+       1488000.0_wp,   &  !< parameter 146 - [J/(m3*K)] heat capacity 4th wall layer (inside) roof
+       0.72_wp,        &  !< parameter 147 - [W/(m*K)] thermal conductivity 4th wall layer (inside) roof
        1736000.0_wp,   &  !< parameter 148 - [J/(m3*K)] heat capacity 4th window layer (inside) roof
-       0.11_wp         &  !< parameter 149 - [W/(m*K)] thermal conductivity 4th window layer (inside) roof
+       0.43_wp         &  !< parameter 149 - [W/(m*K)] thermal conductivity 4th window layer (inside) roof
                         /)
 
     building_pars(:,7) = (/                                                                        &
-      1.0_wp,          &  !< parameter 0   - [-] wall fraction above ground floor level
-      0.0_wp,          &  !< parameter 1   - [-] window fraction above ground floor level
-      0.0_wp,          &  !< parameter 2   - [-] green fraction above ground floor level
-      0.0_wp,          &  !< parameter 3   - [-] green fraction roof above ground floor level
-      1.5_wp,          &  !< parameter 4   - [m2/m2] LAI (Leaf Area Index) roof
-      1.5_wp,          &  !< parameter 5   - [m2/m2] LAI (Leaf Area Index) on wall above ground floor level
-      1950400.0_wp,    &  !< parameter 6   - [J/(m3*K)] heat capacity 1st wall layer (upside) above ground floor level
-      1848000.0_wp,    &  !< parameter 7   - [J/(m3*K)] heat capacity 2nd wall layer above ground floor level
-      1848000.0_wp,    &  !< parameter 8   - [J/(m3*K)] heat capacity 3rd wall layer above ground floor level
-      0.7_wp,          &  !< parameter 9   - [W/(m*K)] thermal conductivity 1st wall layer (upside) above ground floor level
-      1.0_wp,          &  !< parameter 10  - [W/(m*K)] thermal conductivity 2nd wall layer above ground floor level
-      1.0_wp,          &  !< parameter 11  - [W/(m*K)] thermal conductivity 3rd wall layer above ground floor level
-      372.15_wp,       &  !< parameter 12  - [K] indoor target summer temperature
-      293.15_wp,       &  !< parameter 13  - [K] indoor target winter temperature
-      0.93_wp,         &  !< parameter 14  - [-] wall emissivity above ground floor level
-      0.86_wp,         &  !< parameter 15  - [-] green emissivity above ground floor level
-      0.8_wp,          &  !< parameter 16  - [-] window emissivity above ground floor level
-      0.7_wp,          &  !< parameter 17  - [-] window transmissivity (not visual transmissivity) above ground floor level
-      0.001_wp,        &  !< parameter 18  - [m] z0 roughness above ground floor level
-      0.0001_wp,       &  !< parameter 19  - [m] z0h/z0g roughness heat/humidity above ground floor level
-      4.0_wp,          &  !< parameter 20  - [m] ground floor level height
-      1.0_wp,          &  !< parameter 21  - [-] wall fraction ground floor level
-      0.0_wp,          &  !< parameter 22  - [-] window fraction ground floor level
-      0.0_wp,          &  !< parameter 23  - [-] green fraction ground floor level
-      0.0_wp,          &  !< parameter 24  - [-] green fraction roof ground floor level
-      1.5_wp,          &  !< parameter 25  - [m2/m2] LAI (Leaf Area Index) on wall ground floor level
-      1950400.0_wp,    &  !< parameter 26  - [J/(m3*K)] heat capacity 1st wall layer (upside) ground floor level
-      1848000.0_wp,    &  !< parameter 27  - [J/(m3*K)] heat capacity 2nd wall layer ground floor level
-      1848000.0_wp,    &  !< parameter 28  - [J/(m3*K)] heat capacity 3rd wall layer ground floor level
-      0.7_wp,          &  !< parameter 29  - [W/(m*K)] thermal conductivity 1st wall layer (upside) ground floor level
-      1.0_wp,          &  !< parameter 30  - [W/(m*K)] thermal conductivity 2nd wall layer ground floor level
-      1.0_wp,          &  !< parameter 31  - [W/(m*K)] thermal conductivity 3rd wall layer ground floor level
-      0.93_wp,         &  !< parameter 32  - [-] wall emissivity ground floor level
-      0.8_wp,          &  !< parameter 33  - [-] window emissivity ground floor level
-      0.86_wp,         &  !< parameter 34  - [-] green emissivity ground floor level
-      0.7_wp,          &  !< parameter 35  - [-] window transmissivity (not visual transmissivity) ground floor level
-      0.001_wp,        &  !< parameter 36  - [m] z0 roughness ground floor level
-      0.0001_wp,       &  !< parameter 37  - [m] z0h/z0q roughness heat/humidity
-      20.0_wp,         &  !< parameter 38  - [-] wall albedo_type above ground floor level  (albedo_type specified in radiation model)
-      5.0_wp,          &  !< parameter 39  - [-] green albedo_type above ground floor level  (albedo_type specified in radiation model)
-      37.0_wp,         &  !< parameter 40  - [-] window albedo_type above ground floor level  (albedo_type specified in radiation model)
-      0.29_wp,         &  !< parameter 41  - [m] 1st cumulative wall layer thickness above ground floor level
-      0.4_wp,          &  !< parameter 42  - [m] 2nd cumulative wall layer thickness above ground floor level
-      0.695_wp,        &  !< parameter 43  - [m] 3rd cumulative wall layer thickness above ground floor level
-      0.985_wp,        &  !< parameter 44  - [m] 4th cumulative wall layer thickness above ground floor level
-      20000.0_wp,      &  !< parameter 45  - [J/(m2*K)] heat capacity wall surface (1 cm air)
-      23.0_wp,         &  !< parameter 46  - [W/(m2*K)] thermal conductivity of wall surface (1 cm air)
-      20000.0_wp,      &  !< parameter 47  - [J/(m2*K)] heat capacity of window surface (1 cm air)
-      20000.0_wp,      &  !< parameter 48  - [J/(m2*K)] heat capacity of green surface
-      23.0_wp,         &  !< parameter 49  - [W/(m2*K)] thermal conductivity of window surface (1 cm air)
-      10.0_wp,         &  !< parameter 50  - [W/(m2*K)] thermal conductivty of green surface
-      1.0_wp,          &  !< parameter 51  - [-] wall fraction ground plate
-      0.29_wp,         &  !< parameter 52  - [m] 1st cumulative wall layer thickness ground plate
-      0.4_wp,          &  !< parameter 53  - [m] 2nd cumulative wall layer thickness ground plate
-      0.695_wp,        &  !< parameter 54  - [m] 3rd cumulative wall layer thickness ground plate
-      0.985_wp,        &  !< parameter 55  - [m] 4th cumulative wall layer thickness ground plate
-      1950400.0_wp,    &  !< parameter 56  - [J/(m3*K)] heat capacity 1st wall layer (upside) ground plate
-      1848000.0_wp,    &  !< parameter 57  - [J/(m3*K)] heat capacity 2nd wall layer ground plate
-      1848000.0_wp,    &  !< parameter 58  - [J/(m3*K)] heat capacity 3rd wall layer ground plate
-      0.7_wp,          &  !< parameter 59  - [W/(m*K)] thermal conductivity 1st wall layer (upside) ground plate
-      1.0_wp,          &  !< parameter 60  - [W/(m*K)] thermal conductivity 2nd wall layer ground plate
-      1.0_wp,          &  !< parameter 61  - [W/(m*K)] thermal conductivity 3rd wall layer ground plate
-      0.29_wp,         &  !< parameter 62  - [m] 1st cumulative wall layer thickness ground floor level
-      0.4_wp,          &  !< parameter 63  - [m] 2nd cumulative wall layer thickness ground floor level
-      0.695_wp,        &  !< parameter 64  - [m] 3rd cumulative wall layer thickness ground floor level
-      0.985_wp,        &  !< parameter 65  - [m] 4th cumulative wall layer thickness ground floor level
-      20.0_wp,         &  !< parameter 66  - [-] wall albedo_type ground floor level (albedo_type specified in radiation model)
-      0.003_wp,        &  !< parameter 67  - [m] 1st cumulative window layer thickness ground floor level
-      0.006_wp,        &  !< parameter 68  - [m] 2nd cumulative window layer thickness ground floor level
-      0.012_wp,        &  !< parameter 69  - [m] 3rd cumulative window layer thickness ground floor level
-      0.018_wp,        &  !< parameter 70  - [m] 4th cumulative window layer thickness ground floor level
-      1736000.0_wp,    &  !< parameter 71  - [J/(m3*K)] heat capacity 1st window layer (outside) ground floor level
-      1736000.0_wp,    &  !< parameter 72  - [J/(m3*K)] heat capacity 2nd window layer ground floor level
-      1736000.0_wp,    &  !< parameter 73  - [J/(m3*K)] heat capacity 3rd window layer ground floor level
-      0.57_wp,         &  !< parameter 74  - [W/(m*K)] thermal conductivity 1st window layer (outside) ground floor level
-      0.57_wp,         &  !< parameter 75  - [W/(m*K)] thermal conductivity 2nd window layer ground floor level
-      0.57_wp,         &  !< parameter 76  - [W/(m*K)] thermal conductivity 3rd window layer ground floor level
-      37.0_wp,         &  !< parameter 77  - [-] window albedo_type ground floor level (albedo_type specified in radiation model)
-      5.0_wp,          &  !< parameter 78  - [-] green albedo_type ground floor level (albedo_type specified in radiation model)
-      0.003_wp,        &  !< parameter 79  - [m] 1st cumulative window layer thickness above ground floor level
-      0.006_wp,        &  !< parameter 80  - [m] 2nd cumulative window layer thickness above ground floor level
-      0.012_wp,        &  !< parameter 81  - [m] 3rd cumulative window layer thickness above ground floor level
-      0.018_wp,        &  !< parameter 82  - [m] 4th cumulative window layer thickness above ground floor level
-      1736000.0_wp,    &  !< parameter 83  - [J/(m3*K)] heat capacity 1st window layer (outside) above ground floor level
-      1736000.0_wp,    &  !< parameter 84  - [J/(m3*K)] heat capacity 2nd window layer above ground floor level
-      1736000.0_wp,    &  !< parameter 85  - [J/(m3*K)] heat capacity 3rd window layer above ground floor level
-      0.57_wp,         &  !< parameter 86  - [W/(m*K)] thermal conductivity 1st window layer (outside) above ground floor level
-      0.57_wp,         &  !< parameter 87  - [W/(m*K)] thermal conductivity 2nd window layer above ground floor level
-      0.57_wp,         &  !< parameter 88  - [W/(m*K)] thermal conductivity 3rd window layer above ground floor level
-      1.0_wp,          &  !< parameter 89  - [-] wall fraction roof
-      0.29_wp,         &  !< parameter 90  - [m] 1st cumulative wall layer thickness roof
-      0.4_wp,          &  !< parameter 91  - [m] 2nd cumulative wall layer thickness roof
-      0.695_wp,        &  !< parameter 92  - [m] 3rd cumulative wall layer thickness roof
-      0.985_wp,        &  !< parameter 93  - [m] 4th cumulative wall layer thickness roof
-      1950400.0_wp,    &  !< parameter 94  - [J/(m3*K)] heat capacity 1st wall layer (outside) roof
-      1848000.0_wp,    &  !< parameter 95  - [J/(m3*K)] heat capacity 2nd wall layer roof
-      1848000.0_wp,    &  !< parameter 96  - [J/(m3*K)] heat capacity 3rd wall layer roof
-      0.7_wp,          &  !< parameter 97  - [W/(m*K)] thermal conductivity 1st wall layer (upside) roof
-      1.0_wp,          &  !< parameter 98  - [W/(m*K)] thermal conductivity 2nd wall layer roof
-      1.0_wp,          &  !< parameter 99  - [W/(m*K)] thermal conductivity 3rd wall layer roof
-      0.93_wp,         &  !< parameter 100 - [-] wall emissivity roof
-      19.0_wp,         &  !< parameter 101 - [-] wall albedo_type roof (albedo_type specified in radiation model)
-      0.0_wp,          &  !< parameter 102 - [-] window fraction roof
-      0.003_wp,        &  !< parameter 103 - [m] window 1st layer thickness roof
-      0.006_wp,        &  !< parameter 104 - [m] window 2nd layer thickness roof
-      0.012_wp,        &  !< parameter 105 - [m] window 3rd layer thickness roof
-      0.018_wp,        &  !< parameter 106 - [m] window 4th layer thickness roof
-      1736000.0_wp,    &  !< parameter 107 - [J/(m3*K)] heat capacity 1st window layer (outside) roof
-      1736000.0_wp,    &  !< parameter 108 - [J/(m3*K)] heat capacity 2nd window layer roof
-      1736000.0_wp,    &  !< parameter 109 - [J/(m3*K)] heat capacity 3rd window layer roof
-      0.57_wp,         &  !< parameter 110 - [W/(m*K)] thermal conductivity 1st window layer (outside) roof
-      0.57_wp,         &  !< parameter 111 - [W/(m*K)] thermal conductivity 2nd window layer roof
-      0.57_wp,         &  !< parameter 112 - [W/(m*K)] thermal conductivity 3rd window layer roof
-      0.8_wp,          &  !< parameter 113 - [-] window emissivity roof
-      0.7_wp,          &  !< parameter 114 - [-] window transmissivity (not visual transmissivity) roof
-      37.0_wp,         &  !< parameter 115 - [-] window albedo_type roof (albedo_type specified in radiation model)
-      0.86_wp,         &  !< parameter 116 - [-] green emissivity roof
-      5.0_wp,          &  !< parameter 117 - [-] green albedo_type roof (albedo_type specified in radiation model)
-      0.0_wp,          &  !< parameter 118 - [-] green type roof
-      0.8_wp,          &  !< parameter 119 - [-] shading factor
-      100.0_wp,        &  !< parameter 120 - [-] g-value windows
-      100.0_wp,        &  !< parameter 121 - [W/(m2*K)] u-value windows
-      20.0_wp,         &  !< parameter 122 - [1/h] basic airflow without occupancy of the room
-      20.0_wp,         &  !< parameter 123 - [1/h] additional airflow dependent on occupancy of the room
-      0.0_wp,          &  !< parameter 124 - [-] heat recovery efficiency
-      1.0_wp,          &  !< parameter 125 - [m2/m2] dynamic parameter specific effective surface
-      1.0_wp,          &  !< parameter 126 - [J/(m2*K)] dynamic parameter innner heatstorage
-      4.5_wp,          &  !< parameter 127 - [m2/m2] ratio internal surface/floor area
-      100000.0_wp,     &  !< parameter 128 - [W] maximal heating capacity
-      0.0_wp,          &  !< parameter 129 - [W] maximal cooling capacity
-      0.0_wp,          &  !< parameter 130 - [W/m2] additional internal heat gains dependent on occupancy of the room
-      0.0_wp,          &  !< parameter 131 - [W/m2] basic internal heat gains without occupancy of the room
-      3.0_wp,          &  !< parameter 132 - [m] storey height
-      0.2_wp,          &  !< parameter 133 - [m] ceiling construction height
-      0.0_wp,          &  !< parameter 134 - [-] anthropogenic heat output for heating
-      0.0_wp,          &  !< parameter 135 - [-] anthropogenic heat output for cooling
-      1848000.0_wp,    &  !< parameter 136 - [J/(m3*K)] heat capacity 4th wall layer (downside) above ground floor level
-      1.0_wp,          &  !< parameter 137 - [W/(m*K)] thermal conductivity 4th wall layer (downside) above ground floor level
-      1848000.0_wp,    &  !< parameter 138 - [J/(m3*K)] heat capacity 4th wall layer (downside) ground floor level
-      1.0_wp,          &  !< parameter 139 - [W/(m*K)] thermal conductivity 4th wall layer (downside) ground floor level
-      1848000.0_wp,    &  !< parameter 140 - [J/(m3*K)] heat capacity 4th wall layer (downside) ground plate
-      1.0_wp,          &  !< parameter 141 - [W/(m*K)] thermal conductivity 4th wall layer (downside) ground plate
-      1736000.0_wp,    &  !< parameter 142 - [J/(m3*K)] heat capacity 4th window layer (inside) ground floor level
-      0.57_wp,         &  !< parameter 143 - [W/(m*K)] thermal conductivity 4th window layer (inside) ground floor level
-      1736000.0_wp,    &  !< parameter 144 - [J/(m3*K)] heat capacity 4th window layer (inside) above ground floor level
-      0.57_wp,         &  !< parameter 145 - [W/(m*K)] thermal conductivity 4th window layer (inside) above ground floor level
-      1848000.0_wp,    &  !< parameter 146 - [J/(m3*K)] heat capacity 4th wall layer (inside) roof
-      1.0_wp,          &  !< parameter 147 - [W/(m*K)] thermal conductivity 4th wall layer (downside) roof
-      1736000.0_wp,    &  !< parameter 148 - [J/(m3*K)] heat capacity 4th window layer (inside) roof
-      0.57_wp          &  !< parameter 149 - [W/(m*K)] thermal conductivity 4th window layer (inside) roof
+       0.71_wp,        &  !< parameter 0   - [-] wall fraction above ground floor level
+       0.29_wp,        &  !< parameter 1   - [-] window fraction above ground floor level
+       0.0_wp,         &  !< parameter 2   - [-] green fraction above ground floor level
+       0.0_wp,         &  !< parameter 3   - [-] green fraction roof above ground floor level
+       1.5_wp,         &  !< parameter 4   - [m2/m2] LAI (Leaf Area Index) roof
+       1.5_wp,         &  !< parameter 5   - [m2/m2] LAI (Leaf Area Index) on wall above ground floor level
+       1488000.0_wp,   &  !< parameter 6   - [J/(m3*K)] heat capacity 1st wall layer (outside) above ground floor level
+       898800.0_wp,    &  !< parameter 7   - [J/(m3*K)] heat capacity 2nd wall layer above ground floor level
+       898800.0_wp,    &  !< parameter 8   - [J/(m3*K)] heat capacity 3rd wall layer above ground floor level
+       0.72_wp,        &  !< parameter 9   - [W/(m*K)] thermal conductivity 1st wall layer (outside) above ground floor level
+       0.22_wp,        &  !< parameter 10  - [W/(m*K)] thermal conductivity 2nd wall layer above ground floor level
+       0.22_wp,        &  !< parameter 11  - [W/(m*K)] thermal conductivity 3rd wall layer above ground floor level
+       303.15_wp,      &  !< parameter 12  - [K] indoor target summer temperature
+       293.15_wp,      &  !< parameter 13  - [K] indoor target winter temperature
+       0.84_wp,        &  !< parameter 14  - [-] wall emissivity above ground floor level
+       0.86_wp,        &  !< parameter 15  - [-] green emissivity above ground floor level
+       0.89_wp,        &  !< parameter 16  - [-] window emissivity above ground floor level
+       0.85_wp,        &  !< parameter 17  - [-] window transmissivity (not visual transmissivity) above ground floor level
+       0.001_wp,       &  !< parameter 18  - [m] z0 roughness above ground floor level
+       0.0001_wp,      &  !< parameter 19  - [m] z0h/z0g roughness heat/humidity above ground floor level
+       3.0_wp,         &  !< parameter 20  - [m] ground floor level height
+       0.71_wp,        &  !< parameter 21  - [-] wall fraction ground floor level
+       0.29_wp,        &  !< parameter 22  - [-] window fraction ground floor level
+       0.0_wp,         &  !< parameter 23  - [-] green fraction ground floor level
+       0.0_wp,         &  !< parameter 24  - [-] green fraction roof ground floor level
+       1.5_wp,         &  !< parameter 25  - [m2/m2] LAI (Leaf Area Index) on wall ground floor level
+       1488000.0_wp,   &  !< parameter 26  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground floor level
+       898800.0_wp,    &  !< parameter 27  - [J/(m3*K)] heat capacity 2nd wall layer ground floor level
+       898800.0_wp,    &  !< parameter 28  - [J/(m3*K)] heat capacity 3rd wall layer ground floor level
+       0.72_wp,        &  !< parameter 29  - [W/(m*K)] thermal conductivity 1st wall layer (outside) ground floor level
+       0.22_wp,        &  !< parameter 30  - [W/(m*K)] thermal conductivity 2nd wall layer ground floor level
+       0.22_wp,        &  !< parameter 31  - [W/(m*K)] thermal conductivity 3rd wall layer ground floor level
+       0.84_wp,        &  !< parameter 32  - [-] wall emissivity ground floor level
+       0.89_wp,        &  !< parameter 33  - [-] window emissivity ground floor level
+       0.86_wp,        &  !< parameter 34  - [-] green emissivity ground floor level
+       0.85_wp,        &  !< parameter 35  - [-] window transmissivity (not visual transmissivity) ground floor level
+       0.001_wp,       &  !< parameter 36  - [m] z0 roughness ground floor level
+       0.0001_wp,      &  !< parameter 37  - [m] z0h/z0q roughness heat/humidity
+       36.0_wp,        &  !< parameter 38  - [-] wall albedo_type above ground floor level  (albedo_type specified in radiation model)
+       5.0_wp,         &  !< parameter 39  - [-] green albedo_type above ground floor level  (albedo_type specified in radiation model)
+       37.0_wp,        &  !< parameter 40  - [-] window albedo_type above ground floor level  (albedo_type specified in radiation model)
+       0.02_wp,        &  !< parameter 41  - [m] 1st cumulative wall layer thickness above ground floor level
+       0.15_wp,        &  !< parameter 42  - [m] 2nd cumulative wall layer thickness above ground floor level
+       0.28_wp,        &  !< parameter 43  - [m] 3rd cumulative wall layer thickness above ground floor level
+       0.3_wp,         &  !< parameter 44  - [m] 4th cumulative wall layer thickness above ground floor level
+       20000.0_wp,     &  !< parameter 45  - [J/(m2*K)] heat capacity wall surface (1 cm air)
+       23.0_wp,        &  !< parameter 46  - [W/(m2*K)] thermal conductivity of wall surface (1 cm air)
+       20000.0_wp,     &  !< parameter 47  - [J/(m2*K)] heat capacity of window surface (1 cm air)
+       20000.0_wp,     &  !< parameter 48  - [J/(m2*K)] heat capacity of green surface
+       23.0_wp,        &  !< parameter 49  - [W/(m2*K)] thermal conductivity of window surface (1 cm air)
+       10.0_wp,        &  !< parameter 50  - [W/(m2*K)] thermal conductivty of green surface
+       1.0_wp,         &  !< parameter 51  - [-] wall fraction ground plate
+       0.1_wp,         &  !< parameter 52  - [m] 1st cumulative wall layer thickness ground plate
+       0.2_wp,         &  !< parameter 53  - [m] 2nd cumulative wall layer thickness ground plate
+       0.28_wp,        &  !< parameter 54  - [m] 3rd cumulative wall layer thickness ground plate
+       0.3_wp,         &  !< parameter 55  - [m] 4th cumulative wall layer thickness ground plate
+       2112000.0_wp,   &  !< parameter 56  - [J/(m3*K)] heat capacity 1st wall layer (outside) ground plate
+       2112000.0_wp,   &  !< parameter 57  - [J/(m3*K)] heat capacity 2nd wall layer ground plate
+       1008000.0_wp,   &  !< parameter 58  - [J/(m3*K)] heat capacity 3rd wall layer ground plate
+       2.1_wp,         &  !< parameter 59  - [W/(m*K)] thermal conductivity 1st wall layer (oustide) ground plate
+       2.1_wp,         &  !< parameter 60  - [W/(m*K)] thermal conductivity 2nd wall layer ground plate
+       0.41_wp,        &  !< parameter 61  - [W/(m*K)] thermal conductivity 3rd wall layer ground plate
+       0.02_wp,        &  !< parameter 62  - [m] 1st cumulative wall layer thickness ground floor level
+       0.15_wp,        &  !< parameter 63  - [m] 2nd cumulative wall layer thickness ground floor level
+       0.28_wp,        &  !< parameter 64  - [m] 3rd cumulative wall layer thickness ground floor level
+       0.3_wp,         &  !< parameter 65  - [m] 4th cumulative wall layer thickness ground floor level
+       36.0_wp,        &  !< parameter 66  - [-] wall albedo_type ground floor level (albedo_type specified in radiation model)
+       0.02_wp,        &  !< parameter 67  - [m] 1st cumulative window layer thickness ground floor level
+       0.04_wp,        &  !< parameter 68  - [m] 2nd cumulative window layer thickness ground floor level
+       0.06_wp,        &  !< parameter 69  - [m] 3rd cumulative window layer thickness ground floor level
+       0.08_wp,        &  !< parameter 70  - [m] 4th cumulative window layer thickness ground floor level
+       1736000.0_wp,   &  !< parameter 71  - [J/(m3*K)] heat capacity 1st window layer (outside) ground floor level
+       1736000.0_wp,   &  !< parameter 72  - [J/(m3*K)] heat capacity 2nd window layer ground floor level
+       1736000.0_wp,   &  !< parameter 73  - [J/(m3*K)] heat capacity 3rd window layer ground floor level
+       0.43_wp,        &  !< parameter 74  - [W/(m*K)] thermal conductivity 1st window layer (outside) ground floor level
+       0.43_wp,        &  !< parameter 75  - [W/(m*K)] thermal conductivity 2nd window layer ground floor level
+       0.43_wp,        &  !< parameter 76  - [W/(m*K)] thermal conductivity 3rd window layer ground floor level
+       37.0_wp,        &  !< parameter 77  - [-] window albedo_type ground floor level (albedo_type specified in radiation model)
+       5.0_wp,         &  !< parameter 78  - [-] green albedo_type ground floor level (albedo_type specified in radiation model)
+       0.02_wp,        &  !< parameter 79  - [m] 1st cumulative window layer thickness above ground floor level
+       0.04_wp,        &  !< parameter 80  - [m] 2nd thickness window layer above ground floor level
+       0.06_wp,        &  !< parameter 81  - [m] 3rd cumulative window layer thickness above ground floor level
+       0.08_wp,        &  !< parameter 82  - [m] 4th cumulative window layer thickness above ground floor level
+       1736000.0_wp,   &  !< parameter 83  - [J/(m3*K)] heat capacity 1st window layer (outside) above ground floor level
+       1736000.0_wp,   &  !< parameter 84  - [J/(m3*K)] heat capacity 2nd window layer above ground floor level
+       1736000.0_wp,   &  !< parameter 85  - [J/(m3*K)] heat capacity 3rd window layer above ground floor level
+       0.43_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 1st window layer (outside) above ground floor level
+       0.43_wp,        &  !< parameter 86  - [W/(m*K)] thermal conductivity 2nd window layer above ground floor level
+       0.43_wp,        &  !< parameter 87  - [W/(m*K)] thermal conductivity 3rd window layer above ground floor level
+       1.0_wp,         &  !< parameter 89  - [-] wall fraction roof
+       0.02_wp,        &  !< parameter 90  - [m] 1st cumulative wall layer thickness roof
+       0.2_wp,         &  !< parameter 91  - [m] 2nd cumulative wall layer thickness roof
+       0.38_wp,        &  !< parameter 92  - [m] 3rd cumulative wall layer thickness roof
+       0.4_wp,         &  !< parameter 93  - [m] 4th cumulative wall layer thickness roof
+       1488000.0_wp,   &  !< parameter 94  - [J/(m3*K)] heat capacity 1st wall layer (outside) roof
+       898800.0_wp,    &  !< parameter 95  - [J/(m3*K)] heat capacity 2nd wall layer roof
+       898800.0_wp,    &  !< parameter 96  - [J/(m3*K)] heat capacity 3rd wall layer roof
+       0.72_wp,        &  !< parameter 97  - [W/(m*K)] thermal conductivity 1st wall layer (outside) roof
+       0.22_wp,        &  !< parameter 98  - [W/(m*K)] thermal conductivity 2nd wall layer roof
+       0.22_wp,        &  !< parameter 99  - [W/(m*K)] thermal conductivity 3rd wall layer roof
+       0.94_wp,        &  !< parameter 100 - [-] wall emissivity roof
+       20.0_wp,        &  !< parameter 101 - [-] wall albedo_type roof (albedo_type specified in radiation model)
+       0.0_wp,         &  !< parameter 102 - [-] window fraction roof
+       0.02_wp,        &  !< parameter 103 - [m] window 1st layer thickness roof
+       0.04_wp,        &  !< parameter 104 - [m] window 2nd layer thickness roof
+       0.06_wp,        &  !< parameter 105 - [m] window 3rd layer thickness roof
+       0.08_wp,        &  !< parameter 106 - [m] window 4th layer thickness roof
+       1736000.0_wp,   &  !< parameter 107 - [J/(m3*K)] heat capacity 1st window layer (outside) roof
+       1736000.0_wp,   &  !< parameter 108 - [J/(m3*K)] heat capacity 2nd window layer roof
+       1736000.0_wp,   &  !< parameter 109 - [J/(m3*K)] heat capacity 3rd window layer roof
+       0.43_wp,        &  !< parameter 110 - [W/(m*K)] thermal conductivity 1st window layer (outside) roof
+       0.43_wp,        &  !< parameter 111 - [W/(m*K)] thermal conductivity 2nd window layer roof
+       0.43_wp,        &  !< parameter 112 - [W/(m*K)] thermal conductivity 3rd window layer roof
+       0.89_wp,        &  !< parameter 113 - [-] window emissivity roof
+       0.85_wp,        &  !< parameter 114 - [-] window transmissivity (not visual transmissivity) roof
+       37.0_wp,        &  !< parameter 115 - [-] window albedo_type roof (albedo_type specified in radiation model)
+       0.86_wp,        &  !< parameter 116 - [-] green emissivity roof
+       5.0_wp,         &  !< parameter 117 - [-] green albedo_type roof (albedo_type specified in radiation model)
+       0.0_wp,         &  !< parameter 118 - [-] green type roof
+       1.0_wp,         &  !< parameter 119 - [-] shading factor
+       0.85_wp,        &  !< parameter 120 - [-] g-value windows
+       5.4_wp,         &  !< parameter 121 - [W/(m2*K)] u-value windows
+       0.5_wp,         &  !< parameter 122 - [1/h] basic airflow without occupancy of the room for - summer 1.0_wp, winter 0.2
+       1.5_wp,         &  !< parameter 123 - [1/h] additional airflow dependent on occupancy of the room for - summer 1.0_wp, winter 0.8
+       0.0_wp,         &  !< parameter 124 - [-] heat recovery efficiency
+       3.5_wp,         &  !< parameter 125 - [m2/m2] dynamic parameter specific effective surface
+       370000.0_wp,    &  !< parameter 126 - [J/(m2*K)] dynamic parameter innner heat storage
+       4.5_wp,         &  !< parameter 127 - [m2/m2] ratio internal surface/floor area
+       0.0_wp,         &  !< parameter 128 - [W] maximal heating capacity
+       0.0_wp,         &  !< parameter 129 - [W] maximal cooling capacity
+       7.0_wp,         &  !< parameter 130 - [W/m2] additional internal heat gains dependent on occupancy of the room
+       3.0_wp,         &  !< parameter 131 - [W/m2] basic internal heat gains without occupancy of the room
+       3.0_wp,         &  !< parameter 132 - [m] storey height
+       0.2_wp,         &  !< parameter 133 - [m] ceiling construction height
+       0.0_wp,         &  !< parameter 134 - [-] anthropogenic heat output for heating
+       1.0_wp,         &  !< parameter 135 - [-] anthropogenic heat output for cooling
+       1488000.0_wp,   &  !< parameter 136 - [J/(m3*K)] heat capacity 4th wall layer (inside) above ground floor level
+       0.72_wp,        &  !< parameter 137 - [W/(m*K)] thermal conductivity 4th wall layer (inside) above ground floor level
+       1488000.0_wp,   &  !< parameter 138 - [J/(m3*K)] capacity 4th wall layer (inside) ground floor level
+       0.72_wp,        &  !< parameter 139 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground floor level
+       940800.0_wp,    &  !< parameter 140 - [J/(m3*K)] heat capacity 4th wall layer (inside) ground plate
+       0.57_wp,        &  !< parameter 141 - [W/(m*K)] thermal conductivity 4th wall layer (inside) ground plate
+       1736000.0_wp,   &  !< parameter 142 - [J/(m3*K)] heat capacity 4th window layer (inside) ground floor level
+       0.43_wp,        &  !< parameter 143 - [W/(m*K)] thermal conductivity 4th window layer (inside) ground floor level
+       1736000.0_wp,   &  !< parameter 144 - [J/(m3*K)] heat capacity 4th layer (inside) above ground floor level
+       0.43_wp,        &  !< parameter 145 - [W/(m*K)] thermal conductivity 4th window layer (inside) above ground floor level
+       1488000.0_wp,   &  !< parameter 146 - [J/(m3*K)] heat capacity 4th wall layer (inside) roof
+       0.72_wp,        &  !< parameter 147 - [W/(m*K)] thermal conductivity 4th wall layer (inside) roof
+       1736000.0_wp,   &  !< parameter 148 - [J/(m3*K)] heat capacity 4th window layer (inside) roof
+       0.43_wp         &  !< parameter 149 - [W/(m*K)] thermal conductivity 4th window layer (inside) roof
                         /)
+
 
  END SUBROUTINE usm_define_pars
 
