@@ -376,6 +376,8 @@
                    ENDIF
 
                 ENDDO
+                write(9,*) 'building: ', buildings_ah(nb+1)%id, 'k_min: ', k_min_l(nb), 'k_max: ', k_max_l(nb)
+                flush(9)
              ENDIF
           ENDIF
        ENDDO
@@ -387,6 +389,10 @@
 #endif
     buildings_ah(:)%kb_min = k_min_l(:)
     buildings_ah(:)%kb_max = k_max_l(:)
+
+    write(9,*) 'k_min: ', buildings_ah(:)%kb_min
+    write(9,*) 'k_max: ', buildings_ah(:)%kb_max
+    flush(9)
 
     DEALLOCATE( k_min_l )
     DEALLOCATE( k_max_l )
