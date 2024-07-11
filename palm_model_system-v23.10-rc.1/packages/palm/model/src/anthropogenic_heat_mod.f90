@@ -478,6 +478,10 @@
           num_facades_v = buildings_ah(nb)%num_facade_v
        ENDIF
 
+       write(9,*) 'building id: ', buildings_ah(nb)%id
+       write(9,*) 'count - i.e. k_max - k_min + 1: ', buildings_ah(nb)%kb_max - buildings_ah(nb)%kb_min + 1
+       flush(9)
+
 #if defined( __parallel )
        CALL MPI_ALLREDUCE( num_facades_h,                                                          &
                            receive_dum_h,                                                          &
