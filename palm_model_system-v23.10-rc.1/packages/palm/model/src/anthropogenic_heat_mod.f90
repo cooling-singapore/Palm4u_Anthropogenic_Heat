@@ -376,7 +376,7 @@
                    ENDIF
 
                 ENDDO
-                write(9,*) 'building: ', buildings_ah(nb+1)%id, 'k_min: ', k_min_l(nb), 'k_max: ', k_max_l(nb)
+                write(9,*) 'building: ', buildings_ah(nb)%id, 'k_min: ', k_min_l(nb), 'k_max: ', k_max_l(nb)
                 flush(9)
              ENDIF
           ENDIF
