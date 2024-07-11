@@ -376,8 +376,6 @@
                    ENDIF
 
                 ENDDO
-                write(9,*) 'building: ', buildings_ah(nb)%id, 'k_min: ', k_min_l(nb), 'k_max: ', k_max_l(nb)
-                flush(9)
              ENDIF
           ENDIF
        ENDDO
@@ -390,9 +388,12 @@
     buildings_ah(:)%kb_min = k_min_l(:)
     buildings_ah(:)%kb_max = k_max_l(:)
 
-    write(9,*) 'k_min: ', buildings_ah(:)%kb_min
-    write(9,*) 'k_max: ', buildings_ah(:)%kb_max
-    flush(9)
+    DO nb = 1, n_buildings
+      IF (buildings_ah(nb)%kb_max - building_ah(nb)%kb_min <= 0) THEN
+          write(9,*) 'Building ID with k_max - k_min <= 0: ', buildings_ah(nb)%id, ' k_max: ', buildings_ah(nb)%kb_max, ' k_min: ', buildings_ah(nb)%kb_min
+          flush(9)
+      ENDIF
+    ENDDO
 
     DEALLOCATE( k_min_l )
     DEALLOCATE( k_max_l )
