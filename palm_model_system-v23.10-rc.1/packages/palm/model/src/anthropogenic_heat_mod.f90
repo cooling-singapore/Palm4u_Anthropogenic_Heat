@@ -388,13 +388,6 @@
     buildings_ah(:)%kb_min = k_min_l(:)
     buildings_ah(:)%kb_max = k_max_l(:)
 
-    DO nb = 0, n_buildings-1
-      IF (buildings_ah(nb)%kb_max - buildings_ah(nb)%kb_min <= 0) THEN
-          write(9,*) 'Building ID with k_max - k_min <= 0: ', buildings_ah(nb)%id, ' k_max: ', buildings_ah(nb)%kb_max, ' k_min: ', buildings_ah(nb)%kb_min
-          flush(9)
-      ENDIF
-    ENDDO
-
     DEALLOCATE( k_min_l )
     DEALLOCATE( k_max_l )
 
@@ -477,10 +470,6 @@
           num_facades_r = buildings_ah(nb)%num_facade_r
           num_facades_v = buildings_ah(nb)%num_facade_v
        ENDIF
-
-       write(9,*) 'building id: ', buildings_ah(nb)%id
-       write(9,*) 'count - i.e. k_max - k_min + 1: ', buildings_ah(nb)%kb_max - buildings_ah(nb)%kb_min + 1
-       flush(9)
 
 #if defined( __parallel )
        CALL MPI_ALLREDUCE( num_facades_h,                                                          &
