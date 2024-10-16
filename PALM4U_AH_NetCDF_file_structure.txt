@@ -1,0 +1,64 @@
+// PALM AH NetCDF file structure
+
+// global attributes
+  :title = "Anthropogenic heat emissions from surfaces (external source)";
+  :author = "DUCT";
+  :institution = "Cooling Singapore - Singpore ETH Centre";
+  :comment = "Example for definition of file-structure";
+  :creation_date = "24-02-15 13:50:12 +07";
+  :history = "";
+  :keywords = "example, anthropogenic heat";
+  :license = "";
+  :palm_version = "";
+  :references = "";
+  :source = "PALM4-U AH-branch";
+  :version = "0";
+  :Conventions = "CF-1.7";
+  :origin_lat = 1.3038; // double
+  :origin_lon = 103.7735; // double
+  :origin_time = "2019-03-06 10:00:00 +00";
+  :origin_x = 11552037; // double
+  :origin_y = 145147; // double
+  :origin_z = 0.0; // double
+  :rotation_angle = 0.0; // double
+
+// specific attributes
+
+dimensions:
+    building_ids = 40;
+    road_ids = 15;
+    point_ids = 8;
+    time = 24;
+
+  variables:
+
+    int building_ids(building_ids=40);
+      :long_name = "identifiers of the building that emit anthropogenic heat";
+      :units = "1";
+
+    int point_ids(point_ids=8);
+      :long_name = "identifiers of the surface points that emit anthropogenic heat";
+      :units = "1";
+
+    int time(time=24);
+      :long_name = "time step since start of the run";
+      :unit = "s"
+      :axis = "T"
+
+    float x(point_ids=8);
+      :long_name = "distance to origin in x-direction";
+      :units = "m";
+
+    float y(point_ids=8);
+      :long_name = "distance to origin in y-direction";
+      :units = "m";
+
+    float building_ah(t=8760, building_ids=40);
+      :_FillValue = -9999.0f; // float
+      :long_name = "anthropogenic heat emissions from building roof";
+      :units = "kWh";
+
+    float point_ah(t=8760, point_id=8);
+      :_FillValue = -9999.0f; // float
+      :long_name = "anthropogenic heat emissions from a specified ground tile";
+      :units = "kWh";
